@@ -1,33 +1,33 @@
-const VUE_VIEW = '__vueVNodeRef__';
+const VUE_VIEW = "__vueVNodeRef__";
 
 module.exports = function pager(Vue) {
-	return {
-		model: {
-			prop: 'selectedIndex',
-			event: 'selectedIndexChange'
-		},
-		props: {
-			items: {
-				type: Array | Object,
-			},
-			'+alias': {
-				type: String,
-				default: 'item'
-			},
-			'+index': {
-				type: String,
-				default: '$index'
-			},
-			selectedIndex: {
-				type: Number,
-				default: 0
-			}
-		},
-		template: `
+    return {
+        model: {
+            prop: "selectedIndex",
+            event: "selectedIndexChange",
+        },
+        props: {
+            items: {
+                type: Array | Object,
+            },
+            "+alias": {
+                type: String,
+                default: "item",
+            },
+            "+index": {
+                type: String,
+                default: "$index",
+            },
+            selectedIndex: {
+                type: Number,
+                default: 0,
+            },
+        },
+        template: `
     <NativePager
       ref="pagerView"
       :items="items"
-      v-bind="$attrs"
+	  v-bind="$attrs"
       :selectedIndex="selectedIndex"
 	  @itemLoading="onItemLoading"
 	  @itemDisposing="onItemDisposing">
@@ -84,12 +84,12 @@ module.exports = function pager(Vue) {
 		}
 	};
 
-	function getItemContext(item, index, alias, index_alias) {
-		return {
-			[ alias ]: item,
-			[ index_alias ]: index,
-			$even: index % 2 === 0,
-			$odd: index % 2 !== 0
-		};
-	}
-}
+    function getItemContext(item, index, alias, index_alias) {
+        return {
+            [alias]: item,
+            [index_alias]: index,
+            $even: index % 2 === 0,
+            $odd: index % 2 !== 0,
+        };
+    }
+};
