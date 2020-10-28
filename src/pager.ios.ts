@@ -111,14 +111,14 @@ export class Pager extends PagerBase {
         this._layout.scrollDirection =
             UICollectionViewScrollDirection.Horizontal;
         this._layout.minimumInteritemSpacing = 0;
-        this._pager = UICollectionView.alloc().initWithFrameCollectionViewLayout(
+        const pager = this._pager = UICollectionView.alloc().initWithFrameCollectionViewLayout(
             CGRectZero,
             this._layout
         );
-        this.pager.showsHorizontalScrollIndicator = false;
-        this.pager.showsVerticalScrollIndicator = false;
-        this.pager.decelerationRate = UIScrollViewDecelerationRateFast;
-        nativeView.addSubview(this.pager);
+        pager.showsHorizontalScrollIndicator = false;
+        pager.showsVerticalScrollIndicator = false;
+        pager.decelerationRate = UIScrollViewDecelerationRateFast;
+        nativeView.addSubview(pager);
         return nativeView;
     }
 
