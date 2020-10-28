@@ -1409,15 +1409,15 @@ class UICollectionViewDataSourceImpl
                 }
                 view.parent._removeView(view);
                 */
-                (cell.view.ios as UIView).removeFromSuperview();
+                (cell.view.nativeViewProtected as UIView).removeFromSuperview();
                 cell.owner = new WeakRef(view);
             }
 
             if (view && !view.parent) {
                 owner._addView(view);
-                cell.contentView.addSubview(view.ios);
-            } else if (view && view.ios) {
-                cell.contentView.addSubview(view.ios);
+                cell.contentView.addSubview(view.nativeViewProtected);
+            } else if (view && view.nativeViewProtected) {
+                cell.contentView.addSubview(view.nativeViewProtected);
             }
 
             owner._layoutCell(view, indexPath);
