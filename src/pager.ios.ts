@@ -92,7 +92,7 @@ export class Pager extends PagerBase {
     constructor() {
         super();
         this._map = new Map<PagerCell, View>();
-        this._childrenViews = new Map<number, View>();
+        this._childrenViews = new Map<number, common.PagerItem>();
     }
 
     get pager() {
@@ -241,6 +241,7 @@ export class Pager extends PagerBase {
         return this.lastIndex;
     }
 
+    //@ts-ignore
     get ios(): any /*UIView*/ {
         return this.nativeView;
     }
@@ -275,6 +276,7 @@ export class Pager extends PagerBase {
         this._indicatorView.currentPageTintColor = UIColor.whiteColor;
     }
 
+    //@ts-ignore
     public get _childrenCount() {
         return this.items
             ? this.items.length
@@ -586,7 +588,6 @@ export class Pager extends PagerBase {
         }
 
         this.pager.delegate = this._delegate;
-
         if (!this.items && this._childrenCount > 0) {
             selectedIndexProperty.coerce(this);
             this._updateScrollPosition();
@@ -683,8 +684,9 @@ export class Pager extends PagerBase {
             heightMeasureSpec
         );
         super.measure(widthMeasureSpec, heightMeasureSpec);
-		let forceLayout = (this._privateFlags & PFLAG_FORCE_LAYOUT) === PFLAG_FORCE_LAYOUT;
-        if (changed || forceLayout) {
+        //@ts-ignore
+        let forceLayout = (this._privateFlags & PFLAG_FORCE_LAYOUT) === PFLAG_FORCE_LAYOUT;
+        if (( changed || forceLayout)) {
             dispatch_async(main_queue, () => {
                 if (!this.pager) {
                     return;
@@ -828,7 +830,7 @@ export class Pager extends PagerBase {
     _addChildFromBuilder(name: string, value: any): void {
         if (value instanceof common.PagerItem) {
             if (!this._childrenViews) {
-                this._childrenViews = new Map<number, View>();
+                this._childrenViews = new Map<number, common.PagerItem>();
             }
             const count = this._childrenViews.size;
             const keys = Array.from(this._childrenViews.keys());
@@ -1393,11 +1395,11 @@ class UICollectionViewDataSourceImpl
             cell.index = indexPath;
             let view = owner._childrenViews.get(indexPath.row);
 
-            if (view instanceof ProxyViewContainer) {
-                let sp = new StackLayout();
-                sp.addChild(view);
-                view = sp;
-            }
+            // if (view instanceof ProxyViewContainer) {
+            //     let sp = new StackLayout();
+            //     sp.addChild(view);
+            //     view = sp;
+            // }
 
             // If cell is reused it has old content - remove it first.
             if (!cell.view) {
