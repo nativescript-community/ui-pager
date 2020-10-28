@@ -116,7 +116,7 @@ export abstract class PagerBase
     public _effectiveItemWidth: number;
     public transformers: string;
     public loadMoreCount: number = 1;
-    public _childrenViews: Map<number, View>;
+    public _childrenViews: Map<number, PagerItem>;
     readonly _childrenCount: number;
     public disableSwipe: boolean = false;
     public showIndicator: boolean;
@@ -341,13 +341,6 @@ export abstract class PagerBase
 }
 
 export class PagerItem extends GridLayout {
-    constructor() {
-        super();
-    }
-
-    onLoaded(): void {
-        super.onLoaded();
-    }
 }
 
 function onItemsChanged(pager: PagerBase, oldValue, newValue) {
