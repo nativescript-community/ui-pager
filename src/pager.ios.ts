@@ -1461,7 +1461,9 @@ class UICollectionViewDataSourceImpl
         section: number
     ): number {
         const owner = this._owner ? this._owner.get() : null;
-        if (!owner) return 0;
+        // make sure we dont start to load static view if the pager is not loaded.
+        // otherwise static items wont "load"
+        if (!owner ||  !owner.isLoaded) return 0;
         return owner.circularMode ? owner.itemCount : owner._childrenCount;
     }
 
