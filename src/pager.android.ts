@@ -52,7 +52,7 @@ declare const com, java;
 const PLACEHOLDER = "PLACEHOLDER";
 
 export class Pager extends PagerBase {
-    nativeViewProtected: any; /* androidx.viewpager2.widget.ViewPager2 */
+    nativeViewProtected: androidx.viewpager2.widget.ViewPager2;
     _androidViewId: number;
     private _disableAnimation: boolean;
     public pagesCount: number;
@@ -64,13 +64,13 @@ export class Pager extends PagerBase {
     public itemTemplateUpdated(oldData: any, newData: any): void {}
 
     private _oldDisableAnimation: boolean = false;
-    _pagerAdapter;
+    private _pagerAdapter: PagerRecyclerAdapter;
     private _views: Array<any>;
     private _pageListener: any;
-    public _realizedItems = new Map<any /*android.view.View*/, View>();
+    public _realizedItems = new Map<android.view.View, View>();
     public _realizedTemplates = new Map<
         string,
-        Map<any /*android.view.View*/, View>
+        Map<android.view.View, View>
     >();
     lastEvent = 0;
     private _lastSpacing = 0;
@@ -96,10 +96,6 @@ export class Pager extends PagerBase {
         this._views = value;
     }
 
-    get android() {
-        return this.nativeViewProtected;
-    }
-
     get pager() {
         return this._pager;
     }
@@ -110,7 +106,6 @@ export class Pager extends PagerBase {
 
     @profile()
     public createNativeView() {
-        const that = new WeakRef(this);
         const nativeView = new android.widget.RelativeLayout(this._context);
         this._pager = new androidx.viewpager2.widget.ViewPager2(this._context);
         const sdkVersion = parseInt(Device.sdkVersion, 10);
@@ -128,27 +123,27 @@ export class Pager extends PagerBase {
         }
 
         initPagerChangeCallback();
-
-        this._pageListener = new PageChangeCallback(that);
+        this._pageListener = new PageChangeCallback(new WeakRef(this));
 
         initPagerRecyclerAdapter();
         this._pagerAdapter = new PagerRecyclerAdapter(new WeakRef(this));
         this.compositeTransformer = new androidx.viewpager2.widget.CompositePageTransformer();
         this.pager.setUserInputEnabled(!this.disableSwipe);
         this.on(View.layoutChangedEvent, this.onLayoutChange, this);
+        const LayoutParams = android.widget.RelativeLayout.LayoutParams;
         nativeView.addView(
             this.pager,
-            new android.widget.RelativeLayout.LayoutParams(
-                android.widget.RelativeLayout.LayoutParams.MATCH_PARENT,
-                android.widget.RelativeLayout.LayoutParams.MATCH_PARENT
+            new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT
             )
         );
         this._indicatorView = new (com as any).rd.PageIndicatorView2(
             this._context
         );
-        const params = new android.widget.RelativeLayout.LayoutParams(
-            android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT,
-            android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT
+        const params = new LayoutParams(
+            LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT
         );
 
         params.addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -184,7 +179,6 @@ export class Pager extends PagerBase {
         }
 
         this._setIndicator(this.indicator);
-        // this.nativeView.setId(this._androidViewId);
         this._setPeaking(this.peaking);
         this._setSpacing(this.spacing);
         this._setTransformers(this.transformers ? this.transformers : "");
@@ -369,6 +363,7 @@ export class Pager extends PagerBase {
         return this._pagerAdapter;
     }
 
+    //@ts-ignore
     get _childrenCount(): number {
         return this.items
             ? this.items.length
@@ -539,8 +534,7 @@ export class Pager extends PagerBase {
             );
         }
 
-        this._pagerAdapter = new PagerRecyclerAdapter();
-        this._pagerAdapter.owner = new WeakRef(this);
+        this._pagerAdapter = new PagerRecyclerAdapter(new WeakRef(this));
         this.pager.setAdapter(this._pagerAdapter);
         this.refresh();
     }
@@ -851,8 +845,14 @@ function initPagerChangeCallback() {
 
     PageChangeCallback = PageChangeCallbackImpl;
 }
-
-let PagerRecyclerAdapter;
+interface PagerRecyclerAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter<any> {
+    // tslint:disable-next-line:no-misused-new
+    new (owner: WeakRef<Pager>): PagerRecyclerAdapter;
+    getPosition(index: number): number;
+    lastIndex(): number;
+}
+// eslint-disable-next-line no-redeclare
+let PagerRecyclerAdapter : PagerRecyclerAdapter;
 
 function initPagerRecyclerAdapter() {
     if (PagerRecyclerAdapter) {
