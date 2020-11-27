@@ -19,26 +19,24 @@ import {
     TemplateRef,
     ViewChild,
     ViewContainerRef,
-    ɵisListLikeIterable as isListLikeIterable,
+    ɵisListLikeIterable as isListLikeIterable
 } from '@angular/core';
-import { ItemEventData, ItemsSource } from '@nativescript/core/ui/list-view';
-import { KeyedTemplate, View, isIOS } from '@nativescript/core';
-import { EventData, LayoutBase, Template } from '@nativescript/core';
-import { ObservableArray } from '@nativescript/core/data/observable-array';
-import { profile } from '@nativescript/core/profiling';
-
-import {
-    getSingleViewRecursive,
-    isInvisibleNode,
-    registerElement,
-} from '@nativescript/angular';
-import { Trace } from '@nativescript/core';
 import {
     Pager,
     PagerError,
     PagerItem,
-    PagerLog,
+    PagerLog
 } from '@nativescript-community/ui-pager';
+import {
+    getSingleViewRecursive,
+    isInvisibleNode,
+    registerElement
+} from '@nativescript/angular';
+import { EventData, isIOS, KeyedTemplate, LayoutBase, Template, Trace, View } from '@nativescript/core';
+import { ObservableArray } from '@nativescript/core/data/observable-array';
+import { profile } from '@nativescript/core/profiling';
+import { ItemEventData, ItemsSource } from '@nativescript/core/ui/list-view';
+
 
 registerElement('Pager', () => Pager);
 registerElement('PagerItem', () => PagerItem);
@@ -53,28 +51,17 @@ export interface PagerTemplatedItemsView {
     refresh(): void;
 
     on(
-        event: 'itemLoading',
-        callback: (args: ItemEventData) => void,
-        thisArg?: any
-    );
-
-    on(
-        event: 'itemDisposing',
+        event: 'itemDisposing' | 'itemLoading',
         callback: (args: ItemEventData) => void,
         thisArg?: any
     );
 
     off(
-        event: 'itemLoading',
+        event: 'itemLoading' | 'itemDisposing',
         callback: (args: EventData) => void,
         thisArg?: any
     );
 
-    off(
-        event: 'itemDisposing',
-        callback: (args: EventData) => void,
-        thisArg?: any
-    );
 }
 
 export class ItemContext {

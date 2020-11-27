@@ -1,5 +1,5 @@
 {
-  "name": "@nativescript-community/ui-collectionview-angular",
+  "name": "@nativescript-community/ui-pager-angular",
   "main": "index.js",
   "ngPackage": {
     "dest": "../../plugin/angular",
@@ -8,7 +8,7 @@
       "umdModuleIds": {
         "@nativescript/core": "ns-core",
         "@nativescript/angular": "ns-angular",
-        "@nativescript-community/ui-collectionview": "ns-ui-collectionview"
+        "@nativescript-community/ui-pager": "ns-ui-collectionview"
       }
     },
     "whitelistedNonPeerDependencies": [
