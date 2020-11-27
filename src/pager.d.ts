@@ -31,5 +31,5 @@ export declare class Pager extends PagerBase {
 
     _onItemsChanged(oldValue: any, newValue: any);
 
-    getChildView(index:number): PagerItem;
+    getChildView(index: number): PagerItem;
 }

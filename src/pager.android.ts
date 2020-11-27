@@ -1,6 +1,6 @@
 import { ChangeType, Color, Device, ObservableArray, profile, Property, Screen, StackLayout, View } from "@nativescript/core";
 import {  KeyedTemplate } from "@nativescript/core/ui/core/view";
-import * as types from "@nativescript/core/utils/types";
+import { isString } from "@nativescript/core/utils/types";
 import { layout } from "@nativescript/core/utils/utils";
 import {
     autoplayDelayProperty,
@@ -266,7 +266,7 @@ export class Pager extends PagerBase {
     }
 
     private _setTransformers(transformers: string) {
-        if (!types.isString(transformers)) {
+        if (!isString(transformers)) {
             return;
         }
         const transformsArray = transformers.split(" ");
@@ -374,21 +374,15 @@ export class Pager extends PagerBase {
 
     [indicatorColorProperty.setNative](value: Color | string) {
         if (this.indicatorView) {
-            if (value instanceof Color) {
-                this.indicatorView.setUnselectedColor(value.android);
-            } else if (types.isString(value)) {
-                this.indicatorView.setUnselectedColor(new Color(value).android);
-            }
+            const color = (!value || value instanceof Color)? (value as Color) :new Color(value);
+            this.indicatorView.setUnselectedColor(color ? color.android : null);
         }
     }
 
     [indicatorSelectedColorProperty.setNative](value: Color | string) {
         if (this.indicatorView) {
-            if (value instanceof Color) {
-                this.indicatorView.setSelectedColor(value.android);
-            } else if (types.isString(value)) {
-                this.indicatorView.setSelectedColor(new Color(value).android);
-            }
+            const color = (!value || value instanceof Color)? (value as Color) :new Color(value);
+            this.indicatorView.setSelectedColor(color ? color.android : null);
         }
     }
 

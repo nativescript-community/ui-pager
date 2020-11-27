@@ -1,22 +1,23 @@
-const VUE_VIEW = "__vueVNodeRef__";
+const VUE_VIEW = '__vueVNodeRef__';
 
 module.exports = function pager(Vue) {
     return {
         model: {
-            prop: "selectedIndex",
-            event: "selectedIndexChange",
+            prop: 'selectedIndex',
+            event: 'selectedIndexChange',
         },
         props: {
             items: {
+                //@ts-ignore
                 type: Array | Object,
             },
-            "+alias": {
+            '+alias': {
                 type: String,
-                default: "item",
+                default: 'item',
             },
-            "+index": {
+            '+index': {
                 type: String,
-                default: "$index",
+                default: '$index',
             },
             selectedIndex: {
                 type: Number,
@@ -38,7 +39,7 @@ module.exports = function pager(Vue) {
         watch: {
             items: {
                 handler(newVal) {
-                    this.$refs.pagerView.setAttribute("items", newVal);
+                    this.$refs.pagerView.setAttribute('items', newVal);
                     this.$refs.pagerView.nativeView.refresh();
                 },
                 deep: true,
@@ -57,21 +58,19 @@ module.exports = function pager(Vue) {
                 getItemContext(
                     item,
                     index,
-                    this.$props["+alias"],
-                    this.$props["+index"]
+                    this.$props['+alias'],
+                    this.$props['+index']
                 );
-            this.$refs.pagerView.setAttribute("items", this.items);
+            this.$refs.pagerView.setAttribute('items', this.items);
             this.$refs.pagerView.setAttribute(
-                "_itemTemplatesInternal",
+                '_itemTemplatesInternal',
                 this.$templates.getKeyedTemplates()
             );
             this.$refs.pagerView.setAttribute(
-                "_itemTemplateSelector",
-                (item, index) => {
-                    return this.$templates.selectorFn(
-                        this.getItemContext(item, index)
-                    );
-                }
+                '_itemTemplateSelector',
+                (item, index) => this.$templates.selectorFn(
+                    this.getItemContext(item, index)
+                )
             );
         },
         methods: {
@@ -80,7 +79,7 @@ module.exports = function pager(Vue) {
                 const index = args.index;
                 const items = args.object.items;
                 const currentItem =
-                    typeof items.getItem === "function"
+                    typeof items.getItem === 'function'
                         ? items.getItem(index)
                         : items[index];
                 const name = args.object._itemTemplateSelector(
@@ -105,11 +104,11 @@ module.exports = function pager(Vue) {
                 // }
             },
             onSelectedIndexChange({ value }) {
-                this.$emit("selectedIndexChange", {
+                this.$emit('selectedIndexChange', {
                     value,
                     selectedIndex: value ,
                     object: {
-                        selectedIndex: value 
+                        selectedIndex: value
                     }
                 });
             },
