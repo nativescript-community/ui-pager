@@ -1,0 +1,50 @@
+{
+    "name": "@nativescript-community/ui-pager",
+    "version": "4.0.13",
+    "description": "A Carousel/Pager plugin for NativeScript.",
+    "main": "pager",
+    "typings": "pager.d.ts",
+    "sideEffects": false,
+    "nativescript": {
+        "platforms": {
+            "android": "6.0.0",
+            "ios": "6.0.0"
+        }
+    },
+    "keywords": [
+        "NativeScript",
+        "JavaScript",
+        "Android",
+        "iOS",
+        "pager",
+        "viewpager",
+        "UIPageViewController",
+        "slides",
+        "Carousel",
+        "ng",
+        "angular",
+        "vue",
+        "nativescript-angular",
+        "nativescript-vue"
+    ],
+    "author": {
+        "name": "Osei Fortune",
+        "email": "fortune.osei@yahoo.com"
+    },
+    "contributors": [
+        {
+            "name": "Shiva Prasad",
+            "email": "sp@shiv19.com",
+            "url": "https://shiv19.com"
+        }
+    ],
+    "bugs": {
+        "url": "https://github.com/nativescript-community/ui-pager/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nativescript-community/ui-pager"
+    },
+    "license": "Apache-2.0",
+    "readmeFilename": "README.md"
+}

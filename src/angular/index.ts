@@ -2,18 +2,18 @@ import {
     ChangeDetectionStrategy,
     Component,
     ElementRef,
-    forwardRef,
     IterableDiffers,
+    NO_ERRORS_SCHEMA,
     NgModule,
-    NO_ERRORS_SCHEMA
+    forwardRef
 } from '@angular/core';
 
 import { Pager } from '@nativescript-community/ui-pager';
 import {
     PagerItemDirective,
     TEMPLATED_ITEMS_COMPONENT,
-    TemplatedItemsComponent,
-    TemplateKeyDirective
+    TemplateKeyDirective,
+    TemplatedItemsComponent
 } from './pager-items-comp';
 
 export {PagerItemDirective, TemplatedItemsComponent, TemplateKeyDirective} from './pager-items-comp';

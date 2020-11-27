@@ -20,58 +20,58 @@ import {
     ViewChild,
     ViewContainerRef,
     ɵisListLikeIterable as isListLikeIterable,
-} from "@angular/core";
-import { ItemEventData, ItemsSource } from "@nativescript/core/ui/list-view";
-import { isIOS, KeyedTemplate, View } from "@nativescript/core";
-import { EventData, LayoutBase, Template } from "@nativescript/core";
-import { ObservableArray } from "@nativescript/core/data/observable-array";
-import { profile } from "@nativescript/core/profiling";
+} from '@angular/core';
+import { ItemEventData, ItemsSource } from '@nativescript/core/ui/list-view';
+import { KeyedTemplate, View, isIOS } from '@nativescript/core';
+import { EventData, LayoutBase, Template } from '@nativescript/core';
+import { ObservableArray } from '@nativescript/core/data/observable-array';
+import { profile } from '@nativescript/core/profiling';
 
 import {
     getSingleViewRecursive,
     isInvisibleNode,
     registerElement,
-} from "@nativescript/angular";
-import { Trace } from "@nativescript/core";
+} from '@nativescript/angular';
+import { Trace } from '@nativescript/core';
 import {
     Pager,
     PagerError,
     PagerItem,
     PagerLog,
-} from "@nativescript-community/ui-pager";
+} from '@nativescript-community/ui-pager';
 
-registerElement("Pager", () => Pager);
-registerElement("PagerItem", () => PagerItem);
+registerElement('Pager', () => Pager);
+registerElement('PagerItem', () => PagerItem);
 
-const NG_VIEW = "_ngViewRef";
+const NG_VIEW = '_ngViewRef';
 
 export interface PagerTemplatedItemsView {
     items: any[] | ItemsSource;
     itemTemplate: string | Template;
-    itemTemplates?: string | Array<KeyedTemplate>;
+    itemTemplates?: string | KeyedTemplate[];
 
     refresh(): void;
 
     on(
-        event: "itemLoading",
+        event: 'itemLoading',
         callback: (args: ItemEventData) => void,
         thisArg?: any
     );
 
     on(
-        event: "itemDisposing",
+        event: 'itemDisposing',
         callback: (args: ItemEventData) => void,
         thisArg?: any
     );
 
     off(
-        event: "itemLoading",
+        event: 'itemLoading',
         callback: (args: EventData) => void,
         thisArg?: any
     );
 
     off(
-        event: "itemDisposing",
+        event: 'itemDisposing',
         callback: (args: EventData) => void,
         thisArg?: any
     );
@@ -94,10 +94,10 @@ export interface SetupItemViewArgs {
     context: ItemContext;
 }
 @Component({
-    template: "",
+    template: '',
 })
 export abstract class TemplatedItemsComponent
-    implements DoCheck, OnDestroy, AfterContentInit {
+implements DoCheck, OnDestroy, AfterContentInit {
     public abstract get nativeElement(): Pager;
 
     protected templatedItemsView: Pager;
@@ -105,7 +105,7 @@ export abstract class TemplatedItemsComponent
     protected _differ: IterableDiffer<KeyedTemplate>;
     protected _templateMap: Map<string, KeyedTemplate>;
     private _selectedIndex: number;
-    @ViewChild("loader", { read: ViewContainerRef, static: false })
+    @ViewChild('loader', { read: ViewContainerRef, static: false })
     loader: ViewContainerRef;
 
     @Output()
@@ -130,9 +130,7 @@ export abstract class TemplatedItemsComponent
         if (needDiffer && !this._differ && isListLikeIterable(value)) {
             this._differ = this._iterableDiffers
                 .find(this._items)
-                .create((_index, item) => {
-                    return item;
-                });
+                .create((_index, item) => item);
         }
 
         this.templatedItemsView.items = this._items;
@@ -168,21 +166,21 @@ export abstract class TemplatedItemsComponent
     ) {
         this.templatedItemsView = _elementRef.nativeElement;
 
-        this.templatedItemsView.on("itemLoading", this.onItemLoading, this);
-        this.templatedItemsView.on("itemDisposing", this.onItemDisposing, this);
+        this.templatedItemsView.on('itemLoading', this.onItemLoading, this);
+        this.templatedItemsView.on('itemDisposing', this.onItemDisposing, this);
     }
 
     ngAfterContentInit() {
         if (Trace.isEnabled()) {
-            PagerLog("TemplatedItemsView.ngAfterContentInit()");
+            PagerLog('TemplatedItemsView.ngAfterContentInit()');
         }
         this.setItemTemplates();
     }
 
     ngOnDestroy() {
-        this.templatedItemsView.off("itemLoading", this.onItemLoading, this);
+        this.templatedItemsView.off('itemLoading', this.onItemLoading, this);
         this.templatedItemsView.off(
-            "itemDisposing",
+            'itemDisposing',
             this.onItemDisposing,
             this
         );
@@ -196,7 +194,7 @@ export abstract class TemplatedItemsComponent
 
         if (this._templateMap) {
             if (Trace.isEnabled()) {
-                PagerLog("Setting templates");
+                PagerLog('Setting templates');
             }
 
             const templates: KeyedTemplate[] = [];
@@ -235,7 +233,7 @@ export abstract class TemplatedItemsComponent
         const index = args.index;
         const items = (<any>args.object).items;
         const currentItem =
-            typeof items.getItem === "function"
+            typeof items.getItem === 'function'
                 ? items.getItem(index)
                 : items[index];
         let viewRef: EmbeddedViewRef<ItemContext>;
@@ -341,9 +339,9 @@ export abstract class TemplatedItemsComponent
 
         this.setupItemView.next({
             view: viewRef,
-            data: data,
-            index: index,
-            context: context,
+            data,
+            index,
+            context,
         });
     }
 
@@ -379,13 +377,13 @@ export abstract class TemplatedItemsComponent
     ngDoCheck() {
         if (this._differ) {
             if (Trace.isEnabled()) {
-                PagerLog("ngDoCheck() - execute differ");
+                PagerLog('ngDoCheck() - execute differ');
             }
 
             const changes = this._differ.diff(this._items);
             if (changes) {
                 if (Trace.isEnabled()) {
-                    PagerLog("ngDoCheck() - refresh");
+                    PagerLog('ngDoCheck() - refresh');
                 }
 
                 this.templatedItemsView.refresh();
@@ -395,12 +393,12 @@ export abstract class TemplatedItemsComponent
 }
 
 export interface ComponentView {
-    rootNodes: Array<any>;
+    rootNodes: any[];
 
     destroy(): void;
 }
 
-export type RootLocator = (nodes: Array<any>, nestLevel: number) => View;
+export type RootLocator = (nodes: any[], nestLevel: number) => View;
 
 export function getItemViewRoot(
     viewRef: ComponentView,
@@ -410,11 +408,11 @@ export function getItemViewRoot(
 }
 
 export const TEMPLATED_ITEMS_COMPONENT = new InjectionToken<
-    TemplatedItemsComponent
->("TemplatedItemsComponent");
+TemplatedItemsComponent
+>('TemplatedItemsComponent');
 
 @Directive({
-    selector: "[pagerItem]",
+    selector: '[pagerItem]',
 })
 export class PagerItemDirective implements OnInit {
     private item: PagerItem;
@@ -450,14 +448,14 @@ export class PagerItemDirective implements OnInit {
             const view = realViews[0];
             this.item.addChild(view);
             this.owner.nativeElement._addChildFromBuilder(
-                "PagerItem",
+                'PagerItem',
                 this.item
             );
         }
     }
 }
 
-@Directive({ selector: "[pagerTemplateKey]" })
+@Directive({ selector: '[pagerTemplateKey]' })
 export class TemplateKeyDirective {
     constructor(
         private templateRef: TemplateRef<any>,

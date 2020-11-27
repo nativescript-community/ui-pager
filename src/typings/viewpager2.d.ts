@@ -1,45 +1,45 @@
 declare namespace androidx {
     export namespace viewpager2 {
         export namespace adapter {
-            export abstract class FragmentStateAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter<androidx.viewpager2.adapter.FragmentViewHolder> implements androidx.viewpager2.adapter.StatefulAdapter {
-                public static class: java.lang.Class<androidx.viewpager2.adapter.FragmentStateAdapter>;
+            export abstract class FragmentStateAdapter extends recyclerview.widget.RecyclerView.Adapter<FragmentViewHolder> implements StatefulAdapter {
+                public static class: java.lang.Class<FragmentStateAdapter>;
 
                 public saveState(): globalAndroid.os.Parcelable;
 
-                public onViewRecycled(param0: androidx.viewpager2.adapter.FragmentViewHolder): void;
+                public onViewRecycled(param0: FragmentViewHolder): void;
 
                 public setHasStableIds(param0: boolean): void;
 
-                public onDetachedFromRecyclerView(param0: androidx.recyclerview.widget.RecyclerView): void;
+                public onDetachedFromRecyclerView(param0: recyclerview.widget.RecyclerView): void;
 
-                public constructor(param0: androidx.fragment.app.Fragment);
+                public constructor(param0: fragment.app.Fragment);
 
-                public createFragment(param0: number): androidx.fragment.app.Fragment;
+                public createFragment(param0: number): fragment.app.Fragment;
 
-                public onViewAttachedToWindow(param0: androidx.viewpager2.adapter.FragmentViewHolder): void;
+                public onViewAttachedToWindow(param0: FragmentViewHolder): void;
 
                 public containsItem(param0: number): boolean;
 
-                public onFailedToRecycleView(param0: androidx.viewpager2.adapter.FragmentViewHolder): boolean;
+                public onFailedToRecycleView(param0: FragmentViewHolder): boolean;
 
                 public restoreState(param0: globalAndroid.os.Parcelable): void;
 
-                public constructor(param0: androidx.fragment.app.FragmentManager, param1: androidx.lifecycle.Lifecycle);
+                public constructor(param0: fragment.app.FragmentManager, param1: lifecycle.Lifecycle);
 
-                public onCreateViewHolder(param0: globalAndroid.view.ViewGroup, param1: number): androidx.viewpager2.adapter.FragmentViewHolder;
+                public onCreateViewHolder(param0: globalAndroid.view.ViewGroup, param1: number): FragmentViewHolder;
 
-                public constructor(param0: androidx.fragment.app.FragmentActivity);
+                public constructor(param0: fragment.app.FragmentActivity);
 
-                public onBindViewHolder(param0: androidx.viewpager2.adapter.FragmentViewHolder, param1: number): void;
+                public onBindViewHolder(param0: FragmentViewHolder, param1: number): void;
 
                 public getItemId(param0: number): number;
 
-                public onAttachedToRecyclerView(param0: androidx.recyclerview.widget.RecyclerView): void;
+                public onAttachedToRecyclerView(param0: recyclerview.widget.RecyclerView): void;
             }
 
             export namespace FragmentStateAdapter {
                 export abstract class DataSetChangeObserver {
-                    public static class: java.lang.Class<androidx.viewpager2.adapter.FragmentStateAdapter.DataSetChangeObserver>;
+                    public static class: java.lang.Class<DataSetChangeObserver>;
 
                     public onChanged(): void;
 
@@ -54,7 +54,7 @@ declare namespace androidx {
                 }
 
                 export class FragmentMaxLifecycleEnforcer {
-                    public static class: java.lang.Class<androidx.viewpager2.adapter.FragmentStateAdapter.FragmentMaxLifecycleEnforcer>;
+                    public static class: java.lang.Class<FragmentMaxLifecycleEnforcer>;
                 }
             }
         }
@@ -65,7 +65,7 @@ declare namespace androidx {
     export namespace viewpager2 {
         export namespace adapter {
             export class FragmentViewHolder {
-                public static class: java.lang.Class<androidx.viewpager2.adapter.FragmentViewHolder>;
+                public static class: java.lang.Class<FragmentViewHolder>;
             }
         }
     }
@@ -75,7 +75,7 @@ declare namespace androidx {
     export namespace viewpager2 {
         export namespace adapter {
             export class StatefulAdapter {
-                public static class: java.lang.Class<androidx.viewpager2.adapter.StatefulAdapter>;
+                public static class: java.lang.Class<StatefulAdapter>;
 
                 /**
                  * Constructs a new instance of the androidx.viewpager2.adapter.StatefulAdapter interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
@@ -98,7 +98,7 @@ declare namespace androidx {
     export namespace viewpager2 {
         export namespace widget {
             export class AnimateLayoutChangeDetector {
-                public static class: java.lang.Class<androidx.viewpager2.widget.AnimateLayoutChangeDetector>;
+                public static class: java.lang.Class<AnimateLayoutChangeDetector>;
             }
         }
     }
@@ -107,8 +107,8 @@ declare namespace androidx {
 declare namespace androidx {
     export namespace viewpager2 {
         export namespace widget {
-            export class CompositeOnPageChangeCallback extends androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback {
-                public static class: java.lang.Class<androidx.viewpager2.widget.CompositeOnPageChangeCallback>;
+            export class CompositeOnPageChangeCallback extends ViewPager2.OnPageChangeCallback {
+                public static class: java.lang.Class<CompositeOnPageChangeCallback>;
 
                 public onPageSelected(param0: number): void;
 
@@ -123,14 +123,14 @@ declare namespace androidx {
 declare namespace androidx {
     export namespace viewpager2 {
         export namespace widget {
-            export class CompositePageTransformer extends androidx.viewpager2.widget.ViewPager2.PageTransformer {
-                public static class: java.lang.Class<androidx.viewpager2.widget.CompositePageTransformer>;
+            export class CompositePageTransformer extends ViewPager2.PageTransformer {
+                public static class: java.lang.Class<CompositePageTransformer>;
 
                 public transformPage(param0: globalAndroid.view.View, param1: number): void;
 
-                public removeTransformer(param0: androidx.viewpager2.widget.ViewPager2.PageTransformer): void;
+                public removeTransformer(param0: ViewPager2.PageTransformer): void;
 
-                public addTransformer(param0: androidx.viewpager2.widget.ViewPager2.PageTransformer): void;
+                public addTransformer(param0: ViewPager2.PageTransformer): void;
 
                 public constructor();
             }
@@ -142,7 +142,7 @@ declare namespace androidx {
     export namespace viewpager2 {
         export namespace widget {
             export class FakeDrag {
-                public static class: java.lang.Class<androidx.viewpager2.widget.FakeDrag>;
+                public static class: java.lang.Class<FakeDrag>;
             }
         }
     }
@@ -151,8 +151,8 @@ declare namespace androidx {
 declare namespace androidx {
     export namespace viewpager2 {
         export namespace widget {
-            export class MarginPageTransformer extends androidx.viewpager2.widget.ViewPager2.PageTransformer {
-                public static class: java.lang.Class<androidx.viewpager2.widget.MarginPageTransformer>;
+            export class MarginPageTransformer extends ViewPager2.PageTransformer {
+                public static class: java.lang.Class<MarginPageTransformer>;
 
                 public transformPage(param0: globalAndroid.view.View, param1: number): void;
 
@@ -165,8 +165,8 @@ declare namespace androidx {
 declare namespace androidx {
     export namespace viewpager2 {
         export namespace widget {
-            export class PageTransformerAdapter extends androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback {
-                public static class: java.lang.Class<androidx.viewpager2.widget.PageTransformerAdapter>;
+            export class PageTransformerAdapter extends ViewPager2.OnPageChangeCallback {
+                public static class: java.lang.Class<PageTransformerAdapter>;
 
                 public onPageSelected(param0: number): void;
 
@@ -182,16 +182,16 @@ declare namespace androidx {
     export namespace viewpager2 {
         export namespace widget {
             export class ScrollEventAdapter {
-                public static class: java.lang.Class<androidx.viewpager2.widget.ScrollEventAdapter>;
+                public static class: java.lang.Class<ScrollEventAdapter>;
 
-                public onScrollStateChanged(param0: androidx.recyclerview.widget.RecyclerView, param1: number): void;
+                public onScrollStateChanged(param0: recyclerview.widget.RecyclerView, param1: number): void;
 
-                public onScrolled(param0: androidx.recyclerview.widget.RecyclerView, param1: number, param2: number): void;
+                public onScrolled(param0: recyclerview.widget.RecyclerView, param1: number, param2: number): void;
             }
 
             export namespace ScrollEventAdapter {
                 export class ScrollEventValues {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ScrollEventAdapter.ScrollEventValues>;
+                    public static class: java.lang.Class<ScrollEventValues>;
                 }
             }
         }
@@ -202,7 +202,7 @@ declare namespace androidx {
     export namespace viewpager2 {
         export namespace widget {
             export class ViewPager2 {
-                public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2>;
+                public static class: java.lang.Class<ViewPager2>;
                 public static ORIENTATION_HORIZONTAL: number;
                 public static ORIENTATION_VERTICAL: number;
                 public static SCROLL_STATE_IDLE: number;
@@ -224,7 +224,7 @@ declare namespace androidx {
 
                 public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number, param3: number);
 
-                public setAdapter(param0: androidx.recyclerview.widget.RecyclerView.Adapter<any>): void;
+                public setAdapter(param0: recyclerview.widget.RecyclerView.Adapter<any>): void;
 
                 public beginFakeDrag(): boolean;
 
@@ -238,7 +238,7 @@ declare namespace androidx {
 
                 public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 
-                public unregisterOnPageChangeCallback(param0: androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback): void;
+                public unregisterOnPageChangeCallback(param0: ViewPager2.OnPageChangeCallback): void;
 
                 public dispatchRestoreInstanceState(param0: globalAndroid.util.SparseArray<globalAndroid.os.Parcelable>): void;
 
@@ -260,11 +260,11 @@ declare namespace androidx {
 
                 public setCurrentItem(param0: number, param1: boolean): void;
 
-                public getAdapter(): androidx.recyclerview.widget.RecyclerView.Adapter<any>;
+                public getAdapter(): recyclerview.widget.RecyclerView.Adapter<any>;
 
-                public removeItemDecoration(param0: androidx.recyclerview.widget.RecyclerView.ItemDecoration): void;
+                public removeItemDecoration(param0: recyclerview.widget.RecyclerView.ItemDecoration): void;
 
-                public addItemDecoration(param0: androidx.recyclerview.widget.RecyclerView.ItemDecoration, param1: number): void;
+                public addItemDecoration(param0: recyclerview.widget.RecyclerView.ItemDecoration, param1: number): void;
 
                 public endFakeDrag(): boolean;
 
@@ -278,15 +278,15 @@ declare namespace androidx {
 
                 public onViewAdded(param0: globalAndroid.view.View): void;
 
-                public registerOnPageChangeCallback(param0: androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback): void;
+                public registerOnPageChangeCallback(param0: ViewPager2.OnPageChangeCallback): void;
 
-                public getItemDecorationAt(param0: number): androidx.recyclerview.widget.RecyclerView.ItemDecoration;
+                public getItemDecorationAt(param0: number): recyclerview.widget.RecyclerView.ItemDecoration;
 
-                public setPageTransformer(param0: androidx.viewpager2.widget.ViewPager2.PageTransformer): void;
+                public setPageTransformer(param0: ViewPager2.PageTransformer): void;
 
                 public onInitializeAccessibilityNodeInfo(param0: globalAndroid.view.accessibility.AccessibilityNodeInfo): void;
 
-                public addItemDecoration(param0: androidx.recyclerview.widget.RecyclerView.ItemDecoration): void;
+                public addItemDecoration(param0: recyclerview.widget.RecyclerView.ItemDecoration): void;
 
                 public onMeasure(param0: number, param1: number): void;
 
@@ -299,13 +299,13 @@ declare namespace androidx {
 
             export namespace ViewPager2 {
                 export abstract class AccessibilityProvider {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.AccessibilityProvider>;
+                    public static class: java.lang.Class<AccessibilityProvider>;
                 }
 
-                export class BasicAccessibilityProvider extends androidx.viewpager2.widget.ViewPager2.AccessibilityProvider {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.BasicAccessibilityProvider>;
+                export class BasicAccessibilityProvider extends AccessibilityProvider {
+                    public static class: java.lang.Class<BasicAccessibilityProvider>;
 
-                    public onLmInitializeAccessibilityNodeInfo(param0: androidx.core.view.accessibility.AccessibilityNodeInfoCompat): void;
+                    public onLmInitializeAccessibilityNodeInfo(param0: core.view.accessibility.AccessibilityNodeInfoCompat): void;
 
                     public onRvGetAccessibilityClassName(): string;
 
@@ -317,7 +317,7 @@ declare namespace androidx {
                 }
 
                 export abstract class DataSetChangeObserver {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.DataSetChangeObserver>;
+                    public static class: java.lang.Class<DataSetChangeObserver>;
 
                     public onChanged(): void;
 
@@ -332,19 +332,19 @@ declare namespace androidx {
                 }
 
                 export class LinearLayoutManagerImpl {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.LinearLayoutManagerImpl>;
+                    public static class: java.lang.Class<LinearLayoutManagerImpl>;
 
-                    public calculateExtraLayoutSpace(param0: androidx.recyclerview.widget.RecyclerView.State, param1: native.Array<number>): void;
+                    public calculateExtraLayoutSpace(param0: recyclerview.widget.RecyclerView.State, param1: native.Array<number>): void;
 
-                    public requestChildRectangleOnScreen(param0: androidx.recyclerview.widget.RecyclerView, param1: globalAndroid.view.View, param2: globalAndroid.graphics.Rect, param3: boolean, param4: boolean): boolean;
+                    public requestChildRectangleOnScreen(param0: recyclerview.widget.RecyclerView, param1: globalAndroid.view.View, param2: globalAndroid.graphics.Rect, param3: boolean, param4: boolean): boolean;
 
-                    public onInitializeAccessibilityNodeInfo(param0: androidx.recyclerview.widget.RecyclerView.Recycler, param1: androidx.recyclerview.widget.RecyclerView.State, param2: androidx.core.view.accessibility.AccessibilityNodeInfoCompat): void;
+                    public onInitializeAccessibilityNodeInfo(param0: recyclerview.widget.RecyclerView.Recycler, param1: recyclerview.widget.RecyclerView.State, param2: core.view.accessibility.AccessibilityNodeInfoCompat): void;
 
-                    public performAccessibilityAction(param0: androidx.recyclerview.widget.RecyclerView.Recycler, param1: androidx.recyclerview.widget.RecyclerView.State, param2: number, param3: globalAndroid.os.Bundle): boolean;
+                    public performAccessibilityAction(param0: recyclerview.widget.RecyclerView.Recycler, param1: recyclerview.widget.RecyclerView.State, param2: number, param3: globalAndroid.os.Bundle): boolean;
                 }
 
                 export class OffscreenPageLimit {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.OffscreenPageLimit>;
+                    public static class: java.lang.Class<OffscreenPageLimit>;
 
                     /**
                      * Constructs a new instance of the androidx.viewpager2.widget.ViewPager2$OffscreenPageLimit interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
@@ -354,7 +354,7 @@ declare namespace androidx {
                 }
 
                 export abstract class OnPageChangeCallback {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback>;
+                    public static class: java.lang.Class<OnPageChangeCallback>;
 
                     public onPageSelected(param0: number): void;
 
@@ -366,7 +366,7 @@ declare namespace androidx {
                 }
 
                 export class Orientation {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.Orientation>;
+                    public static class: java.lang.Class<Orientation>;
 
                     /**
                      * Constructs a new instance of the androidx.viewpager2.widget.ViewPager2$Orientation interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
@@ -375,14 +375,14 @@ declare namespace androidx {
                     public constructor();
                 }
 
-                export class PageAwareAccessibilityProvider extends androidx.viewpager2.widget.ViewPager2.AccessibilityProvider {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.PageAwareAccessibilityProvider>;
+                export class PageAwareAccessibilityProvider extends AccessibilityProvider {
+                    public static class: java.lang.Class<PageAwareAccessibilityProvider>;
 
                     public handlesPerformAccessibilityAction(param0: number, param1: globalAndroid.os.Bundle): boolean;
 
                     public onPerformAccessibilityAction(param0: number, param1: globalAndroid.os.Bundle): boolean;
 
-                    public onAttachAdapter(param0: androidx.recyclerview.widget.RecyclerView.Adapter<any>): void;
+                    public onAttachAdapter(param0: recyclerview.widget.RecyclerView.Adapter<any>): void;
 
                     public onSetLayoutDirection(): void;
 
@@ -390,7 +390,7 @@ declare namespace androidx {
 
                     public onGetAccessibilityClassName(): string;
 
-                    public onDetachAdapter(param0: androidx.recyclerview.widget.RecyclerView.Adapter<any>): void;
+                    public onDetachAdapter(param0: recyclerview.widget.RecyclerView.Adapter<any>): void;
 
                     public onRvInitializeAccessibilityEvent(param0: globalAndroid.view.accessibility.AccessibilityEvent): void;
 
@@ -400,7 +400,7 @@ declare namespace androidx {
 
                     public onSetOrientation(): void;
 
-                    public onInitialize(param0: androidx.viewpager2.widget.CompositeOnPageChangeCallback, param1: androidx.recyclerview.widget.RecyclerView): void;
+                    public onInitialize(param0: CompositeOnPageChangeCallback, param1: recyclerview.widget.RecyclerView): void;
 
                     public handlesGetAccessibilityClassName(): boolean;
 
@@ -408,7 +408,7 @@ declare namespace androidx {
                 }
 
                 export class PageTransformer {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.PageTransformer>;
+                    public static class: java.lang.Class<PageTransformer>;
 
                     /**
                      * Constructs a new instance of the androidx.viewpager2.widget.ViewPager2$PageTransformer interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
@@ -422,13 +422,13 @@ declare namespace androidx {
                 }
 
                 export class PagerSnapHelperImpl {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.PagerSnapHelperImpl>;
+                    public static class: java.lang.Class<PagerSnapHelperImpl>;
 
-                    public findSnapView(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager): globalAndroid.view.View;
+                    public findSnapView(param0: recyclerview.widget.RecyclerView.LayoutManager): globalAndroid.view.View;
                 }
 
                 export class RecyclerViewImpl {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.RecyclerViewImpl>;
+                    public static class: java.lang.Class<RecyclerViewImpl>;
 
                     public getAccessibilityClassName(): string;
 
@@ -440,14 +440,14 @@ declare namespace androidx {
                 }
 
                 export class SavedState {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.SavedState>;
-                    public static CREATOR: globalAndroid.os.Parcelable.Creator<androidx.viewpager2.widget.ViewPager2.SavedState>;
+                    public static class: java.lang.Class<SavedState>;
+                    public static CREATOR: globalAndroid.os.Parcelable.Creator<SavedState>;
 
                     public writeToParcel(param0: globalAndroid.os.Parcel, param1: number): void;
                 }
 
                 export class ScrollState {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.ScrollState>;
+                    public static class: java.lang.Class<ScrollState>;
 
                     /**
                      * Constructs a new instance of the androidx.viewpager2.widget.ViewPager2$ScrollState interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
@@ -457,7 +457,7 @@ declare namespace androidx {
                 }
 
                 export class SmoothScrollToPosition {
-                    public static class: java.lang.Class<androidx.viewpager2.widget.ViewPager2.SmoothScrollToPosition>;
+                    public static class: java.lang.Class<SmoothScrollToPosition>;
 
                     public run(): void;
                 }
