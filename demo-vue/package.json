@@ -6,20 +6,20 @@
   "license": "MIT",
   "dependencies": {
     "@nativescript-community/ui-pager": "file:../src",
-    "@nativescript/core": "7.0.3",
+    "@nativescript/core": "7.0.13",
     "nativescript-theme-core": "^2.0.24",
-    "nativescript-vue": "2.8.1"
+    "nativescript-vue": "2.8.3"
   },
   "devDependencies": {
-    "@babel/core":"7.11.6",
-    "@nativescript/ios": "7.0.0",
-    "@nativescript/webpack": "3.0.4",
+    "@babel/core":"7.12.9",
+    "@nativescript/ios": "7.0.6",
+    "@nativescript/webpack": "3.0.8",
     "babel-loader": "8.1.0",
     "nativescript-vue-template-compiler": "^2.8.1",
     "sass-loader": "9.0.3",
     "typescript": "3.9.7",
-    "vue": "2.6.11",
-    "vue-loader": "^15.9.3"
+    "vue": "2.6.12",
+    "vue-loader": "^15.9.5"
   },
   "main": "main"
 }
