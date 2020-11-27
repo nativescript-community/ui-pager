@@ -106,7 +106,11 @@ module.exports = function pager(Vue) {
             },
             onSelectedIndexChange({ value }) {
                 this.$emit("selectedIndexChange", {
-                    object: { selectedIndex: value },
+                    value,
+                    selectedIndex: value ,
+                    object: {
+                        selectedIndex: value 
+                    }
                 });
             },
         },
