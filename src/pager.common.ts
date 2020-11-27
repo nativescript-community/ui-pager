@@ -110,13 +110,11 @@ export abstract class PagerBase
     public static loadMoreItemsEvent = LOADMOREITEMS;
     public static itemLoadingEvent = ITEMLOADING;
     public orientation: Orientation;
-    public _innerWidth: number = 0;
-    public _innerHeight: number = 0;
     public _effectiveItemHeight: number;
     public _effectiveItemWidth: number;
     public transformers: string;
     public loadMoreCount: number = 1;
-    public _childrenViews: Map<number, PagerItem>;
+    public _childrenViews: Map<number, View>;
     readonly _childrenCount: number;
     public disableSwipe: boolean = false;
     public showIndicator: boolean;
@@ -271,23 +269,12 @@ export abstract class PagerBase
 
     public onLayout(left: number, top: number, right: number, bottom: number) {
         super.onLayout(left, top, right, bottom);
-        this._innerWidth =
-            right -
-            left -
-            this.effectivePaddingLeft -
-            this.effectivePaddingRight;
-
-        this._innerHeight =
-            bottom -
-            top -
-            this.effectivePaddingTop -
-            this.effectivePaddingBottom;
-        this._effectiveItemWidth = global.isIOS
-            ? layout.getMeasureSpecSize((this as any)._currentWidthMeasureSpec)
-            : this.getMeasuredWidth();
-        this._effectiveItemHeight = global.isIOS
-            ? layout.getMeasureSpecSize((this as any)._currentHeightMeasureSpec)
-            : this.getMeasuredHeight();
+        this._effectiveItemWidth = this.getMeasuredWidth() - this.effectivePaddingLeft - this.effectivePaddingRight;
+        this._effectiveItemHeight = this.getMeasuredHeight() - this.effectivePaddingTop - this.effectivePaddingBottom;
+        if (global.isIOS && this.iosOverflowSafeAreaEnabled) {
+            const safeArea = this.getSafeAreaInsets();
+            this._effectiveItemHeight += safeArea.top + safeArea.bottom;
+        }
     }
 
     public convertToSize(length): number {
