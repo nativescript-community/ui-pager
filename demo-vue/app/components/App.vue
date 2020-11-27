@@ -81,8 +81,6 @@
 		},
 		methods:{
 			onIndexChanged(event){
-				this.selectedIndex = event;
-				console.log('onIndexChanged', event);
 			}
 		}
 	};
