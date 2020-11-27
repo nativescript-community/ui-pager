@@ -40,3 +40,4 @@ demo-vue/platforms
 demo-react/platforms
 demo-react/lib
 .awcache
+pnpm-lock.yaml
