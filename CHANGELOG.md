@@ -1,3 +1,88 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [13.0.1](https://github.com/Akylas/nativescript-pager/compare/v11.0.11...v13.0.1) (2020-11-27)
+
+
+### Bug Fixes
+
+* angular 10 support ([e692d50](https://github.com/Akylas/nativescript-pager/commit/e692d5038fc8a552fe7d77630ec025a3cfd1e6a3))
+* disableAnimation for selectedIndex change ([e3feaea](https://github.com/Akylas/nativescript-pager/commit/e3feaea779156c5419bfeb3e297570f76fb2c840))
+* disableAnimation for selectedIndex change ([093ee19](https://github.com/Akylas/nativescript-pager/commit/093ee1906a07dc7362c3083d699b5d38417b6b9c))
+* ios for static views not loading ([a005722](https://github.com/Akylas/nativescript-pager/commit/a0057220f88eb6b8a7ed0a9ef6f8d439c903f077))
+* ios iosOverflowSafeAreaEnabled fixes with contentInsetAdjustmentBehavior ([3a925c3](https://github.com/Akylas/nativescript-pager/commit/3a925c314b309609908f66f319cf0877fb5302d7))
+* svelte allow let:index ([212d67a](https://github.com/Akylas/nativescript-pager/commit/212d67a63fe4c1e55349dfae30763b764c6d9de2))
+* try to fix angular ([b7bda44](https://github.com/Akylas/nativescript-pager/commit/b7bda44dd4a68548976cb4ee5c23468a498768f4))
+* vue event fix ([acdab69](https://github.com/Akylas/nativescript-pager/commit/acdab699a416401e76c8dc7a788b96f84f165b94))
+* vue fix for model ([6e25ed9](https://github.com/Akylas/nativescript-pager/commit/6e25ed9aac02fb8fd3990934a0ba719276a0a7ea))
+* **ios:** requstLayout would not update pages ([ad68e2c](https://github.com/Akylas/nativescript-pager/commit/ad68e2c2e17c665aa749b74a768b15bb73713503))
+* vue fix for v-model ([3e69cc8](https://github.com/Akylas/nativescript-pager/commit/3e69cc81b3a957cde1851e87945897d4d7295e67))
+* **ios:** fix snapping to work in all cases ([fb25e6a](https://github.com/Akylas/nativescript-pager/commit/fb25e6ac71cc6ccbc7475d976b7b49d3f46e6e7a))
+* **ios:** requstLayout would not update pages ([b9b2b3a](https://github.com/Akylas/nativescript-pager/commit/b9b2b3a48647bbc45f9496941c7ee4e8b2d9ea60))
+* vue fix for v-model ([98f8ac1](https://github.com/Akylas/nativescript-pager/commit/98f8ac1abe49450a587e67c8dc2c9b1c4d092157))
+* **ios:** protection around quick destroy of pager and events ([25a0fb0](https://github.com/Akylas/nativescript-pager/commit/25a0fb0ddfaefb28904d3fd51dc42942627ba6c2))
+* **react:** update react support ([9b953b3](https://github.com/Akylas/nativescript-pager/commit/9b953b32933e9e796469e5ae93aa8451991bc934))
+
+
+### Features
+
+* getChildView ([e9f600f](https://github.com/Akylas/nativescript-pager/commit/e9f600f6514ac48d6586829b6256de548d07923f))
+* getChildView ([986ec71](https://github.com/Akylas/nativescript-pager/commit/986ec711d4f441b1baebf42e9ba6e69d4ac5c250))
+
+
+
+# 12.0.0-alpha.8 (2020-02-27)
+
+
+### Bug Fixes
+
+* angular export ([9d6ec03](https://github.com/Akylas/nativescript-pager/commit/9d6ec03e0f922d07e86bbb63a138a16f6492207e))
+
+
+
+# 12.0.0-alpha.6 (2020-02-26)
+
+
+
+# 12.0.0-alpha.5 (2020-02-25)
+
+
+### Bug Fixes
+
+* missing dispatch meta whitelist ([55ba003](https://github.com/Akylas/nativescript-pager/commit/55ba003351d4973225e56524a2ba22c5c36dac0d))
+* switch to [@nativescript](https://github.com/nativescript) scoped packages ([f2c5b5a](https://github.com/Akylas/nativescript-pager/commit/f2c5b5ad7d55d22a1c73f4e61a8d4a062f03bbc6)), closes [#162](https://github.com/Akylas/nativescript-pager/issues/162) [#153](https://github.com/Akylas/nativescript-pager/issues/153) [#160](https://github.com/Akylas/nativescript-pager/issues/160)
+
+
+
+# 12.0.0-alpha.4 (2020-02-25)
+
+
+### Bug Fixes
+
+* **ios:** late init ([242a359](https://github.com/Akylas/nativescript-pager/commit/242a359d77bd282f8cdad96a9fa4859951a6e62d))
+* build issues ([c913554](https://github.com/Akylas/nativescript-pager/commit/c9135546db2a6d8c8bc84fad4c63ec3ddc416f0b))
+
+
+
+# 12.0.0-alpha.1 (2020-02-22)
+
+
+### Bug Fixes
+
+* **ios:**  metadata filtering ([0596501](https://github.com/Akylas/nativescript-pager/commit/059650159301e4de92ca4f44beaa9eb07eabeb82))
+* updates ([d65390e](https://github.com/Akylas/nativescript-pager/commit/d65390e8047934aa0cae2db07ff04a01e6c44b92))
+
+
+### Features
+
+* v12 ([d02d9cf](https://github.com/Akylas/nativescript-pager/commit/d02d9cf69f450cea5361900e8e178d899b2c6289))
+
+
+
+
+
 # Changelog
 
 ## [12.0.0-alpha.1](https://github.com/triniwiz/nativescript-pager/tree/12.0.0-alpha.1) (2020-02-22)
