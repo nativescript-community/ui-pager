@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.3](https://github.com/Akylas/nativescript-pager/compare/v13.0.2...v13.0.3) (2020-12-07)
+
+
+### Bug Fixes
+
+* dont think selectedIndex sould affect layout ([0357e28](https://github.com/Akylas/nativescript-pager/commit/0357e288e6278924e29e76162130c3b7044d5d85))
+* prevent children to request layout. ([5578565](https://github.com/Akylas/nativescript-pager/commit/5578565457c37b3ba7f9ff58d2c121ab31d24e98))
+
+
+
+
+
 ## [13.0.2](https://github.com/Akylas/nativescript-pager/compare/v13.0.1...v13.0.2) (2020-11-29)
 
 
