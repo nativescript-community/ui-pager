@@ -395,7 +395,7 @@ indicatorProperty.register(PagerBase);
 export const selectedIndexProperty = new CoercibleProperty<PagerBase, number>({
     name: 'selectedIndex',
     defaultValue: -1,
-    affectsLayout: global.isIOS,
+    // affectsLayout: global.isIOS,
     coerceValue: (target, value) => {
         const items = target._childrenCount;
         if (items) {
