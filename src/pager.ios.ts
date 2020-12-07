@@ -341,9 +341,10 @@ export class Pager extends PagerBase {
     }
 
     public eachChildView(callback: (child: View) => boolean): void {
-        this._map.forEach((view, key) => {
-            callback(view);
-        });
+        this._map.forEach((view, key) => callback(view));
+    }
+    public eachChild(callback: (child: ViewBase) => boolean) {
+        this._map.forEach((view, key) => callback(view));
     }
 
     _updateScrollPosition() {
