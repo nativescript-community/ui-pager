@@ -4,34 +4,27 @@ import {
     EventData,
     KeyedTemplate,
     ObservableArray,
-    Property,
-    ProxyViewContainer,
+    Property, ProxyViewContainer,
     StackLayout,
     Utils,
     View,
-    profile,
+    ViewBase,
+    profile
 } from '@nativescript/core';
 import { layout } from '@nativescript/core/utils/utils';
-import * as common from './pager.common';
 import {
-    ITEMDISPOSING,
-    ITEMLOADING,
-    Indicator,
-    ItemEventData,
+    ITEMDISPOSING, ITEMLOADING,
+    Indicator, ItemEventData,
     LOADMOREITEMS,
     Orientation,
-    PagerBase,
-    autoPlayProperty,
-    autoplayDelayProperty,
-    disableSwipeProperty,
-    indicatorColorProperty,
-    indicatorProperty,
+    PagerBase, PagerItem,
+    autoPlayProperty, autoplayDelayProperty,
+    disableSwipeProperty, indicatorColorProperty, indicatorProperty,
     indicatorSelectedColorProperty,
-    itemTemplatesProperty,
-    itemsProperty,
+    itemTemplatesProperty, itemsProperty,
     orientationProperty,
     selectedIndexProperty,
-    showIndicatorProperty,
+    showIndicatorProperty
 } from './pager.common';
 
 export * from './pager.common';
@@ -136,7 +129,7 @@ export class Pager extends PagerBase {
     constructor() {
         super();
         this._map = new Map<PagerCell, View>();
-        this._childrenViews = new Map<number, common.PagerItem>();
+        this._childrenViews = new Map<number, PagerItem>();
     }
 
     get pager() {
@@ -693,14 +686,14 @@ export class Pager extends PagerBase {
     public _removeContainer(cell: PagerCell, indexPath?: NSIndexPath): void {
         let view = cell.view;
 
-        const args = <ItemEventData>{
+        const args = {
             eventName: ITEMDISPOSING,
             object: this,
             index: indexPath.row,
             android: undefined,
             ios: cell,
             view,
-        };
+        } as ItemEventData;
         this.notify(args);
         view = args.view;
         if (view && view.parent) {
@@ -803,7 +796,7 @@ export class Pager extends PagerBase {
                 }
             }
             const bindingContext = this._getDataItem(indexPath.row);
-            const args = <ItemEventData>{
+            const args = {
                 eventName: ITEMLOADING,
                 object: this,
                 index: indexPath.row,
@@ -811,7 +804,7 @@ export class Pager extends PagerBase {
                 ios: cell,
                 view,
                 bindingContext,
-            };
+            } as ItemEventData;
 
             this.notify(args);
 
@@ -882,15 +875,15 @@ export class Pager extends PagerBase {
     }
 
     _addChildFromBuilder(name: string, value: any): void {
-        if (value instanceof common.PagerItem) {
+        if (value instanceof PagerItem) {
             if (!this._childrenViews) {
-                this._childrenViews = new Map<number, common.PagerItem>();
+                this._childrenViews = new Map<number, PagerItem>();
             }
             const count = this._childrenViews.size;
             const keys = Array.from(this._childrenViews.keys());
-
             // TODO: fix this in N. A pager has no reason to propagatea requestLayout
             value['performLayout'] = ()=>{};
+            value.getChildAt(0).iosOverflowSafeAreaEnabled = true;
             if (count === 0) {
                 this._childrenViews.set(this._childrenCount, value);
             } else {
@@ -958,14 +951,14 @@ class PagerCell extends UICollectionViewCell {
     }
 
     public static initWithEmptyBackground(): PagerCell {
-        const cell = <PagerCell>PagerCell.new();
+        const cell = PagerCell.new() as PagerCell;
         // Clear background by default - this will make cells transparent
         cell.backgroundColor = null;
         return cell;
     }
 
     public willMoveToSuperview(newSuperview: UIView): void {
-        const parent = <Pager>(this.view ? this.view.parent : null);
+        const parent = (this.view ? this.view.parent : null) as Pager;
 
         // When inside Pager and there is no newSuperview this cell is
         // removed from native visual tree so we remove it from our tree too.
@@ -1100,7 +1093,6 @@ class UICollectionDelegateImpl
             let offset: number;
             const size = owner._getRealWidthHeight();
             let total: number;
-            let percent: number;
             if (owner.orientation === 'vertical') {
                 width = size.height;
                 offset = scrollView.contentOffset.y;
@@ -1113,7 +1105,7 @@ class UICollectionDelegateImpl
                 total =
                     scrollView.contentSize.width - scrollView.bounds.size.width;
             }
-            percent = offset / total;
+            const percent = offset / total;
             const progress = percent * (owner.itemCount - 1);
             if (
                 owner.indicatorView &&
@@ -1323,16 +1315,18 @@ class UICollectionViewDataSourceImpl
 
             if (view && !view.parent) {
                 owner._addView(view);
-                if (owner.iosOverflowSafeArea) {
-                    const innerView = UICellView.new() as UICellView;
-                    innerView.view = new WeakRef(view);
-                    innerView.addSubview(view.nativeViewProtected);
-                    cell.contentView.addSubview(innerView);
-                } else {
-                    cell.contentView.addSubview(view.nativeViewProtected);
-                }
+                // if (owner.iosOverflowSafeArea) {
+                const innerView = UICellView.new() as UICellView;
+                innerView.view = new WeakRef(view);
+                innerView.addSubview(view.nativeViewProtected);
+                cell.contentView.addSubview(innerView);
+                // } else {
+                //     cell.contentView.addSubview(view.nativeViewProtected);
+                // }
             }
 
+            view.iosOverflowSafeArea = owner.iosOverflowSafeArea;
+            view['iosIgnoreSafeArea'] = owner['iosIgnoreSafeArea'];
             owner._layoutCell(view, indexPath);
             const width = layout.toDevicePixels(size.width);
             const height = layout.toDevicePixels(size.height);
@@ -1352,8 +1346,10 @@ class UICollectionViewDataSourceImpl
         cell.index = indexPath;
         if (owner) {
             const size = owner._getSize();
-            owner._prepareCell(<PagerCell>cell, indexPath);
+            owner._prepareCell(cell, indexPath);
             const cellView: any = (cell as PagerCell).view;
+            cellView.iosOverflowSafeArea = owner.iosOverflowSafeArea;
+            cellView['iosIgnoreSafeArea'] = owner['iosIgnoreSafeArea'];
             if (!owner.iosOverflowSafeAreaEnabled && cellView && cellView.isLayoutRequired) {
                 View.layoutChild(
                     owner,
@@ -1447,7 +1443,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
                 return originalLayoutAttribute;
             }
         }
-        return <any>visibleLayoutAttributes;
+        return visibleLayoutAttributes as any;
     }
 
     public shouldInvalidateLayoutForBoundsChange(newBounds: CGRect): boolean {
@@ -1497,7 +1493,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
                 this.collectionView.contentOffset.x / pageWidth;
             // Determine the current page based on velocity.
             const currentPage =
-                velocity.x == 0
+                velocity.x === 0
                     ? Math.round(approximatePage)
                     : velocity.x < 0.0
                         ? Math.floor(approximatePage)
@@ -1531,7 +1527,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
 
             // Determine the current page based on velocity.
             const currentPage =
-                velocity.y == 0
+                velocity.y === 0
                     ? Math.round(approximatePage)
                     : velocity.y < 0.0
                         ? Math.floor(approximatePage)
