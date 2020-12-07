@@ -888,6 +888,8 @@ export class Pager extends PagerBase {
             const count = this._childrenViews.size;
             const keys = Array.from(this._childrenViews.keys());
 
+            // TODO: fix this in N. A pager has no reason to propagatea requestLayout
+            value['performLayout'] = ()=>{};
             if (count === 0) {
                 this._childrenViews.set(this._childrenCount, value);
             } else {
