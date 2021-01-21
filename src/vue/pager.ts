@@ -23,6 +23,10 @@ module.exports = function pager(Vue) {
                 type: Number,
                 default: 0,
             },
+            itemTemplateSelector: {
+                type: Function,
+                default: undefined,
+            },
         },
         template: `
     <NativePager
@@ -53,25 +57,17 @@ module.exports = function pager(Vue) {
             },
         },
         mounted() {
-            if (!this.items) return;
-            this.getItemContext = (item, index) =>
-                getItemContext(
-                    item,
-                    index,
-                    this.$props['+alias'],
-                    this.$props['+index']
-                );
-            this.$refs.pagerView.setAttribute('items', this.items);
-            this.$refs.pagerView.setAttribute(
-                '_itemTemplatesInternal',
-                this.$templates.getKeyedTemplates()
-            );
-            this.$refs.pagerView.setAttribute(
-                '_itemTemplateSelector',
-                (item, index) => this.$templates.selectorFn(
-                    this.getItemContext(item, index)
-                )
-            );
+            const pagerView = this.$refs.pagerView;
+            this.pagerView = pagerView.nativeView;
+            pagerView.setAttribute('itemTemplates', this.$templates.getKeyedTemplates());
+
+            const itemTemplateSelector = this.itemTemplateSelector
+                ? this.itemTemplateSelector // custom template selector if any
+                : (item, index, items) => {
+                    const isSelected = false;
+                    return this.$templates.selectorFn(this.getItemContext(item, index, isSelected));
+                };
+            pagerView.setAttribute('itemTemplateSelector', itemTemplateSelector);
         },
         methods: {
             onItemLoading(args) {
