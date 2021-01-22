@@ -56,6 +56,9 @@ module.exports = function pager(Vue) {
                 });
             },
         },
+        created() {
+            this.getItemContext = getItemContext.bind(this);
+        },
         mounted() {
             const pagerView = this.$refs.pagerView;
             this.pagerView = pagerView.nativeView;
