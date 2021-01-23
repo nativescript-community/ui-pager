@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.6](https://github.com/Akylas/nativescript-pager/compare/v13.0.5...v13.0.6) (2021-01-23)
+
+
+### Bug Fixes
+
+* **vue:** another vue fix… ([8c8c074](https://github.com/Akylas/nativescript-pager/commit/8c8c074c555007cbe41678831c2532cda1b5a3a0))
+
+
+
+
+
 ## [13.0.5](https://github.com/Akylas/nativescript-pager/compare/v13.0.4...v13.0.5) (2021-01-22)
 
 
