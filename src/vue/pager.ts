@@ -114,7 +114,7 @@ module.exports = function pager(Vue) {
         },
     };
 
-    function getItemContext(item, index, alias, index_alias) {
+    function getItemContext(item, index = -1, selected = false, alias = this.$props['+alias'], index_alias = this.$props['+index']) {
         return {
             [alias]: item,
             [index_alias]: index,
