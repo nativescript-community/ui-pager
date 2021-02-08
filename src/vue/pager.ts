@@ -62,15 +62,17 @@ module.exports = function pager(Vue) {
         mounted() {
             const pagerView = this.$refs.pagerView;
             this.pagerView = pagerView.nativeView;
-            pagerView.setAttribute('itemTemplates', this.$templates.getKeyedTemplates());
+            if (this.$templates) {
+                pagerView.setAttribute('itemTemplates', this.$templates.getKeyedTemplates());
+                const itemTemplateSelector = this.itemTemplateSelector
+                    ? this.itemTemplateSelector // custom template selector if any
+                    : (item, index, items) => {
+                        const isSelected = false;
+                        return this.$templates.selectorFn(this.getItemContext(item, index, isSelected));
+                    };
+                pagerView.setAttribute('itemTemplateSelector', itemTemplateSelector);
+            }
 
-            const itemTemplateSelector = this.itemTemplateSelector
-                ? this.itemTemplateSelector // custom template selector if any
-                : (item, index, items) => {
-                    const isSelected = false;
-                    return this.$templates.selectorFn(this.getItemContext(item, index, isSelected));
-                };
-            pagerView.setAttribute('itemTemplateSelector', itemTemplateSelector);
         },
         methods: {
             onItemLoading(args) {
