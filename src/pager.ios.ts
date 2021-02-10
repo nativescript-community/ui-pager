@@ -129,7 +129,6 @@ export class Pager extends PagerBase {
     constructor() {
         super();
         this._map = new Map<PagerCell, View>();
-        this._childrenViews = new Map<number, PagerItem>();
     }
 
     get pager() {
@@ -310,11 +309,7 @@ export class Pager extends PagerBase {
 
     //@ts-ignore
     public get _childrenCount() {
-        return this.items
-            ? this.items.length
-            : this._childrenViews
-                ? this._childrenViews.size
-                : 0;
+        return this.items?.length || this._childrenViews?.length || 0;
     }
 
     public itemTemplateUpdated(oldData: any, newData: any): void {}
@@ -683,13 +678,13 @@ export class Pager extends PagerBase {
         this._disableAnimation = value;
     }
 
-    public _removeContainer(cell: PagerCell, indexPath?: NSIndexPath): void {
+    public _removeContainer(cell: PagerCell, index?: number): void {
         let view = cell.view;
 
         const args = {
             eventName: ITEMDISPOSING,
             object: this,
-            index: indexPath.row,
+            index,
             android: undefined,
             ios: cell,
             view,
@@ -783,6 +778,7 @@ export class Pager extends PagerBase {
     public _prepareCell(cell: PagerCell, indexPath: NSIndexPath) {
         try {
             this._preparingCell = true;
+            const index = indexPath.row;
 
             let view = cell.view;
             const template = this._getItemTemplate(indexPath.row);
@@ -799,7 +795,7 @@ export class Pager extends PagerBase {
             const args = {
                 eventName: ITEMLOADING,
                 object: this,
-                index: indexPath.row,
+                index,
                 android: undefined,
                 ios: cell,
                 view,
@@ -823,7 +819,7 @@ export class Pager extends PagerBase {
                 cell.owner = new WeakRef(view);
             } else if (cell.view !== view) {
                 this._map.delete(cell);
-                this._removeContainer(cell, indexPath);
+                this._removeContainer(cell, index);
                 (cell.view.nativeViewProtected as UIView).removeFromSuperview();
                 cell.owner = new WeakRef(view);
             }
@@ -874,31 +870,6 @@ export class Pager extends PagerBase {
         }
     }
 
-    _addChildFromBuilder(name: string, value: any): void {
-        if (value instanceof PagerItem) {
-            if (!this._childrenViews) {
-                this._childrenViews = new Map<number, PagerItem>();
-            }
-            const count = this._childrenViews.size;
-            const keys = Array.from(this._childrenViews.keys());
-            // TODO: fix this in N. A pager has no reason to propagatea requestLayout
-            // rollbacked as i found a breaking case without this
-            // value['performLayout'] = ()=>{};
-            value.getChildAt(0).iosOverflowSafeAreaEnabled = true;
-            if (count === 0) {
-                this._childrenViews.set(this._childrenCount, value);
-            } else {
-                for (let i = 0; i < count; i++) {
-                    const key = keys[i];
-                    const view = this._childrenViews.get(key);
-                    if (i === keys.length - 1 && value !== view) {
-                        this._childrenViews.set(this._childrenCount, value);
-                    }
-                }
-            }
-        }
-    }
-
     get horizontalOffset(): number {
         return this.pager ? this.pager.contentOffset.x : 0;
     }
@@ -945,7 +916,7 @@ export class Pager extends PagerBase {
 @NativeClass
 class PagerCell extends UICollectionViewCell {
     public owner: WeakRef<View>;
-    public index: NSIndexPath;
+    public index: number;
 
     public get view(): View {
         return this.owner ? this.owner.get() : null;
@@ -1285,19 +1256,21 @@ class UICollectionViewDataSourceImpl
             }
         }
         if (owner && !owner.items && count > 0) {
+            const index = indexPath.row;
+            const data = owner._childrenViews[index];
+            const viewType = data.type;
             owner._preparingCell = true;
-            const size = owner._getSize();
             collectionView.registerClassForCellWithReuseIdentifier(
                 PagerCell.class(),
-                `static-${indexPath.row}`
+                `static-${viewType}`
             );
             cell =
                 collectionView.dequeueReusableCellWithReuseIdentifierForIndexPath(
-                    `static-${indexPath.row}`,
+                    `static-${viewType}`,
                     indexPath
                 ) || PagerCell.initWithEmptyBackground();
-            cell.index = indexPath;
-            const view = owner._childrenViews.get(indexPath.row);
+            cell.index = index;
+            const view = data.view;
 
             // if (view instanceof ProxyViewContainer) {
             //     let sp = new StackLayout();
@@ -1329,6 +1302,7 @@ class UICollectionViewDataSourceImpl
             view.iosOverflowSafeArea = owner.iosOverflowSafeArea;
             view['iosIgnoreSafeArea'] = owner['iosIgnoreSafeArea'];
             owner._layoutCell(view, indexPath);
+            const size = owner._getSize();
             const width = layout.toDevicePixels(size.width);
             const height = layout.toDevicePixels(size.height);
             if (view && (view as any).isLayoutRequired) {
