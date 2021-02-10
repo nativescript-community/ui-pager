@@ -17,6 +17,7 @@ import {
     Template,
     Trace,
     View,
+    ViewBase,
     addWeakEventListener,
     makeParser,
     makeValidator,
@@ -80,6 +81,8 @@ export enum Indicator {
 
 const booleanConverter = (v: any): boolean => String(v) === 'true';
 
+let UNIQUE_VIEW_TYPE = 0;
+
 @CSSType('Pager')
 export abstract class PagerBase
     extends ContainerView
@@ -111,7 +114,7 @@ export abstract class PagerBase
     public _effectiveItemWidth: number;
     public transformers: string;
     public loadMoreCount: number = 1;
-    public _childrenViews: Map<number, View>;
+    public _childrenViews: {view: PagerItem; type: number}[];
     readonly _childrenCount: number;
     public disableSwipe: boolean = false;
     public showIndicator: boolean;
@@ -122,8 +125,39 @@ export abstract class PagerBase
 
     abstract refresh(): void;
 
-    getChildView(index: number) {
-        return this._childrenViews && this._childrenViews.get(index);
+    getChildView(index: number): View {
+        return this._childrenViews && this._childrenViews[index].view;
+    }
+    _removeView(view: ViewBase) {
+        // inside the recyclerview we wrap the PagerItem in a StackLayout
+        // so we need to call remove on that stacklayout
+        if (view instanceof PagerItem && this._childrenViews) {
+            const index = this._childrenViews.findIndex(s=>s.view === view);
+            if (index !== -1) {
+                this._removeChildView(index);
+                this.refresh();
+            }
+        } else {
+            super._removeView(view);
+        }
+    }
+    protected _removeChildView(index: number) {
+        this._childrenViews.splice(index, 1);
+    }
+    protected _addChildView(view, type) {
+        this._childrenViews.push({view, type});
+    }
+
+    _addChildFromBuilder(name: string, value: any): void {
+        if (value instanceof PagerItem && value.parent !== this) {
+            if (!this._childrenViews) {
+                this._childrenViews = [];
+            }
+            this._addChildView(value, UNIQUE_VIEW_TYPE++);
+            if (this.isLoaded) {
+                this.refresh();
+            }
+        }
     }
 
     private _itemTemplateSelector: (
@@ -244,8 +278,8 @@ export abstract class PagerBase
     _getDataItem(index: number): any {
         const thisItems = this.items;
         if (thisItems) {
-            return thisItems && (<ItemsSource>thisItems).getItem
-                ? (<ItemsSource>thisItems).getItem(index)
+            return thisItems && (thisItems as ItemsSource).getItem
+                ? (thisItems as ItemsSource).getItem(index)
                 : thisItems[index];
         }
     }
@@ -299,15 +333,15 @@ export abstract class PagerBase
             converted = size * length.value;
         } else if (typeof length === 'string') {
             if (length.indexOf('px') > -1) {
-                converted = parseInt(length.replace('px', ''));
+                converted = parseInt(length.replace('px', ''), 10);
             } else if (length.indexOf('dip') > -1) {
                 converted = layout.toDevicePixels(
-                    parseInt(length.replace('dip', ''))
+                    parseInt(length.replace('dip', ''), 10)
                 );
             } else if (length.indexOf('%') > -1) {
-                converted = size * (parseInt(length.replace('%', '')) / 100);
+                converted = size * (parseInt(length.replace('%', ''), 10) / 100);
             } else {
-                converted = layout.toDevicePixels(parseInt(length));
+                converted = layout.toDevicePixels(parseInt(length, 10));
             }
         } else if (typeof length === 'number') {
             converted = layout.toDevicePixels(length);
@@ -318,8 +352,6 @@ export abstract class PagerBase
         }
         return converted;
     }
-
-    abstract _addChildFromBuilder(name: string, value: any): void;
 
     abstract _onItemsChanged(oldValue: any, newValue: any): void;
 }

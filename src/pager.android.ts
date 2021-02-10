@@ -1,4 +1,4 @@
-import { ChangeType, Color, Device, ObservableArray, Property, Screen, StackLayout, View, profile, ViewBase } from '@nativescript/core';
+import { ChangeType, Color, Device, ObservableArray, Property, Screen, StackLayout, View, ViewBase, profile } from '@nativescript/core';
 import {  KeyedTemplate } from '@nativescript/core/ui/core/view';
 import { isString } from '@nativescript/core/utils/types';
 import { layout } from '@nativescript/core/utils/utils';
@@ -68,6 +68,7 @@ export class Pager extends PagerBase {
     private _views: any[];
     private _pageListener: any;
     public _realizedItems = new Map<android.view.View, View>();
+    public _childrenViewsType = new Map<number, View>();
     public _realizedTemplates = new Map<
     string,
     Map<android.view.View, View>
@@ -84,7 +85,6 @@ export class Pager extends PagerBase {
 
     constructor() {
         super();
-        this._childrenViews = new Map<number, View>();
         this._transformers = [];
     }
 
@@ -189,14 +189,15 @@ export class Pager extends PagerBase {
             this._indicatorView.setCount(0);
         }
     }
-    _removeView(view: ViewBase) {
-        // inside the recyclerview we wrap the PagerItem in a StackLayout
-        // so we need to call remove on that stacklayout
-        if (view instanceof PagerItem && view.parent !== this) {
-            return super._removeView(view.parent);
-        }
-        return super._removeView(view);
 
+    protected _removeChildView(index: number) {
+        const type =this._childrenViews[index].type;
+        this._childrenViewsType.delete(type);
+        super._removeChildView(index);
+    }
+    protected _addChildView(view, type) {
+        super._addChildView(view, type);
+        this._childrenViewsType.set(type, view);
     }
     onLayoutChange(args: any) {
         this._setSpacing(args.object.spacing);
@@ -343,7 +344,7 @@ export class Pager extends PagerBase {
 
     public disposeNativeView() {
         this.off(View.layoutChangedEvent, this.onLayoutChange, this);
-        this._childrenViews.clear();
+        this._childrenViews = null;
         this._realizedItems.clear();
         this._realizedTemplates.clear();
         this._pageListener = null;
@@ -373,11 +374,7 @@ export class Pager extends PagerBase {
 
     //@ts-ignore
     get _childrenCount(): number {
-        return this.items
-            ? this.items.length
-            : this._childrenViews
-                ? this._childrenViews.size
-                : 0;
+        return this.items?.length || this._childrenViews?.length || 0;
     }
 
     [indicatorColorProperty.setNative](value: Color | string) {
@@ -562,14 +559,6 @@ export class Pager extends PagerBase {
         }
     }
 
-    _addChildFromBuilder(name: string, value: any): void {
-        if (value instanceof PagerItem) {
-            if (!value.parent && value.parent !== this) {
-                this._childrenViews.set(this._childrenViews.size, value);
-            }
-        }
-    }
-
     public [orientationProperty.setNative](value: Orientation) {
         if (value === 'vertical') {
             this._pager.setOrientation(
@@ -620,7 +609,7 @@ export class Pager extends PagerBase {
             indicator.setSelection(selectedPosition);
         }
 
-        const slideToRightSide = selectedPosition == position && positionOffset != 0;
+        const slideToRightSide = selectedPosition === position && positionOffset !== 0;
         let selectingPosition;
         let selectingProgress;
 
@@ -698,7 +687,7 @@ export class Pager extends PagerBase {
 export const pagesCountProperty = new Property<Pager, number>({
     name: 'pagesCount',
     defaultValue: 0,
-    valueConverter: (v) => parseInt(v),
+    valueConverter: (v) => parseInt(v, 10),
     valueChanged: (pager: Pager, oldValue, newValue) => {
         pager.updatePagesCount(pager.pagesCount);
     },
@@ -936,7 +925,7 @@ function initPagerRecyclerAdapter() {
                     }
                 }
                 const bindingContext = owner._getDataItem(index);
-                const args = <ItemEventData>{
+                const args = {
                     eventName: ITEMLOADING,
                     object: owner,
                     android: holder,
@@ -944,7 +933,7 @@ function initPagerRecyclerAdapter() {
                     index,
                     bindingContext,
                     view: holder.view[PLACEHOLDER] ? null : holder.view
-                };
+                } as ItemEventData;
 
                 owner.notify(args);
                 if (holder.view[PLACEHOLDER]) {
@@ -1042,7 +1031,7 @@ function initStaticPagerStateAdapter() {
                 return null;
             }
 
-            const view = owner._childrenViews.get(type);
+            const view = owner._childrenViewsType.get(type);
             const sp = new StackLayout(); // Pager2 requires match_parent so add a parent with to fill
             if (view && !view.parent) {
                 sp.addChild(view);
@@ -1071,14 +1060,14 @@ function initStaticPagerStateAdapter() {
             const owner = this.owner ? this.owner.get() : null;
             if (owner) {
 
-                const args = <ItemEventData>{
+                const args = {
                     eventName: ITEMLOADING,
                     object: owner,
                     android: holder,
                     ios: undefined,
                     index,
                     view: holder.view[PLACEHOLDER] ? null : holder.view
-                };
+                } as ItemEventData;
 
                 owner.notify(args);
                 if (holder.view[PLACEHOLDER]) {
@@ -1098,7 +1087,7 @@ function initStaticPagerStateAdapter() {
             const owner = this.owner ? this.owner.get() : null;
             if (owner) {
                 if (owner._childrenViews) {
-                    return owner._childrenViews.get(i);
+                    return owner._childrenViews[i].view;
                 }
             }
             return null;
@@ -1119,12 +1108,14 @@ function initStaticPagerStateAdapter() {
 
         public getItemCount(): number {
             const owner = this.owner ? this.owner.get() : null;
-            return owner && owner._childrenViews
-                ? owner._childrenViews.size
-                : 0;
+            return owner && owner._childrenViews?.length || 0;
         }
 
         public getItemViewType(index: number) {
+            const owner = this.owner?.get();
+            if (owner && owner._childrenViews) {
+                return owner._childrenViews[index].type;
+            }
             return index;
         }
 
