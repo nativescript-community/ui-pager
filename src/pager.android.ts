@@ -1,33 +1,33 @@
-import { ChangeType, Color, Device, ObservableArray, profile, Property, Screen, StackLayout, View } from "@nativescript/core";
-import {  KeyedTemplate } from "@nativescript/core/ui/core/view";
-import { isString } from "@nativescript/core/utils/types";
-import { layout } from "@nativescript/core/utils/utils";
+import { ChangeType, Color, Device, ObservableArray, Property, Screen, StackLayout, View, profile, ViewBase } from '@nativescript/core';
+import {  KeyedTemplate } from '@nativescript/core/ui/core/view';
+import { isString } from '@nativescript/core/utils/types';
+import { layout } from '@nativescript/core/utils/utils';
 import {
-    autoplayDelayProperty,
-    autoPlayProperty,
-    disableSwipeProperty,
+    ITEMLOADING,
     Indicator,
+    ItemEventData,
+    LOADMOREITEMS,
+    Orientation,
+    PagerBase,
+    PagerItem,
+    Transformer,
+    autoPlayProperty,
+    autoplayDelayProperty,
+    disableSwipeProperty,
     indicatorColorProperty,
     indicatorProperty,
     indicatorSelectedColorProperty,
-    ItemEventData,
-    ITEMLOADING,
-    itemsProperty,
     itemTemplatesProperty,
-    LOADMOREITEMS,
-    Orientation,
+    itemsProperty,
     orientationProperty,
-    PagerBase,
-    PagerItem,
     peakingProperty,
     selectedIndexProperty,
     showIndicatorProperty,
-    spacingProperty,
-    Transformer
-} from "./pager.common";
+    spacingProperty
+} from './pager.common';
 
-export * from "./pager.common";
-export { ItemsSource, Transformer } from "./pager.common";
+export * from './pager.common';
+export { ItemsSource, Transformer } from './pager.common';
 
 function notifyForItemAtIndex(
     owner,
@@ -36,11 +36,11 @@ function notifyForItemAtIndex(
     eventName: string,
     index: number
 ) {
-    let args = {
-        eventName: eventName,
+    const args = {
+        eventName,
         object: owner,
-        index: index,
-        view: view,
+        index,
+        view,
         ios: undefined,
         android: nativeView,
     };
@@ -49,7 +49,7 @@ function notifyForItemAtIndex(
 }
 
 declare const com, java;
-const PLACEHOLDER = "PLACEHOLDER";
+const PLACEHOLDER = 'PLACEHOLDER';
 
 export class Pager extends PagerBase {
     nativeViewProtected: androidx.viewpager2.widget.ViewPager2;
@@ -65,12 +65,12 @@ export class Pager extends PagerBase {
 
     private _oldDisableAnimation: boolean = false;
     private _pagerAdapter: PagerRecyclerAdapter;
-    private _views: Array<any>;
+    private _views: any[];
     private _pageListener: any;
     public _realizedItems = new Map<android.view.View, View>();
     public _realizedTemplates = new Map<
-        string,
-        Map<android.view.View, View>
+    string,
+    Map<android.view.View, View>
     >();
     lastEvent = 0;
     private _lastSpacing = 0;
@@ -92,7 +92,7 @@ export class Pager extends PagerBase {
         return this._views;
     }
 
-    set views(value: Array<any>) {
+    set views(value: any[]) {
         this._views = value;
     }
 
@@ -112,7 +112,7 @@ export class Pager extends PagerBase {
         if (sdkVersion >= 21) {
             this._pager.setNestedScrollingEnabled(true);
         }
-        if (this.orientation === "vertical") {
+        if (this.orientation === 'vertical') {
             this._pager.setOrientation(
                 androidx.viewpager2.widget.ViewPager2.ORIENTATION_VERTICAL
             );
@@ -138,7 +138,7 @@ export class Pager extends PagerBase {
                 LayoutParams.MATCH_PARENT
             )
         );
-        this._indicatorView = new (com as any).rd.PageIndicatorView2(
+        this._indicatorView = new (com).rd.PageIndicatorView2(
             this._context
         );
         const params = new LayoutParams(
@@ -181,7 +181,7 @@ export class Pager extends PagerBase {
         this._setIndicator(this.indicator);
         this._setPeaking(this.peaking);
         this._setSpacing(this.spacing);
-        this._setTransformers(this.transformers ? this.transformers : "");
+        this._setTransformers(this.transformers ? this.transformers : '');
 
         if (this.showIndicator) {
             this._indicatorView.setCount(this.items ? this.items.length : 0);
@@ -189,11 +189,19 @@ export class Pager extends PagerBase {
             this._indicatorView.setCount(0);
         }
     }
+    _removeView(view: ViewBase) {
+        // inside the recyclerview we wrap the PagerItem in a StackLayout
+        // so we need to call remove on that stacklayout
+        if (view instanceof PagerItem && view.parent !== this) {
+            return super._removeView(view.parent);
+        }
+        return super._removeView(view);
 
+    }
     onLayoutChange(args: any) {
         this._setSpacing(args.object.spacing);
         this._setPeaking(args.object.peaking);
-        this._setTransformers(this.transformers ? this.transformers : "");
+        this._setTransformers(this.transformers ? this.transformers : '');
         this._updateScrollPosition();
         // Set disableAnimation to original value
         this.disableAnimation = this._oldDisableAnimation;
@@ -222,8 +230,8 @@ export class Pager extends PagerBase {
         const newPeaking = size !== this._lastPeaking;
         if (newPeaking) {
             this.pager.setClipToPadding(false);
-            const left = this.orientation === "horizontal" ? size : 0;
-            const top = this.orientation === "horizontal" ? 0 : size;
+            const left = this.orientation === 'horizontal' ? size : 0;
+            const top = this.orientation === 'horizontal' ? 0 : size;
             this.pager.setPadding(left, top, left, top);
             this.pager.setClipChildren(false);
             this._lastPeaking = size;
@@ -243,7 +251,7 @@ export class Pager extends PagerBase {
     }
 
     private _setIndicator(value: Indicator) {
-        const AnimationType = (com as any).rd.animation.type.AnimationType;
+        const AnimationType = (com).rd.animation.type.AnimationType;
         switch (value) {
             case Indicator.None:
                 this.indicatorView.setAnimationType(AnimationType.NONE);
@@ -269,7 +277,7 @@ export class Pager extends PagerBase {
         if (!isString(transformers)) {
             return;
         }
-        const transformsArray = transformers.split(" ");
+        const transformsArray = transformers.split(' ');
         this._transformers.forEach((transformer) => {
             this.compositeTransformer.removeTransformer(transformer);
         });
@@ -331,7 +339,7 @@ export class Pager extends PagerBase {
             }
             this._initAutoPlay(this.autoPlay);
         }
-    }
+    };
 
     public disposeNativeView() {
         this.off(View.layoutChangedEvent, this.onLayoutChange, this);
@@ -563,7 +571,7 @@ export class Pager extends PagerBase {
     }
 
     public [orientationProperty.setNative](value: Orientation) {
-        if (value === "vertical") {
+        if (value === 'vertical') {
             this._pager.setOrientation(
                 androidx.viewpager2.widget.ViewPager2.ORIENTATION_VERTICAL
             );
@@ -598,7 +606,7 @@ export class Pager extends PagerBase {
             position = count - 1;
         }
 
-        let isRightOverScrolled = position > selectedPosition;
+        const isRightOverScrolled = position > selectedPosition;
         let isLeftOverScrolled;
 
         if (isRtl) {
@@ -612,7 +620,7 @@ export class Pager extends PagerBase {
             indicator.setSelection(selectedPosition);
         }
 
-        let slideToRightSide = selectedPosition == position && positionOffset != 0;
+        const slideToRightSide = selectedPosition == position && positionOffset != 0;
         let selectingPosition;
         let selectingProgress;
 
@@ -648,7 +656,7 @@ export class Pager extends PagerBase {
     }
 
     _nextIndex(): number {
-        let next = this.selectedIndex + 1;
+        const next = this.selectedIndex + 1;
         if (next > this.lastIndex) {
             return 0;
         }
@@ -688,7 +696,7 @@ export class Pager extends PagerBase {
 }
 
 export const pagesCountProperty = new Property<Pager, number>({
-    name: "pagesCount",
+    name: 'pagesCount',
     defaultValue: 0,
     valueConverter: (v) => parseInt(v),
     valueChanged: (pager: Pager, oldValue, newValue) => {
@@ -706,7 +714,7 @@ function initPagerChangeCallback() {
 
     @NativeClass
     class PageChangeCallbackImpl extends androidx.viewpager2.widget.ViewPager2
-        .OnPageChangeCallback {
+            .OnPageChangeCallback {
         private readonly owner: WeakRef<Pager>;
 
         constructor(owner: WeakRef<Pager>) {
@@ -732,10 +740,10 @@ function initPagerChangeCallback() {
                     position = owner.pagerAdapter.getPosition(position);
                 }
                 const offset = position * positionOffsetPixels;
-                if (owner.orientation === "vertical") {
+                if (owner.orientation === 'vertical') {
                     owner._horizontalOffset = 0;
                     owner._verticalOffset = offset;
-                } else if (owner.orientation === "horizontal") {
+                } else if (owner.orientation === 'horizontal') {
                     owner._horizontalOffset = offset;
                     owner._verticalOffset = 0;
                 }
@@ -802,8 +810,8 @@ function initPagerChangeCallback() {
                         androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_IDLE
                 ) {
                     // ts-ignore
-                    let count = owner.pagerAdapter.getItemCount();
-                    let index = owner.pager.getCurrentItem();
+                    const count = owner.pagerAdapter.getItemCount();
+                    const index = owner.pager.getCurrentItem();
                     if (owner.circularMode) {
                         if (index === 0) {
                             // last item
@@ -846,7 +854,7 @@ interface PagerRecyclerAdapter extends androidx.recyclerview.widget.RecyclerView
     lastIndex(): number;
 }
 // eslint-disable-next-line no-redeclare
-let PagerRecyclerAdapter : PagerRecyclerAdapter;
+let PagerRecyclerAdapter: PagerRecyclerAdapter;
 
 function initPagerRecyclerAdapter() {
     if (PagerRecyclerAdapter) {
@@ -872,11 +880,11 @@ function initPagerRecyclerAdapter() {
 
             let view: View =
                 template.createView();
-            
+
             if (!view && owner._itemViewLoader !== undefined) {
                 view = owner._itemViewLoader(template.key);
             }
-            let sp = new StackLayout();
+            const sp = new StackLayout();
             if (view) {
                 sp.addChild(view);
             } else {
@@ -928,7 +936,7 @@ function initPagerRecyclerAdapter() {
                     }
                 }
                 const bindingContext = owner._getDataItem(index);
-                let args = <ItemEventData>{
+                const args = <ItemEventData>{
                     eventName: ITEMLOADING,
                     object: owner,
                     android: holder,
@@ -973,7 +981,7 @@ function initPagerRecyclerAdapter() {
         public getItemViewType(index: number) {
             const owner = this.owner ? this.owner.get() : null;
             if (owner) {
-                let template = owner._getItemTemplate(index);
+                const template = owner._getItemTemplate(index);
                 return owner._itemTemplatesInternal.indexOf(template);
             }
             return 0;
@@ -1035,7 +1043,7 @@ function initStaticPagerStateAdapter() {
             }
 
             const view = owner._childrenViews.get(type);
-            let sp = new StackLayout(); // Pager2 requires match_parent so add a parent with to fill
+            const sp = new StackLayout(); // Pager2 requires match_parent so add a parent with to fill
             if (view && !view.parent) {
                 sp.addChild(view);
             } else {
@@ -1063,7 +1071,7 @@ function initStaticPagerStateAdapter() {
             const owner = this.owner ? this.owner.get() : null;
             if (owner) {
 
-                let args = <ItemEventData>{
+                const args = <ItemEventData>{
                     eventName: ITEMLOADING,
                     object: owner,
                     android: holder,
