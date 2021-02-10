@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.10](https://github.com/Akylas/nativescript-pager/compare/v13.0.9...v13.0.10) (2021-02-10)
+
+
+### Bug Fixes
+
+* correctly handle remove/add views in static layout (v-for) ([58cc142](https://github.com/Akylas/nativescript-pager/commit/58cc14295a023d350c7182e65f3def762222a4f1))
+
+
+
+
+
 ## [13.0.9](https://github.com/Akylas/nativescript-pager/compare/v13.0.8...v13.0.9) (2021-02-10)
 
 
