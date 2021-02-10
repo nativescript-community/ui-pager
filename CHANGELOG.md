@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.9](https://github.com/Akylas/nativescript-pager/compare/v13.0.8...v13.0.9) (2021-02-10)
+
+
+### Bug Fixes
+
+* **android:** fix crash on removing static page ([71b3ecc](https://github.com/Akylas/nativescript-pager/commit/71b3ecc0b9000f2df8f16fc76e038d988ba60173))
+
+
+
+
+
 ## [13.0.8](https://github.com/Akylas/nativescript-pager/compare/v13.0.7...v13.0.8) (2021-02-09)
 
 
