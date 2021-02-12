@@ -144,7 +144,7 @@ Vue.use(Pager);
 ### Angular
 
 ```js
-import { PagerModule } from "nativescript-pager/angular";
+import { PagerModule } from "@nativescript-community/ui-pager/angular";
 
 @NgModule({
     imports: [
