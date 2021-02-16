@@ -125,7 +125,6 @@ export class _Pager extends React.Component<Props, State> {
 
             if (onCellFirstLoad) onCellFirstLoad(rootKeyAndRef.nativeView);
         } else {
-            console.log('[Pager] existing view: ', view);
             if (onCellRecycle) onCellRecycle(view);
 
             const { rootKey, nativeView } = this.argsViewToRootKeyAndRef.get(view);
@@ -161,7 +160,6 @@ export class _Pager extends React.Component<Props, State> {
             throw new Error('Unable to get ref to Pager');
         }
 
-        console.log('[Pager] no existing view.');
         const rootKey: string = `Pager-${node._domId}-${this.roots.size.toString()}`;
 
         const root = new NSVRoot<View>();
@@ -196,7 +194,6 @@ export class _Pager extends React.Component<Props, State> {
                 itemTemplates.push({
                     key,
                     createView: () => {
-                        console.log(`[Pager] item template "${key}"`);
                         const rootKeyAndRef: RootKeyAndTNSView = this.renderNewRoot(placeholderItem, cellFactory);
                         this.argsViewToRootKeyAndRef.set(rootKeyAndRef.nativeView, rootKeyAndRef);
 
@@ -220,7 +217,6 @@ export class _Pager extends React.Component<Props, State> {
 
 
     render() {
-        console.log('Pager\'s render()');
         const {
             // Only used by the class component; not the JSX element.
             forwardedRef,
