@@ -198,6 +198,7 @@ export class Pager extends PagerBase {
     protected _addChildView(view, type) {
         super._addChildView(view, type);
         this._childrenViewsType.set(type, view);
+        this.initStaticPagerAdapter();
     }
     onLayoutChange(args: any) {
         this._setSpacing(args.object.spacing);
@@ -443,9 +444,7 @@ export class Pager extends PagerBase {
             this._initAutoPlay(this.autoPlay);
         });
     }
-
-    onLoaded(): void {
-        super.onLoaded();
+    initStaticPagerAdapter () {
         if (!this.items && this._childrenCount > 0) {
             initStaticPagerStateAdapter();
             if (!(this._pagerAdapter instanceof StaticPagerStateAdapter)) {
@@ -463,6 +462,10 @@ export class Pager extends PagerBase {
                 }, 0);
             }
         }
+    }
+    onLoaded(): void {
+        super.onLoaded();
+        this.initStaticPagerAdapter();
     }
 
     [selectedIndexProperty.setNative](value: number) {
