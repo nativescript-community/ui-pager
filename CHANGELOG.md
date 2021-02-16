@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.11](https://github.com/Akylas/nativescript-pager/compare/v13.0.10...v13.0.11) (2021-02-16)
+
+
+### Bug Fixes
+
+* remove react logs ([9ddc9ee](https://github.com/Akylas/nativescript-pager/commit/9ddc9ee9f4e8128af5152681c40c26d2d568d9fd))
+* **android:** fix for views added after init ([3597d8c](https://github.com/Akylas/nativescript-pager/commit/3597d8c49c63738d4591da7e02481c27684f3acd))
+
+
+
+
+
 ## [13.0.10](https://github.com/Akylas/nativescript-pager/compare/v13.0.9...v13.0.10) (2021-02-10)
 
 
