@@ -447,7 +447,7 @@ export class Pager extends PagerBase {
     initStaticPagerAdapter () {
         if (!this.items && this._childrenCount > 0) {
             initStaticPagerStateAdapter();
-            if (!(this._pagerAdapter instanceof StaticPagerStateAdapter)) {
+            if (this.pager && !(this._pagerAdapter instanceof StaticPagerStateAdapter)) {
                 this._pagerAdapter = new StaticPagerStateAdapter(new WeakRef(this));
                 this.pager.setAdapter(this._pagerAdapter);
                 selectedIndexProperty.coerce(this);
