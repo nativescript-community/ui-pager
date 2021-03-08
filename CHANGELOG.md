@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.12](https://github.com/Akylas/nativescript-pager/compare/v13.0.11...v13.0.12) (2021-03-08)
+
+
+### Bug Fixes
+
+* **android:** prevent crash ([88e93e9](https://github.com/Akylas/nativescript-pager/commit/88e93e9bb2a499771d5b4d327dca7450fba48961))
+
+
+
+
+
 ## [13.0.11](https://github.com/Akylas/nativescript-pager/compare/v13.0.10...v13.0.11) (2021-02-16)
 
 
