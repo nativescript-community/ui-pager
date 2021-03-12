@@ -935,7 +935,7 @@ function initPagerRecyclerAdapter() {
                     ios: undefined,
                     index,
                     bindingContext,
-                    view: holder.view[PLACEHOLDER] ? null : holder.view
+                    view: holder.view[PLACEHOLDER] ? null : holder.view.getChildAt(0)
                 } as ItemEventData;
 
                 owner.notify(args);

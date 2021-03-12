@@ -66,35 +66,23 @@ module.exports = function pager(Vue) {
                 pagerView.setAttribute('itemTemplates', this.$templates.getKeyedTemplates());
                 const itemTemplateSelector = this.itemTemplateSelector
                     ? this.itemTemplateSelector // custom template selector if any
-                    : (item, index, items) => {
-                        const isSelected = false;
-                        return this.$templates.selectorFn(this.getItemContext(item, index, isSelected));
-                    };
+                    : (item, index, items) => this.$templates.selectorFn(this.getItemContext(item, index));
                 pagerView.setAttribute('itemTemplateSelector', itemTemplateSelector);
             }
 
         },
         methods: {
             onItemLoading(args) {
-                if (!this.items) return;
+                if (!this.items) {
+                    return;
+                }
                 const index = args.index;
                 const items = args.object.items;
-                const currentItem =
-                    typeof items.getItem === 'function'
-                        ? items.getItem(index)
-                        : items[index];
-                const name = args.object._itemTemplateSelector(
-                    currentItem,
-                    index,
-                    items
-                );
+                const currentItem = args.bindingContext;
+                const name = args.object._itemTemplateSelector(currentItem, index, items);
                 const context = this.getItemContext(currentItem, index);
-                const oldVnode = args.view && args.view[VUE_VIEW];
-                args.view = this.$templates.patchTemplate(
-                    name,
-                    context,
-                    oldVnode
-                );
+                const oldVnode = (args.view && args.view[VUE_VIEW]);
+                args.view = this.$templates.patchTemplate(name, context, oldVnode);
             },
             onItemDisposing(args) {
                 // TODO: handle disposing template
@@ -116,10 +104,10 @@ module.exports = function pager(Vue) {
         },
     };
 
-    function getItemContext(item, index = -1, selected = false, alias = this.$props['+alias'], index_alias = this.$props['+index']) {
+    function getItemContext(item, index = -1, alias = this.$props['+alias'], index_alias = this.$props['+index']) {
         return {
             [alias]: item,
-            [index_alias]: index,
+            [index_alias || '$index']: index,
             $even: index % 2 === 0,
             $odd: index % 2 !== 0,
         };
