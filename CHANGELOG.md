@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.14](https://github.com/Akylas/nativescript-pager/compare/v13.0.13...v13.0.14) (2021-03-16)
+
+
+### Bug Fixes
+
+* **ios:** prevent endless request lauyout ([a82cd56](https://github.com/Akylas/nativescript-pager/commit/a82cd5636f09901392063bd378224f9860dd36d4))
+
+
+
+
+
 ## [13.0.13](https://github.com/Akylas/nativescript-pager/compare/v13.0.12...v13.0.13) (2021-03-12)
 
 
