@@ -702,26 +702,18 @@ export class Pager extends PagerBase {
         this._map.delete(cell);
     }
 
-    public measure(widthMeasureSpec: number, heightMeasureSpec: number): void {
-        const changed = (this as any)._setCurrentMeasureSpecs(
-            widthMeasureSpec,
-            heightMeasureSpec
-        );
-        super.measure(widthMeasureSpec, heightMeasureSpec);
-        //@ts-ignore
-        const forceLayout = (this._privateFlags & PFLAG_FORCE_LAYOUT) === PFLAG_FORCE_LAYOUT;
-        if (( changed || forceLayout)) {
-            dispatch_async(main_queue, () => {
-                if (!this.pager) {
-                    return;
-                }
-                this.pager.reloadData();
-                if (changed) {
-                    this._updateScrollPosition();
-                }
-                this._initAutoPlay(this.autoPlay);
-            });
-        }
+    // called by N when the size actually changed
+    _onSizeChanged() {
+        dispatch_async(main_queue, () => {
+            if (!this.pager) {
+                return;
+            }
+            this.pager.reloadData();
+            // if (changed) {
+            this._updateScrollPosition();
+            // }
+            this._initAutoPlay(this.autoPlay);
+        });
     }
 
     public onMeasure(
@@ -1298,6 +1290,17 @@ class UICollectionViewDataSourceImpl
             }
 
             if (view && !view.parent) {
+                view['performLayout'] = () => {
+                    View.measureChild(
+                        owner,
+                        view,
+                        view._currentWidthMeasureSpec,
+                        view._currentHeightMeasureSpec
+                    );
+                    if (view && view.isLayoutRequired) {
+                        View.layoutChild(owner, view, 0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+                    }
+                };
                 owner._addView(view);
                 // if (owner.iosOverflowSafeArea) {
                 const innerView = UICellView.new() as UICellView;
