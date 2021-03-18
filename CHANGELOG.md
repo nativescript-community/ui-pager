@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.15](https://github.com/Akylas/nativescript-pager/compare/v13.0.14...v13.0.15) (2021-03-18)
+
+
+### Bug Fixes
+
+* **ios:** allow child textfield to resize itself without losing focus ([a1da0f4](https://github.com/Akylas/nativescript-pager/commit/a1da0f4d3bd6c6c0293a548697807b2a8ff949bf))
+
+
+
+
+
 ## [13.0.14](https://github.com/Akylas/nativescript-pager/compare/v13.0.13...v13.0.14) (2021-03-16)
 
 
