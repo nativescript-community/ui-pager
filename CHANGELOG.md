@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.16](https://github.com/Akylas/nativescript-pager/compare/v13.0.15...v13.0.16) (2021-03-19)
+
+
+### Bug Fixes
+
+* **android:** selectedIndex not trigger on scroll without animation ([c1da92b](https://github.com/Akylas/nativescript-pager/commit/c1da92bf14bde7fc7494f964c1771a8ca93c8ca4))
+* **ios:** prevent crash when used iinside a collectionview cell ([9e7b1d1](https://github.com/Akylas/nativescript-pager/commit/9e7b1d1a27d139d95daaa1574c8a9e9ef10ba1a6))
+
+
+### Features
+
+* selectedIndex && currentPosition for scroll event ([ebb708a](https://github.com/Akylas/nativescript-pager/commit/ebb708ae63af9bb9ebd93089ae73d5fba1babd4e))
+
+
+
+
+
 ## [13.0.15](https://github.com/Akylas/nativescript-pager/compare/v13.0.14...v13.0.15) (2021-03-18)
 
 
