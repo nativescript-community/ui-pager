@@ -747,6 +747,7 @@ function initPagerChangeCallback() {
                     eventName: Pager.scrollEvent,
                     object: owner,
                     selectedIndex: position,
+                    currentPosition: position + positionOffset,
                     scrollX: owner.horizontalOffset,
                     scrollY: owner.verticalOffset,
                 });
