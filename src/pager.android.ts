@@ -484,6 +484,10 @@ export class Pager extends PagerBase {
     public scrollToIndexAnimated(index: number, animate: boolean) {
         if (this.pager) {
             this.pager.setCurrentItem(index, animate);
+            if (!animate) {
+                // without animate we wont go through the delegate
+                selectedIndexProperty.nativeValueChange(this, index);
+            }
         }
     }
 
