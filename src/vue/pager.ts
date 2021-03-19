@@ -8,8 +8,7 @@ module.exports = function pager(Vue) {
         },
         props: {
             items: {
-                //@ts-ignore
-                type: Array | Object,
+                type: [Array, Object],
             },
             '+alias': {
                 type: String,
