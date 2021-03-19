@@ -1096,6 +1096,8 @@ class UICollectionDelegateImpl
             owner.notify({
                 object: owner,
                 eventName: Pager.scrollEvent,
+                selectedIndex: Math.floor(progress),
+                currentPosition: progress,
                 scrollX: owner.horizontalOffset,
                 scrollY: owner.verticalOffset,
             });
