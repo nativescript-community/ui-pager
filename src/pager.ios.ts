@@ -589,13 +589,14 @@ export class Pager extends PagerBase {
         if (!this.pager) {
             return;
         }
-        if (this.items instanceof ObservableArray) {
-            this.pager.performBatchUpdatesCompletion(() => {
-                this._reset();
-            }, null);
-        } else {
-            this._reset();
-        }
+        // if called within a collectinview item it will crash with performBatchUpdatesCompletion
+        // if (this.items instanceof ObservableArray && this.pager.numberOfSections > 0 && this.pager.numberOfItemsInSection(0) > 0 ) {
+        //     this.pager.performBatchUpdatesCompletion(() => {
+        //         this._reset();
+        //     }, null);
+        // } else {
+        this._reset();
+        // }
     }
 
     refresh() {
