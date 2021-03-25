@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.17](https://github.com/Akylas/nativescript-pager/compare/v13.0.16...v13.0.17) (2021-03-25)
+
+
+### Bug Fixes
+
+* **ios:** prevent crash when pager not in current page ([c0b70f1](https://github.com/Akylas/nativescript-pager/commit/c0b70f1d5e4c22d4ad5ab837cad2cc099567d4ec))
+
+
+
+
+
 ## [13.0.16](https://github.com/Akylas/nativescript-pager/compare/v13.0.15...v13.0.16) (2021-03-19)
 
 
