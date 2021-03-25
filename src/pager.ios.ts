@@ -535,6 +535,7 @@ export class Pager extends PagerBase {
 
     _scrollToIndexAnimated(index: number, animate: boolean) {
         if (!this.pager) return;
+
         const contentSize = this.pager.contentSize;
         const size =
             this.orientation === 'vertical'
@@ -559,7 +560,10 @@ export class Pager extends PagerBase {
         if (maxMinIndex === -1) {
             maxMinIndex = 0;
         }
-
+        if (this.page && this.page.frame?.currentPage !== this.page) {
+            // in case the page is not the current page, scrolling will crash
+            return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
+        }
         dispatch_async(main_queue, () => {
             this.pager.scrollToItemAtIndexPathAtScrollPositionAnimated(
                 NSIndexPath.indexPathForItemInSection(maxMinIndex, 0),
