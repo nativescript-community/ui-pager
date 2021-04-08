@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.19](https://github.com/Akylas/nativescript-pager/compare/v13.0.18...v13.0.19) (2021-04-08)
+
+
+### Bug Fixes
+
+* **ios:** fix non showing pages in modal ([13a4987](https://github.com/Akylas/nativescript-pager/commit/13a49878554a0c7cad9e830a20aca0e213c59b9c))
+
+
+
+
+
 ## [13.0.18](https://github.com/Akylas/nativescript-pager/compare/v13.0.17...v13.0.18) (2021-03-31)
 
 
