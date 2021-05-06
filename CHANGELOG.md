@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.20](https://github.com/Akylas/nativescript-pager/compare/v13.0.19...v13.0.20) (2021-05-06)
+
+
+### Bug Fixes
+
+* **ios:** dont fail to set first page during page animation ([50c9f8b](https://github.com/Akylas/nativescript-pager/commit/50c9f8baf0ae99846b3b748b20691f0545801e7d))
+* **ios:** remove hack which prevented non 0 first page ([af729af](https://github.com/Akylas/nativescript-pager/commit/af729af70f4a8e0bb13d7fa41acbda578c2fb9b6))
+
+
+
+
+
 ## [13.0.19](https://github.com/Akylas/nativescript-pager/compare/v13.0.18...v13.0.19) (2021-04-08)
 
 
