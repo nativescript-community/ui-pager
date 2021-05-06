@@ -762,17 +762,17 @@ export class Pager extends PagerBase {
             const height = layout.toDevicePixels(size.height);
             View.layoutChild(this, childView, 0, 0, width, height);
         });
-        if (this.iosOverflowSafeAreaEnabledLayoutHackNeeded ) {
-            this.iosOverflowSafeAreaEnabledLayoutHackNeeded = false;
-            if (this.iosOverflowSafeAreaEnabled){
+        // if (this.iosOverflowSafeAreaEnabledLayoutHackNeeded ) {
+        //     this.iosOverflowSafeAreaEnabledLayoutHackNeeded = false;
+        //     if (this.iosOverflowSafeAreaEnabled){
 
-                // dirty hack for iosOverflowSafeAreaEnabled where
-                // the scrollview is scrolled just a little on start
-                setTimeout(()=>{
-                    this.pager.contentOffset = CGPointZero;
-                }, 0);
-            }
-        }
+        //         // dirty hack for iosOverflowSafeAreaEnabled where
+        //         // the scrollview is scrolled just a little on start
+        //         setTimeout(()=>{
+        //             this.pager.contentOffset = CGPointZero;
+        //         }, 0);
+        //     }
+        // }
     }
 
     public requestLayout(): void {
