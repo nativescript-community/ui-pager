@@ -560,9 +560,19 @@ export class Pager extends PagerBase {
         if (maxMinIndex === -1) {
             maxMinIndex = 0;
         }
-        if (!this.isLoaded || (this.page && this.page.frame && this.page.frame.currentPage !== this.page)) {
-            // in case the page is not the current page, scrolling will crash
+        if (!this.isLoaded) {
             return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
+        }
+        const frame = this.page && this.page.frame;
+        if (this.page && frame) {
+            if (frame._executingContext) {
+                if (frame._executingContext.entry.resolvedPage !== this.page) {
+                    return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
+                }
+            } else if(frame.currentPage !== this.page) {
+                return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
+
+            }
         }
         dispatch_async(main_queue, () => {
             this.pager.scrollToItemAtIndexPathAtScrollPositionAnimated(
