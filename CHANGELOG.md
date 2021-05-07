@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.21](https://github.com/Akylas/nativescript-pager/compare/v13.0.20...v13.0.21) (2021-05-07)
+
+
+### Bug Fixes
+
+* update and fix angular ([58b6faf](https://github.com/Akylas/nativescript-pager/commit/58b6faf4c4988e3c37ec108d4a5bec0fb3d2784c))
+
+
+
+
+
 ## [13.0.20](https://github.com/Akylas/nativescript-pager/compare/v13.0.19...v13.0.20) (2021-05-06)
 
 
