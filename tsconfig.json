@@ -5,6 +5,8 @@
         "moduleResolution": "node",
         "removeComments": true,
         "noLib": false,
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
         "emitDecoratorMetadata": false,
         "experimentalDecorators": true,
         "jsx": "react",
