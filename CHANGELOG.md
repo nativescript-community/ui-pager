@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.22](https://github.com/Akylas/nativescript-pager/compare/v13.0.21...v13.0.22) (2021-07-26)
+
+
+### Bug Fixes
+
+* vscode fix for is not a module ([e8f8ce2](https://github.com/Akylas/nativescript-pager/commit/e8f8ce2cc6c51d0137472f3a3bcc6f7a8574c110))
+
+
+
+
+
 ## [13.0.21](https://github.com/Akylas/nativescript-pager/compare/v13.0.20...v13.0.21) (2021-05-07)
 
 
