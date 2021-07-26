@@ -762,6 +762,7 @@ export class Pager extends PagerBase {
             const height = layout.toDevicePixels(size.height);
             View.layoutChild(this, childView, 0, 0, width, height);
         });
+        // TODO: find the issue and correctly fix it
         // if (this.iosOverflowSafeAreaEnabledLayoutHackNeeded ) {
         //     this.iosOverflowSafeAreaEnabledLayoutHackNeeded = false;
         //     if (this.iosOverflowSafeAreaEnabled){
