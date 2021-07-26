@@ -1,34 +1,11 @@
-[![npm](https://img.shields.io/npm/v/nativescript-pager.svg)](https://www.npmjs.com/package/nativescript-pager)
-[![npm](https://img.shields.io/npm/dt/nativescript-pager.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-pager)
-[![Build Status](https://travis-ci.org/triniwiz/nativescript-pager.svg?branch=master)](https://travis-ci.org/triniwiz/nativescript-pager)
+[![npm](https://img.shields.io/npm/v/@nativescript-community/ui-pager.svg)](https://www.npmjs.com/package/@nativescript-community/ui-pager)
+[![npm](https://img.shields.io/npm/dt/@nativescript-community/ui-pager.svg?label=npm%20downloads)](https://www.npmjs.com/package/@nativescript-community/ui-pager)
 
 # NativeScript Pager
 
 ## Install
 
-#### NativeScript 7x
-
 - `tns plugin add @nativescript-community/ui-pager`
-
-#### NativeScript 6x
-
-- `tns plugin add nativescript-pager`
-
-#### NativeScript 5x
-
-- `tns plugin add nativescript-pager@9.x`
-
-#### NativeScript 4x
-
-- `tns plugin add nativescript-pager@8.0.2`
-
-#### NativeScript 3x
-
-- `tns plugin add nativescript-pager@7.2.3`
-
-#### NativeScript 2x
-
-- `tns plugin add nativescript-pager@2.3.0`
 
 ## Usage
 
@@ -39,7 +16,7 @@ Pager for NativeScript supports the core ObservableArray module part of the core
 ````
 
 
-IMPORTANT: Make sure you include `xmlns:pager="nativescript-pager"` on the Page element any element can be used in the pager
+IMPORTANT: Make sure you include `xmlns:pager="@nativescript-community/ui-pager"` on the Page element any element can be used in the pager
 
 ```xml
 <pager:Pager items="{{items}}" row="2" id="pager" spacing="2%" peaking="10%" transformers="scale" pagesCount="10" showIndicator="true" backgroundColor="lightsteelblue">
@@ -104,7 +81,7 @@ IMPORTANT: Make sure you include `xmlns:pager="nativescript-pager"` on the Page 
 
 ```js
 import Vue from 'nativescript-vue';
-import Pager from 'nativescript-pager/vue';
+import Pager from '@nativescript-community/ui-pager/vue';
 
 Vue.use(Pager);
 ```
@@ -144,7 +121,7 @@ Vue.use(Pager);
 ### Angular
 
 ```js
-import { PagerModule } from "nativescript-pager/angular";
+import { PagerModule } from "@nativescript-community/ui-pager/angular";
 
 @NgModule({
     imports: [
@@ -273,7 +250,7 @@ _Angular v4+_
 ### React
 
 ```typescript jsx
-import {$Pager} from 'nativescript-pager/react';
+import {$Pager} from '@nativescript-community/ui-pager/react';
 return (
 <$Pager
                 height={{ unit: "%", value: 100 }}

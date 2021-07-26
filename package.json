@@ -57,14 +57,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Akylas/nativescript-pager.git"
+        "url": "git+https://github.com/nativescript-community/ui-pager.git"
     },
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/Akylas/nativescript-pager/issues"
+        "url": "https://github.com/nativescript-community/ui-pager/issues"
     },
-    "homepage": "https://github.com/Akylas/nativescript-pager#readme",
+    "homepage": "https://github.com/nativescript-community/ui-pager#readme",
     "commitlint": {
         "extends": [
             "@commitlint/config-conventional"
