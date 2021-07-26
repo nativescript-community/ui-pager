@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.23](https://github.com/nativescript-community/ui-pager/compare/v13.0.22...v13.0.23) (2021-07-26)
+
+
+### Bug Fixes
+
+* vue fix ([c543697](https://github.com/nativescript-community/ui-pager/commit/c543697f6fd6e3e2504827bd8fb4faac3a292e81))
+
+
+
+
+
 ## [13.0.22](https://github.com/nativescript-community/ui-pager/compare/v13.0.21...v13.0.22) (2021-07-26)
 
 
