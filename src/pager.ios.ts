@@ -547,19 +547,7 @@ export class Pager extends PagerBase {
         if (this._childrenCount === 0) {
             return;
         }
-        let maxMinIndex = -1;
-        const max = this._childrenCount - 1;
-        if (index < 0) {
-            maxMinIndex = 0;
-        } else if (index > max) {
-            maxMinIndex = max;
-        } else {
-            maxMinIndex = index;
-        }
-
-        if (maxMinIndex === -1) {
-            maxMinIndex = 0;
-        }
+        const maxMinIndex = Math.min(Math.max(0, index), this._childrenCount - 1);
         if (!this.isLoaded) {
             return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
         }
@@ -1515,7 +1503,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
                     : Math.round(flickVelocity);
 
             const newPageIndex = currentPage + flickedPages;
-            selectedIndexProperty.nativeValueChange(owner, Math.max(newPageIndex, 0));
+            selectedIndexProperty.nativeValueChange(owner, Math.min(Math.max(newPageIndex, 0), owner._childrenCount - 1));
             // Calculate newHorizontalOffset.
             const newHorizontalOffset =
                 newPageIndex * pageWidth -
@@ -1549,7 +1537,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
                     : Math.round(flickVelocity);
 
             const newPageIndex = currentPage + flickedPages;
-            selectedIndexProperty.nativeValueChange(owner, Math.max(newPageIndex, 0));
+            selectedIndexProperty.nativeValueChange(owner, Math.min(Math.max(newPageIndex, 0), owner._childrenCount - 1));
             const newVerticalOffset =
                 newPageIndex * pageHeight -
                 this.collectionView.contentInset.top;
