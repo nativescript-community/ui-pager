@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.25](https://github.com/nativescript-community/ui-pager/compare/v13.0.24...v13.0.25) (2021-08-05)
+
+
+### Bug Fixes
+
+* **ios:** ios 14 crash fix ([8fc3fd3](https://github.com/nativescript-community/ui-pager/commit/8fc3fd3effad56963562ed8ef0ceeae1fdc07406))
+
+
+
+
+
 ## [13.0.24](https://github.com/nativescript-community/ui-pager/compare/v13.0.23...v13.0.24) (2021-08-04)
 
 
