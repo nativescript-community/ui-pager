@@ -736,6 +736,9 @@ export class Pager extends PagerBase {
     iosOverflowSafeAreaEnabledLayoutHackNeeded = true;
     public onLayout(left: number, top: number, right: number, bottom: number) {
         super.onLayout(left, top, right, bottom);
+        if(!this.nativeView) {
+            return;
+        }
         this.pager.frame = this.nativeView.bounds;
         if (this.indicatorView && this.indicatorView.intrinsicContentSize) {
             this.indicatorView.center = CGPointMake(
