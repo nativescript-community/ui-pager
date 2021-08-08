@@ -3,8 +3,9 @@ import {
     Color,
     EventData,
     KeyedTemplate,
-    ObservableArray,
-    Property, ProxyViewContainer,
+    Observable,
+    ObservableArray, Property,
+    ProxyViewContainer,
     StackLayout,
     Utils,
     View,
@@ -119,12 +120,16 @@ export class Pager extends PagerBase {
     borderWidth: number;
     borderColor: string;
     backgroundColor: any;
-    _isDirty: boolean = false;
     _isRefreshing: boolean = false;
     private _pager: UICollectionView;
     private _indicatorView: any;
     private _observableArrayInstance: ObservableArray<any>;
     _isInit: boolean = false;
+
+
+    public _innerWidth: number = 0;
+    public _innerHeight: number = 0;
+    _lastLayoutKey: string;
 
     constructor() {
         super();
@@ -578,44 +583,40 @@ export class Pager extends PagerBase {
         this._scrollToIndexAnimated(index, animate);
     }
 
-    private _reset() {
-        if (!this.pager) {
+    @profile
+    public refresh() {
+        if (!this.isLoaded || !this.nativeView) {
+            this._isDataDirty = true;
             return;
         }
+        this._isDataDirty = false;
+        this._lastLayoutKey = this._innerWidth + '_' + this._innerHeight;
+
+        // clear bindingContext when it is not observable because otherwise bindings to items won't reevaluate
+        this._map.forEach((view, nativeView, map) => {
+            if (!(view.bindingContext instanceof Observable)) {
+                view.bindingContext = null;
+            }
+        });
+
+        // TODO: this is ugly look here: https://github.com/nativescript-vue/nativescript-vue/issues/525
+        // this.clearRealizedCells();
+        // dispatch_async(main_queue, () => {
         this.pager.reloadData();
         this.pager.collectionViewLayout.invalidateLayout();
         this._updateScrollPosition();
+        this._initAutoPlay(this.autoPlay);
+        // });
     }
 
-    private _refresh() {
-        if (!this.pager) {
-            return;
-        }
-        // if called within a collectinview item it will crash with performBatchUpdatesCompletion
-        // if (this.items instanceof ObservableArray && this.pager.numberOfSections > 0 && this.pager.numberOfItemsInSection(0) > 0 ) {
-        //     this.pager.performBatchUpdatesCompletion(() => {
-        //         this._reset();
-        //     }, null);
-        // } else {
-        this._reset();
-        // }
-    }
-
-    refresh() {
-        dispatch_async(main_queue, () => {
-            this._refresh();
-        });
-    }
-
-    @profile
+    _isDataDirty = false;
     public onLoaded() {
         super.onLoaded();
         if (this.showIndicator && this.indicatorView) {
             this.nativeView.addSubview(this.indicatorView);
         }
-        if (!this._isDirty) {
+        if (this._isDataDirty && this._innerWidth !== undefined && this._innerHeight !== undefined) {
             this.refresh();
-            this._isDirty = true;
         }
 
         this.pager.delegate = this._delegate;
@@ -706,18 +707,18 @@ export class Pager extends PagerBase {
     }
 
     // called by N when the size actually changed
-    _onSizeChanged() {
-        dispatch_async(main_queue, () => {
-            if (!this.pager) {
-                return;
-            }
-            this.pager.reloadData();
-            // if (changed) {
-            this._updateScrollPosition();
-            // }
-            this._initAutoPlay(this.autoPlay);
-        });
-    }
+    // _onSizeChanged() {
+    //     dispatch_async(main_queue, () => {
+    //         if (!this.pager) {
+    //             return;
+    //         }
+    //         this.pager.reloadData();
+    //         // if (changed) {
+    //         this._updateScrollPosition();
+    //         // }
+    //         this._initAutoPlay(this.autoPlay);
+    //     });
+    // }
 
     public onMeasure(
         widthMeasureSpec: number,
@@ -734,8 +735,15 @@ export class Pager extends PagerBase {
         });
     }
     iosOverflowSafeAreaEnabledLayoutHackNeeded = true;
+    protected updateInnerSize() {
+        const width = this.getMeasuredWidth();
+        const height = this.getMeasuredHeight();
+        this._innerWidth = width - this.effectivePaddingLeft - this.effectivePaddingRight;
+        this._innerHeight = height - this.effectivePaddingTop - this.effectivePaddingBottom;
+    }
     public onLayout(left: number, top: number, right: number, bottom: number) {
         super.onLayout(left, top, right, bottom);
+        this.updateInnerSize();
         if(!this.nativeView) {
             return;
         }
@@ -747,24 +755,19 @@ export class Pager extends PagerBase {
                     this.indicatorView.intrinsicContentSize.height
             );
         }
-        const size = this._getSize();
-        this._map.forEach((childView, pagerCell) => {
-            const width = layout.toDevicePixels(size.width);
-            const height = layout.toDevicePixels(size.height);
-            View.layoutChild(this, childView, 0, 0, width, height);
-        });
-        // TODO: find the issue and correctly fix it
-        // if (this.iosOverflowSafeAreaEnabledLayoutHackNeeded ) {
-        //     this.iosOverflowSafeAreaEnabledLayoutHackNeeded = false;
-        //     if (this.iosOverflowSafeAreaEnabled){
+        const layoutView = this.pager.collectionViewLayout;
+        if (!layoutView) {
+            return;
+        }
 
-        //         // dirty hack for iosOverflowSafeAreaEnabled where
-        //         // the scrollview is scrolled just a little on start
-        //         setTimeout(()=>{
-        //             this.pager.contentOffset = CGPointZero;
-        //         }, 0);
-        //     }
-        // }
+        layoutView.invalidateLayout();
+
+        // there is no need to call refresh if it was triggered before with same size.
+        // this refresh is just to handle size change
+        const layoutKey = this._innerWidth + '_' + this._innerHeight;
+        if (this._lastLayoutKey !== layoutKey) {
+            this.refresh();
+        }
     }
 
     public requestLayout(): void {
