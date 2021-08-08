@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.26](https://github.com/nativescript-community/ui-pager/compare/v13.0.25...v13.0.26) (2021-08-08)
+
+
+### Bug Fixes
+
+* **ios:** refactor to prevent race conditions and crashes with html texts ([a72c557](https://github.com/nativescript-community/ui-pager/commit/a72c557107f5b9c115ca807d3bc2c0bca84f37ba))
+
+
+
+
+
 ## [13.0.25](https://github.com/nativescript-community/ui-pager/compare/v13.0.24...v13.0.25) (2021-08-05)
 
 
