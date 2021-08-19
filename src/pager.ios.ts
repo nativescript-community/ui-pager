@@ -833,15 +833,15 @@ export class Pager extends PagerBase {
             if (view && !view.parent) {
                 this._addView(view);
                 // prevent infinit request layout
-                view['performLayout'] = () => {
-                    this._layoutCell(view, indexPath);
-                    const size = this._getSize();
-                    const width = layout.toDevicePixels(size.width);
-                    const height = layout.toDevicePixels(size.height);
-                    if (view && view.isLayoutRequired) {
-                        View.layoutChild(this, view, 0, 0, width, height);
-                    }
-                };
+                // view['performLayout'] = () => {
+                //     this._layoutCell(view, indexPath);
+                //     const size = this._getSize();
+                //     const width = layout.toDevicePixels(size.width);
+                //     const height = layout.toDevicePixels(size.height);
+                //     if (view && view.isLayoutRequired) {
+                //         View.layoutChild(this, view, 0, 0, width, height);
+                //     }
+                // };
                 if (this.iosOverflowSafeArea) {
                     const innerView = UICellView.new() as UICellView;
                     innerView.view = new WeakRef(view);
@@ -1302,17 +1302,17 @@ class UICollectionViewDataSourceImpl
             }
 
             if (view && !view.parent) {
-                view['performLayout'] = () => {
-                    View.measureChild(
-                        owner,
-                        view,
-                        view._currentWidthMeasureSpec,
-                        view._currentHeightMeasureSpec
-                    );
-                    if (view && view.isLayoutRequired) {
-                        View.layoutChild(owner, view, 0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-                    }
-                };
+                // view['performLayout'] = () => {
+                //     View.measureChild(
+                //         owner,
+                //         view,
+                //         view._currentWidthMeasureSpec,
+                //         view._currentHeightMeasureSpec
+                //     );
+                //     if (view && view.isLayoutRequired) {
+                //         View.layoutChild(owner, view, 0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+                //     }
+                // };
                 owner._addView(view);
                 // if (owner.iosOverflowSafeArea) {
                 const innerView = UICellView.new() as UICellView;
