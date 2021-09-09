@@ -1,14 +1,7 @@
-import {
-    ItemEventData,
-    LayoutBase,
-    StackLayout,
-    View
-} from '@nativescript/core';
-import {
-    NativeViewElementNode, TemplateElement,
-    ViewNode, createElement,
-    registerElement
-} from 'svelte-native/dom';
+import { ItemEventData, View } from '@nativescript/core';
+import { profile } from '@nativescript/core/profiling';
+import { ContentView, LayoutBase, StackLayout, ViewBase } from '@nativescript/core/ui';
+import { NativeViewElementNode, TemplateElement, ViewNode, createElement, registerElement } from 'svelte-native/dom';
 import { flush } from 'svelte/internal';
 import { Pager } from '../pager';
 
@@ -21,32 +14,35 @@ declare module '@nativescript/core/ui/core/view-base' {
 }
 
 class SvelteKeyedTemplate {
-    key: string;
+    _key: string;
     _templateEl: TemplateElement;
     constructor(key: string, templateEl: TemplateElement) {
-        this.key = key;
+        this._key = key;
         this._templateEl = templateEl;
     }
     get component() {
         return this._templateEl.component;
     }
+    get key() {
+        return this._key;
+    }
     createView() {
         // create a proxy element to eventually contain our item (once we have one to render)
         // TODO is StackLayout the best choice here?
-        const wrapper = createElement('StackLayout') as NativeViewElementNode<
-        View
-        >;
+        // const wrapper = createElement('StackLayout') as NativeViewElementNode<View>;
 
-        const nativeEl = wrapper.nativeView;
+        const nativeEl = new StackLayout();
 
         // because of the way {N} works we cant use that wrapper as the target for the component
         // it will trigger uncessary {N} component updates because the parent view is already attached
 
         (nativeEl as any).__SvelteComponentBuilder__ = (parentView, props) => {
-            (nativeEl as any).__SvelteComponent__ = new this.component({
-                target: parentView,
-                props,
-            });
+            profile('__SvelteComponentBuilder__', () => {
+                (nativeEl as any).__SvelteComponent__ = new this.component({
+                    target: parentView,
+                    props,
+                });
+            })();
         };
         return nativeEl;
     }
@@ -56,16 +52,13 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
     constructor() {
         super('pager', Pager);
         const nativeView = this.nativeView;
-        nativeView.itemViewLoader = (viewType: any): View =>
-            this.loadView(viewType);
+        nativeView.itemViewLoader = (viewType: any): View => this.loadView(viewType);
         this.nativeView.on(Pager.itemLoadingEvent, this.updateListItem, this);
     }
 
     private loadView(viewType: string): View {
-        if (Array.isArray(this.nativeElement._itemTemplatesInternal)) {
-            const keyedTemplate = this.nativeElement._itemTemplatesInternal.find(
-                (t) => t.key === 'default'
-            );
+        if (Array.isArray(this.nativeElement.itemTemplates)) {
+            const keyedTemplate = this.nativeElement.itemTemplates.find((t) => t.key === 'default');
             if (keyedTemplate) {
                 return keyedTemplate.createView();
             }
@@ -74,10 +67,7 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
         const componentClass = this.getComponentForView(viewType);
         if (!componentClass) return null;
 
-        const wrapper = createElement('StackLayout') as NativeViewElementNode<
-        View
-        >;
-        const nativeEl = wrapper.nativeView;
+        const nativeEl = new ContentView();
 
         const builder = (parentView, props: any) => {
             (nativeEl as any).__SvelteComponent__ = new componentClass({
@@ -85,7 +75,7 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
                 props,
             });
         };
-        // in svelte we want to add the wrapper as a child of the collectionview ourselves
+        // in svelte we want to add the wrapper as a child of the pager ourselves
         (nativeEl as any).__SvelteComponentBuilder__ = builder;
         return nativeEl;
     }
@@ -101,12 +91,7 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
 
     private getComponentForView(viewType: string) {
         const normalizedViewType = viewType.toLowerCase();
-        const templateEl = this.childNodes.find(
-            (n) =>
-                n.tagName === 'template' &&
-                String(n.getAttribute('type')).toLowerCase() ===
-                    normalizedViewType
-        ) as any;
+        const templateEl = this.childNodes.find((n) => n.tagName === 'template' && String(n.getAttribute('type')).toLowerCase() === normalizedViewType) as any;
         if (!templateEl) return null;
         return templateEl.component;
     }
@@ -147,7 +132,7 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
         }
     }
     private updateListItem(args: ItemEventData & { bindingContext }) {
-        const _view = (args.view as StackLayout).getChildAt(0);
+        const _view = args.view;
         const props = { item: args.bindingContext, index: args.index };
         const componentInstance = _view.__SvelteComponent__;
         if (!componentInstance) {
@@ -163,6 +148,7 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
             }
         } else {
             // ensure we dont do unnecessary tasks if index did not change
+            // console.log('updateListItem', args.index,  _view.__CollectionViewCurrentIndex__);
             _view.__CollectionViewCurrentIndex__ = args.index;
             componentInstance.$set(props);
             flush(); // we need to flush to make sure update is applied right away

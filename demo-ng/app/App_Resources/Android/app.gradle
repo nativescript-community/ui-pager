@@ -1,9 +1,0 @@
-android {
-  defaultConfig {
-    generatedDensities = []
-    applicationId = "org.nativescript.demong"
-  }
-  aaptOptions {
-    additionalParameters "--no-version-vectors"
-  }
-}
