@@ -27,7 +27,7 @@
         "demo.vue.ios": "cd ./demo-vue && ns run ios --no-hmr",
         "setup": "npm run submodules && ts-patch install",
         "tsc": "cpy '**/*.d.ts' '../plugin' --parents --cwd=src && tsc -skipLibCheck -d",
-        "publish": "npm run setup && npm run build && lerna publish --create-release=github --force-publish",
+        "publish": "npm run setup && npm run build.all && lerna publish --create-release=github --force-publish",
         "postinstall": "npm run setup",
         "start": "./node_modules/.bin/ntl -A -s 15 -o",
         "sync": "node ./tools/sync.js -w && npx sort-package-json",
