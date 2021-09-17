@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.29](https://github.com/nativescript-community/ui-pager/compare/v13.0.28...v13.0.29) (2021-09-17)
+
+
+### Bug Fixes
+
+* **android:** allow to change appcompat version ([8925202](https://github.com/nativescript-community/ui-pager/commit/8925202f1787054e1791f7ebfdf82b6f8d078746))
+
+
+
+
+
 ## [13.0.28](https://github.com/nativescript-community/ui-pager/compare/v13.0.27...v13.0.28) (2021-09-17)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager
