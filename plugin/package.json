@@ -1,7 +1,7 @@
 {
     "name": "@nativescript-community/ui-pager",
     "version": "13.0.27",
-    "description": "A Carousel/Pager plugin for NativeScript.",
+    "description": "A NativeScript Pager / Carousel component that allows the user to swipe left and right through pages of data. ",
     "main": "pager",
     "typings": "pager.d.ts",
     "sideEffects": false,
@@ -24,18 +24,22 @@
         "ng",
         "angular",
         "vue",
+        "vue.js",
+        "react",
+        "svelte",
         "nativescript-angular",
-        "nativescript-vue"
+        "nativescript-vue",
+        "preview|https://raw.githubusercontent.com/nativescript-community/ui-pager/master/images/demo-ios.gif|iOS Demo",
+        "preview|https://raw.githubusercontent.com/nativescript-community/ui-pager/master/images/demo-android.gif|Android Demo"
     ],
     "author": {
-        "name": "Osei Fortune",
-        "email": "fortune.osei@yahoo.com"
+        "name": "Martin Guillon",
+        "email": "martin@akylas.fr"
     },
     "contributors": [
         {
-            "name": "Shiva Prasad",
-            "email": "sp@shiv19.com",
-            "url": "https://shiv19.com"
+            "name": "Osei Fortune",
+            "email": "fortune.osei@yahoo.com"
         }
     ],
     "bugs": {

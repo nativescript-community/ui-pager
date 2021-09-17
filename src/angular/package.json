@@ -8,10 +8,10 @@
       "umdModuleIds": {
         "@nativescript/core": "ns-core",
         "@nativescript/angular": "ns-angular",
-        "@nativescript-community/ui-pager": "ns-ui-collectionview"
+        "@nativescript-community/ui-pager": "ns-ui-pager"
       }
     },
-    "whitelistedNonPeerDependencies": [
+    "allowedNonPeerDependencies": [
       "."
     ]
   }

@@ -1,0 +1,19 @@
+<ActionBar>
+    <NavigationButton android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+    <Label text="Basic Pager"></Label>
+</ActionBar>
+
+<StackLayout>
+    <Pager
+        [items]="items"
+        height="100%"
+    >
+        <ng-template let-i="index" let-item="item">
+            <GridLayout
+                [backgroundColor]="item.color"
+            >
+                <Label class="label" [text]="item.title"></Label>
+            </GridLayout>
+        </ng-template>
+    </Pager>
+</StackLayout>
