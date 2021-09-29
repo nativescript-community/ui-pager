@@ -762,6 +762,13 @@ export class Pager extends PagerBase {
 
         layoutView.invalidateLayout();
 
+        const size = this._getSize();
+        this._map.forEach((childView, pagerCell) => {
+            const width = layout.toDevicePixels(size.width);
+            const height = layout.toDevicePixels(size.height);
+            View.layoutChild(this, childView, 0, 0, width, height);
+        });
+
         // there is no need to call refresh if it was triggered before with same size.
         // this refresh is just to handle size change
         const layoutKey = this._innerWidth + '_' + this._innerHeight;
@@ -1319,6 +1326,7 @@ class UICollectionViewDataSourceImpl
                 innerView.view = new WeakRef(view);
                 innerView.addSubview(view.nativeViewProtected);
                 cell.contentView.addSubview(innerView);
+                owner._map.set(cell, view);
                 // } else {
                 //     cell.contentView.addSubview(view.nativeViewProtected);
                 // }
