@@ -2,8 +2,8 @@
     "extends": "./tools/tsconfig",
     "compilerOptions": {
         "paths": {
-            "@nativescript-community/ui-pager": ["src"],
-            "@nativescript-community/ui-pager/*": ["src/*"],
+            "@nativescript-community/ui-pager": ["src/ui-pager"],
+            "@nativescript-community/ui-pager/*": ["src/ui-pager/*"],
         }
     }
 }

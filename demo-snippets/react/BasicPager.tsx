@@ -16,6 +16,7 @@ interface Item {
 const cellFactory = (item: Item) => (
     <gridLayout backgroundColor={item.color} height={{ unit: "%", value: 100 }}>
         <label 
+            //@ts-ignore
             width="100%"
             text={item.title} 
             textAlignment={"center"} 
