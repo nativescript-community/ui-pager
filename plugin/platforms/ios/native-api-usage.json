@@ -1,7 +1,0 @@
-{
-  "uses": [
-	"CHIPageControl*:*",
-	"Dispatch*:*",
-	"Darwin*:*"
-  ]
-}

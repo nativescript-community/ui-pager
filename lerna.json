@@ -1,6 +1,6 @@
 {
   "packages": [
-    "plugin"
+    "packages/*"
   ],
   "version": "13.0.30",
   "command": {
