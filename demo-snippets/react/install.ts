@@ -1,6 +1,6 @@
 import { BasicPager } from './BasicPager';
 
-export function install() { }
+export function installPlugin() { }
 
 export const demos = [
     { name: 'Basic Pager', path: 'basic', component: BasicPager }

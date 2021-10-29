@@ -5,7 +5,7 @@ import { registerNativeViewElement } from 'svelte-native/dom';
 import StaticPager from './StaticPager.svelte';
 import BasicPager from './BasicPager.svelte';
 
-export function install() {
+export function installPlugin() {
     PagerElement.register();
     registerNativeViewElement('pageritem', () => PagerItem);
 }
