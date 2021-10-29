@@ -1,310 +1,230 @@
-[![npm](https://img.shields.io/npm/v/@nativescript-community/ui-pager.svg)](https://www.npmjs.com/package/@nativescript-community/ui-pager)
-[![npm](https://img.shields.io/npm/dt/@nativescript-community/ui-pager.svg?label=npm%20downloads)](https://www.npmjs.com/package/@nativescript-community/ui-pager)
+<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
+<!--  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      DO NOT EDIT THIS READEME DIRECTLY! Edit "bluesprint.md" instead.
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<h1 align="center">@nativescript-community/ui-pager</h1>
+<p align="center">
+		<a href="https://npmcharts.com/compare/@nativescript-community/ui-pager?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@nativescript-community/ui-pager.svg" height="20"/></a>
+<a href="https://www.npmjs.com/package/@nativescript-community/ui-pager"><img alt="NPM Version" src="https://img.shields.io/npm/v/@nativescript-community/ui-pager.svg" height="20"/></a>
+	</p>
 
-# NativeScript Pager
+<p align="center">
+  <b>A NativeScript Pager / Carousel component that allows the user to swipe left and right through pages of data. </b></br>
+  <sub><sub>
+</p>
 
-## Install
+<br />
 
-- `tns plugin add @nativescript-community/ui-pager`
 
-## Usage
+| <img src="https://github.com/nativescript-community/ui-pager/raw/master/images/demo-ios.gif" height="500" /> | <img src="https://github.com/nativescript-community/ui-pager/raw/master/images/demo-android.gif" height="500" /> |
+| --- | ----------- |
+| iOS Demo | Android Demo |
 
-**Note** v11+
+
+[](#table-of-contents)
+
+## Table of Contents
+
+* [Installation](#installation)
+* [API](#api)
+	* [Properties](#properties)
+* [Usage in Angular](#usage-in-angular)
+	* [Examples](#examples)
+* [Usage in React](#usage-in-react)
+	* [Examples](#examples-1)
+* [Usage in Svelte](#usage-in-svelte)
+	* [Examples](#examples-2)
+* [Usage in Vue](#usage-in-vue)
+	* [Examples](#examples-3)
+* [Demos and Development](#demos-and-development)
+	* [Setup](#setup)
+	* [Build](#build)
+	* [Demos](#demos)
+* [Questions](#questions)
+
+
+[](#installation)
+
+## Installation
+Run the following command from the root of your project:
+
+`ns plugin add @nativescript-community/ui-pager`
+
+
+[](#api)
+
+## API
+
+### Properties
+
+| Property | Type |
+| - | - |
+| items | `array` or `ItemsSource` 
+| selectedIndex | `number` |
+| canGoRight | `boolean` |
+| canGoLeft | `boolean` |
+| spacing | `PercentLengthType` |
+| peaking | `PercentLengthType` |
+| perPage | `number` |
+| indicator | `string`  ('disable', 'none', 'worm', 'fill', 'swap', 'thin_worm', 'flat')|
+| circularMode | `boolean` |
+| autoPlayDelay | `number` |
+| autoPlay | `boolean` |
+| orientation | `string` ('horizontal' or 'vertical') |
+| autoPlay | `boolean` |
+| disableSwipe | `boolean` |
+| showIndicator | `boolean` |
+| indicatorColor | `Color` or `string` |
+| indicatorSelectedColor | `Color` or `string` |
+
 
 ```
 Pager for NativeScript supports the core ObservableArray module part of the core NativeScript modules collection. Using an ObservableArray instance as a source for Pager will ensure that changes in the source collection will be automatically taken care of by the control.
-````
-
-
-IMPORTANT: Make sure you include `xmlns:pager="@nativescript-community/ui-pager"` on the Page element any element can be used in the pager
-
-```xml
-<pager:Pager items="{{items}}" row="2" id="pager" spacing="2%" peaking="10%" transformers="scale" pagesCount="10" showIndicator="true" backgroundColor="lightsteelblue">
-            <pager:Pager.itemTemplate>
-                <GridLayout rows="auto, *" columns="*" backgroundColor="red">
-                    <Label text="{{title}}"/>
-                    <Image row="1" src="{{image}}"/>
-                </GridLayout>
-            </pager:Pager.itemTemplate>
-</pager:Pager>
 ```
 
-### Multi Template
 
-```xml
-<c:Pager selectedIndexChange="selectedIndexChange" itemTemplateSelector="$index % 2 === 0 ? 'even' : 'odd'" selectedIndex="5" items="{{items}}" row="4" id="pager" pagesCount="10" showIndicator="true" backgroundColor="lightsteelblue">
-      <Pager.itemTemplates>
-        <template key="even">
-          <GridLayout rows="auto,auto,*" columns="*">
-            <Label text="Even"/>
-            <Label row="1" text="{{title}}"/>
-            <Image loaded="loadedImage" row="2" src="{{image}}"/>
-          </GridLayout>
-        </template>
-        <template key="odd">
-          <GridLayout rows="auto,auto ,auto,*" columns="*" backgroundColor="white">
-            <Label text="Odd"/>
-            <Label row="1" text="{{title}}"/>
-            <StackLayout row="2">
-              <Label text="{{image}}"/>
-            </StackLayout>
-            <Image loaded="loadedImage" row="3" src="{{image}}"/>
-          </GridLayout>
-        </template>
-      </Pager.itemTemplates>
-      <!-- <Pager.itemTemplate><GridLayout rows="auto,*" columns="*"><Label row="1" text="{{title}}"/><Image loaded="loadedImage" row="2" src="{{image}}"/></GridLayout></Pager.itemTemplate> -->
-    </c:Pager>
+
+[](#usage-in-angular)
+
+## Usage in Angular
+
+Import the module into your project.
+
+```typescript
+import { PagerModule } from "@nativescript-community/ui-pager/angular";
+
+@NgModule({
+    imports: [
+        PagerModule,
+    ],
+})
 ```
 
-### Static Views
+### Examples
 
-```xml
-<c:Pager selectedIndexChange="selectedIndexChange" row="4" id="pager"
-                 showIndicator="true" backgroundColor="lightsteelblue">
-            <c:PagerItem backgroundColor="red">
-                <Label text="First"></Label>
-            </c:PagerItem>
-            <c:PagerItem backgroundColor="white">
-                <Label text="Second" ></Label>
-            </c:PagerItem>
-            <c:PagerItem backgroundColor="black">
-                <Label text="Third" color="white"></Label>
-            </c:PagerItem>
-            <c:PagerItem backgroundColor="green">
-                <Label text="Fourth"></Label>
-            </c:PagerItem>
-        </c:Pager>
+- [Static Pager](demo-snippets/ng/static-pager)
+  - A simple pager example using static content.
+- [Basic Pager](demo-snippets/ng/basic-pager)
+  - A simple pager example using dynamic content.
 
+
+[](#usage-in-react)
+
+## Usage in React
+
+Import the module into your project.
+
+```typescript
+import { Pager } from '@nativescript-community/ui-pager/react';
 ```
 
-### Vue
+### Examples
 
-```js
+- [Basic Pager](demo-snippets/react/BasicPager.tsx)
+  - A simple pager example using dynamic content.
+
+[](#usage-in-svelte)
+
+## Usage in Svelte
+
+Import the module into your project.
+
+```typescript
+import { registerNativeViewElement } from 'svelte-native/dom';
+
+import PagerElement from '@nativescript-community/ui-pager/svelte';
+import { PagerItem } from '@nativescript-community/ui-pager';
+
+PagerElement.register();
+registerNativeViewElement('pageritem', () => PagerItem);
+```
+
+### Examples
+
+- [Static Pager](demo-snippets/svelte/StaticPager.svelte)
+  - A simple pager example using static content.
+- [Basic Pager](demo-snippets/svelte/BasicPager.svelte)
+  - A simple pager example using dynamic content.
+
+
+[](#usage-in-vue)
+
+## Usage in Vue
+
+Import the module into your project.
+
+```typescript
 import Vue from 'nativescript-vue';
 import Pager from '@nativescript-community/ui-pager/vue';
 
 Vue.use(Pager);
 ```
 
-```html
-<template>
-    <Pager for="item in items">
-        <v-template>
-            <GridLayout class="pager-item" rows="auto, *" columns="*">
-                <Label :text="item.title" />
-                <Image  stretch="fill" row="1" :src="item.image" />
-            </GridLayout>
-        </v-template>
-        <v-template if="$odd">
-            <GridLayout class="pager-item" rows="auto, *" columns="*">
-                <Image  stretch="fill" :src="item.image" />
-                <Label :text="item.title" row="1"/>
-            </GridLayout>
-        </v-template>
-    </Pager>
-</template>
-```
+### Examples
 
-### Static Views
+- [Static Pager](demo-snippets/vue/StaticPager.vue)
+  - A simple pager example using static content.
+- [Basic Pager](demo-snippets/vue/BasicPager.vue)
+  - A simple pager example using dynamic content.
 
-```html
-<Pager height="100%" :selectedIndex="1">
-  <PagerItem backgroundColor="red"> <label text="First"></label> </PagerItem>
-  <PagerItem backgroundColor="white"> <label text="Second"></label> </PagerItem>
-  <PagerItem backgroundColor="black">
-    <label text="Third" color="white"></label>
-  </PagerItem>
-  <PagerItem backgroundColor="green"> <label text="Fourth"></label> </PagerItem>
-</Pager>
-```
 
-### Angular
 
-```js
-import { PagerModule } from "@nativescript-community/ui-pager/angular";
+[](#demos-and-development)
 
-@NgModule({
-    imports: [
-    PagerModule
-    ],
-    declarations: [
-        AppComponent
-    ],
-    bootstrap: [AppComponent]
-})
-```
+## Demos and Development
 
-_Angular v2_
 
-```html
-<Pager
-  [items]="items"
-  #pager
-  [selectedIndex]="currentPagerIndex"
-  (selectedIndexChange)="onIndexChanged($event)"
-  class="pager"
->
-  <template let-i="index" let-item="item">
-    <GridLayout
-      class="pager-item"
-      rows="auto, *"
-      columns="*"
-      backgroundColor="red"
-    >
-      <label [text]="item.title"></label>
-      <image row="1" [src]="item.image"></image>
-    </GridLayout>
-  </template>
-</Pager>
-```
+### Setup
 
-_Angular v4+_
-
-```html
-<Pager
-  [items]="items"
-  #pager
-  [selectedIndex]="currentPagerIndex"
-  (selectedIndexChange)="onIndexChanged($event)"
-  class="pager"
->
-  <ng-template let-i="index" let-item="item">
-    <GridLayout
-      class="pager-item"
-      rows="auto, *"
-      columns="*"
-      backgroundColor="red"
-    >
-      <label [text]="item.title"></label>
-      <image row="1" [src]="item.image"></image>
-    </GridLayout>
-  </ng-template>
-</Pager>
-```
-
-### Multi Template
-
-```ts
- public templateSelector = (item: any, index: number, items: any) => {
-    return index % 2 === 0 ? 'even' : 'odd';
-  }
-```
-
-```html
-<Pager
-  row="1"
-  [items]="items | async"
-  [itemTemplateSelector]="templateSelector"
-  #pager
-  [selectedIndex]="currentPagerIndex"
-  (selectedIndexChange)="onIndexChanged($event)"
-  class="pager"
-  backgroundColor="lightsteelblue"
->
-  <ng-template pagerTemplateKey="even" let-i="index" let-item="item">
-    <GridLayout class="pager-item" rows="auto,auto,*" columns="*">
-      <label text="Even"></label> <label row="1" [text]="item.title"></label>
-      <image loaded="loadedImage" row="2" [src]="item.image"></image>
-    </GridLayout>
-  </ng-template>
-
-  <ng-template pagerTemplateKey="odd" let-i="index" let-item="item">
-    <GridLayout
-      class="pager-item"
-      rows="auto,auto,auto,*"
-      columns="*"
-      backgroundColor="white"
-    >
-      <label text="Odd"></label> <label row="1" [text]="item.title"></label>
-      <StackLayout row="2"> <label [text]="item.image"></label> </StackLayout>
-      <image loaded="loadedImage" row="3" [src]="item.image"></image>
-    </GridLayout>
-  </ng-template>
-</Pager>
-```
-
-### Static Views
-
-```html
-<Pager
-  backgroundColor="orange"
-  row="1"
-  #pager
-  [selectedIndex]="1"
-  height="100%"
->
-  <StackLayout *pagerItem backgroundColor="red">
-    <label text="First"></label>
-  </StackLayout>
-  <StackLayout *pagerItem backgroundColor="white">
-    <label text="Second"></label>
-  </StackLayout>
-  <StackLayout *pagerItem backgroundColor="black">
-    <label text="Third" color="white"></label>
-  </StackLayout>
-  <StackLayout *pagerItem backgroundColor="green">
-    <label text="Fourth"></label>
-  </StackLayout>
-</Pager>
-```
-### React
-
-```typescript jsx
-import {$Pager} from '@nativescript-community/ui-pager/react';
-return (
-<$Pager
-                height={{ unit: "%", value: 100 }}
-                   selectedIndex={this.selectedIndex}
-                   selectedIndexChange={this.selectedIndexChange.bind(this)}
-                    items={this.items}
-                     cellFactory={
-                    (item, ref) => {
-                        return (
-                            <$StackLayout id={item.title} ref={ref}>
-                                <$Label text={item.title}/>
-                                <$ImageCacheIt stretch={'aspectFill'}
-                                        src={item.image}/>
-                            </$StackLayout>
-                        );
-                    }
-                }/>
-)
-```
-
-### Static Views
-
-```typescript jsx
-return(<$Pager row={0} col={0} selectedIndex={this.selectedIndex} height={{unit: '%', value: 100}}>
-                           <$PagerItem backgroundColor={'red'}>
-                               <$Label text={'First'}/>
-                           </$PagerItem>
-                           <$PagerItem backgroundColor={'white'}>
-                               <$Label text={'Second'}/>
-                           </$PagerItem>
-                           <$PagerItem backgroundColor={'black'}>
-                               <$Label text={'Third'} color={new Color('white')}/>
-                           </$PagerItem>
-                           <$PagerItem backgroundColor={'green'}>
-                               <$Label text={'Fourth'}/>
-                           </$PagerItem>
-                           <$PagerItem backgroundColor={'pink'}>
-                               <$Label text={'Fifth'}/>
-                           </$PagerItem>
-                       </$Pager>)
+To run the demos, you must clone this repo **recursively**.
 
 ```
-
-
-
-
-
-
-## Config
-
-```xml
-<Pager cache="false" disableSwipe="true" disableAnimation="true" selectedIndex="5">
+git clone https://github.com/@nativescript-community/ui-pager.git --recursive
 ```
 
-| IOS                                     | Android                                      |
-| --------------------------------------- | -------------------------------------------- |
-| ![ios](https://i.imgur.com/mvkqXOa.gif) | ![android](https://i.imgur.com/LQgOZ0wh.gif) |
+**Install Dependencies:**
+```bash
+npm i # or 'yarn install' or 'pnpm install'
+```
+
+**Interactive Menu:**
+
+To start the interactive menu, run `npm start` (or `yarn start` or `pnpm start`). This will list all of the commonly used scripts.
+
+### Build
+
+```bash
+npm run build
+
+npm run build.angular # or for Angular
+```
+
+### Demos
+
+```bash
+npm run demo.[ng|react|svelte|vue].[ios|android]
+
+npm run demo.svelte.ios # Example
+```
+
+[](#questions)
+
+## Questions
+
+If you have any questions/issues/comments please feel free to create an issue or start a conversation in the [NativeScript Community Discord](https://nativescript.org/discord).
