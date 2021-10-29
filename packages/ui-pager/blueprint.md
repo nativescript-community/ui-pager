@@ -41,7 +41,7 @@ Run the following command from the root of your project:
 
 ```
 Pager for NativeScript supports the core ObservableArray module part of the core NativeScript modules collection. Using an ObservableArray instance as a source for Pager will ensure that changes in the source collection will be automatically taken care of by the control.
-````
+```
 
 
 ## Usage in Angular
@@ -58,7 +58,7 @@ import { PagerModule } from "@nativescript-community/ui-pager/angular";
 })
 ```
 
-### Examples:
+### Examples
 
 - [Static Pager](demo-snippets/ng/static-pager)
   - A simple pager example using static content.
@@ -73,7 +73,7 @@ Import the module into your project.
 import { Pager } from '@nativescript-community/ui-pager/react';
 ```
 
-### Examples:
+### Examples
 
 - [Basic Pager](demo-snippets/react/BasicPager.tsx)
   - A simple pager example using dynamic content.
@@ -91,7 +91,7 @@ PagerElement.register();
 registerNativeViewElement('pageritem', () => PagerItem);
 ```
 
-### Examples:
+### Examples
 
 - [Static Pager](demo-snippets/svelte/StaticPager.svelte)
   - A simple pager example using static content.
@@ -109,7 +109,7 @@ import Pager from '@nativescript-community/ui-pager/vue';
 Vue.use(Pager);
 ```
 
-### Examples:
+### Examples
 
 - [Static Pager](demo-snippets/vue/StaticPager.vue)
   - A simple pager example using static content.
