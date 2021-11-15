@@ -568,13 +568,16 @@ export class Pager extends PagerBase {
             }
         }
         dispatch_async(main_queue, () => {
-            this.pager.scrollToItemAtIndexPathAtScrollPositionAnimated(
-                NSIndexPath.indexPathForItemInSection(maxMinIndex, 0),
-                this.orientation === 'vertical'
-                    ? UICollectionViewScrollPosition.CenteredVertically
-                    : UICollectionViewScrollPosition.CenteredHorizontally,
-                !!animate
-            );
+            if (this._dataSource.collectionViewNumberOfItemsInSection(this.pager, 0) > maxMinIndex) {
+                this.pager.scrollToItemAtIndexPathAtScrollPositionAnimated(
+                    NSIndexPath.indexPathForItemInSection(maxMinIndex, 0),
+                    this.orientation === 'vertical'
+                        ? UICollectionViewScrollPosition.CenteredVertically
+                        : UICollectionViewScrollPosition.CenteredHorizontally,
+                    !!animate
+                );
+            }
+            
             selectedIndexProperty.nativeValueChange(this, maxMinIndex);
         });
     }
