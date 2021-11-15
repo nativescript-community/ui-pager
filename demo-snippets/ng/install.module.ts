@@ -13,7 +13,7 @@ export const COMPONENTS = [StaticPagerComponent, BasicPagerComponent];
 })
 export class InstallModule {}
 
-export function install() { }
+export function installPlugin() { }
 
 export const demos = [
     { name: 'Static Pager', path: 'static-pager', component: StaticPagerComponent },

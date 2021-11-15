@@ -8,6 +8,6 @@
             "tns-core-modules/*": ["./node_modules/@nativescript/core/*"]
         }
     },
-    "include": ["../../src/ui-pager/**/*.ts", "../../references.d.ts", "../../src/references.d.ts"],
+    "include": ["../../src/ui-pager/**/*", "../../references.d.ts", "../../src/references.d.ts"],
     "exclude": ["../../src/ui-pager/angular/**"]
 }
