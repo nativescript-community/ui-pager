@@ -1,0 +1,12 @@
+{
+  "uses": [
+    "android.widget:RelativeLayout*",
+    "androidx.viewpager2.widget:ViewPager2*",
+    "androidx.viewpager2.widget:CompositePageTransformer*",
+    "com.rd:PageIndicatorView2*",
+    "com.rd.animation.type:AnimationType*",
+    "android.text.style:URLSpan*",
+    "androidx.core.widget:TextViewCompat*"
+  ]
+}
+
