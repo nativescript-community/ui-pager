@@ -4,7 +4,7 @@ import Pager from '@nativescript-community/ui-pager/vue';
 import StaticPager from './StaticPager.vue';
 import BasicPager from './BasicPager.vue';
 
-export function install() {
+export function installPlugin() {
     Vue.use(Pager);
 }
 
