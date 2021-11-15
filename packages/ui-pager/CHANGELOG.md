@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.32](https://github.com/nativescript-community/ui-pager/compare/v13.0.31...v13.0.32) (2021-11-15)
+
+
+### Bug Fixes
+
+* missing platforms directory ([44bff68](https://github.com/nativescript-community/ui-pager/commit/44bff68074855d14032201fe9198e1519ab22ca0))
+
+
+
+
+
 ## [13.0.31](https://github.com/nativescript-community/ui-pager/compare/v13.0.30...v13.0.31) (2021-10-22)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager
