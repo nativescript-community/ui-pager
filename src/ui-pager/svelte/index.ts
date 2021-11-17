@@ -1,9 +1,9 @@
 import { ItemEventData, View } from '@nativescript/core';
 import { profile } from '@nativescript/core/profiling';
 import { ContentView, LayoutBase, StackLayout, ViewBase } from '@nativescript/core/ui';
-import { NativeViewElementNode, TemplateElement, ViewNode, createElement, registerElement } from 'svelte-native/dom';
+import { NativeViewElementNode, TemplateElement, ViewNode, createElement, registerElement, registerNativeViewElement } from 'svelte-native/dom';
 import { flush } from 'svelte/internal';
-import { Pager } from '..';
+import { Pager, PagerItem } from '..';
 
 declare module '@nativescript/core/ui/core/view-base' {
     interface ViewBase {
@@ -40,7 +40,7 @@ class SvelteKeyedTemplate {
             profile('__SvelteComponentBuilder__', () => {
                 (nativeEl as any).__SvelteComponent__ = new this.component({
                     target: parentView,
-                    props,
+                    props
                 });
             })();
         };
@@ -72,7 +72,7 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
         const builder = (parentView, props: any) => {
             (nativeEl as any).__SvelteComponent__ = new componentClass({
                 target: parentView,
-                props,
+                props
             });
         };
         // in svelte we want to add the wrapper as a child of the pager ourselves
@@ -100,19 +100,11 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
         super.onInsertedChild(childNode, index);
         if (childNode instanceof TemplateElement) {
             const key = childNode.getAttribute('key') || 'default';
-            const templateIndex = this.nativeView._itemTemplatesInternal.findIndex(
-                (t) => t.key === key
-            );
+            const templateIndex = this.nativeView._itemTemplatesInternal.findIndex((t) => t.key === key);
             if (templateIndex >= 0) {
-                this.nativeView._itemTemplatesInternal.splice(
-                    templateIndex,
-                    1,
-                    new SvelteKeyedTemplate(key, childNode) as any
-                );
+                this.nativeView._itemTemplatesInternal.splice(templateIndex, 1, new SvelteKeyedTemplate(key, childNode) as any);
             } else {
-                this.nativeView._itemTemplatesInternal = this.nativeView._itemTemplatesInternal.concat(
-                    new SvelteKeyedTemplate(key, childNode) as any
-                );
+                this.nativeView._itemTemplatesInternal = this.nativeView._itemTemplatesInternal.concat(new SvelteKeyedTemplate(key, childNode) as any);
             }
         }
     }
@@ -121,13 +113,8 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
         super.onRemovedChild(childNode);
         if (childNode instanceof TemplateElement) {
             const key = childNode.getAttribute('key') || 'default';
-            if (
-                this.nativeView._itemTemplatesInternal &&
-                typeof this.nativeView._itemTemplatesInternal !== 'string'
-            ) {
-                this.nativeView._itemTemplatesInternal = this.nativeView._itemTemplatesInternal.filter(
-                    (t) => t.key !== key
-                );
+            if (this.nativeView._itemTemplatesInternal && typeof this.nativeView._itemTemplatesInternal !== 'string') {
+                this.nativeView._itemTemplatesInternal = this.nativeView._itemTemplatesInternal.filter((t) => t.key !== key);
             }
         }
     }
@@ -141,9 +128,7 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
                 _view.__SvelteComponentBuilder__(dummy, props);
                 _view.__SvelteComponentBuilder__ = null;
                 _view.__CollectionViewCurrentIndex__ = args.index;
-                const nativeEl = (dummy.firstElement() as NativeViewElementNode<
-                View
-                >).nativeView;
+                const nativeEl = (dummy.firstElement() as NativeViewElementNode<View>).nativeView;
                 (_view as LayoutBase).addChild(nativeEl);
             }
         } else {
@@ -157,5 +142,6 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
 
     static register() {
         registerElement('pager', () => new PagerViewElement());
+        registerNativeViewElement('pageritem', () => PagerItem);
     }
 }
