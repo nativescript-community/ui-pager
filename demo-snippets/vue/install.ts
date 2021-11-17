@@ -9,6 +9,6 @@ export function installPlugin() {
 }
 
 export const demos = [
-    { name: 'Static Pager', path: "static", component: StaticPager },
-    { name: 'Basic Pager', path: "basic", component: BasicPager }
+    { name: 'Static Pager', path: 'static', component: StaticPager },
+    { name: 'Basic Pager', path: 'basic', component: BasicPager }
 ];
