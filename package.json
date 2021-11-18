@@ -13,9 +13,13 @@
     "author": "",
     "scripts": {
         "build": "lerna run build",
+        "build.win": "lerna run build.win",
         "build.all": "lerna run build.all",
+        "build.all.win": "lerna run build.all.win",
         "build.angular": "lerna run build.angular",
+        "build.angular.win": "lerna run build.angular.win",
         "clean": "rimraf packages/**/*.d.ts packages/**/*.js packages/**/*.js.map packages/**/*.metadata.json packages/**/*.ngsummary.json node_modules package-lock.json",
+        "clean.win": "rimraf packages\\**\\*.d.ts packages\\**\\*.js packages\\**\\*.js.map packages\\**\\*.metadata.json packages\\**\\*.ngsummary.json node_modules package-lock.json",
         "commitmsg": "commitlint -e $GIT_PARAMS",
         "demo.ng.android": "cd ./demo-ng && ns run android --no-hmr",
         "demo.ng.ios": "cd ./demo-ng && ns run ios --no-hmr",
