@@ -38,8 +38,6 @@ function notifyForItemAtIndex(owner, nativeView: any, view: any, eventName: stri
     return args;
 }
 
-declare let CHIPageControlAji, CHIPageControlAleppo, CHIPageControlChimayo, CHIPageControlJalapeno, CHIPageControlJaloro, CHIPageControlPuya;
-
 const main_queue = dispatch_get_current_queue();
 
 export enum ContentInsetAdjustmentBehavior {
@@ -89,47 +87,47 @@ class UICellView extends UIView {
 const PFLAG_FORCE_LAYOUT = 1;
 export class Pager extends PagerBase {
     lastEvent: number = 0;
-    private _disableSwipe: boolean = false;
-    private _disableAnimation: boolean = false;
-    _layout: UICollectionViewFlowLinearLayoutImpl;
-    _preparingCell: boolean = false;
-    _delegate: UICollectionDelegateImpl;
+    private mDisableSwipe: boolean = false;
+    private mDisableAnimation: boolean = false;
+    mLayout: UICollectionViewFlowLinearLayoutImpl;
+    mPreparingCell: boolean = false;
+    mDelegate: UICollectionDelegateImpl;
     nativeViewProtected: UIView;
-    private _dataSource: UICollectionViewDataSourceImpl;
-    _map: Map<PagerCell, View>;
+    private mDataSource: UICollectionViewDataSourceImpl;
+    mMap: Map<PagerCell, View>;
     borderRadius: number;
     borderWidth: number;
     borderColor: string;
     backgroundColor: any;
-    _isRefreshing: boolean = false;
-    private _pager: UICollectionView;
-    private _indicatorView: any;
-    private _observableArrayInstance: ObservableArray<any>;
-    _isInit: boolean = false;
+    mIsRefreshing: boolean = false;
+    private mPager: UICollectionView;
+    private mIndicatorView: any;
+    private mObservableArrayInstance: ObservableArray<any>;
+    mIsInit: boolean = false;
 
-    public _innerWidth: number = 0;
-    public _innerHeight: number = 0;
-    _lastLayoutKey: string;
+    public mInnerWidth: number = 0;
+    public mInnerHeight: number = 0;
+    mLastLayoutKey: string;
 
     constructor() {
         super();
-        this._map = new Map<PagerCell, View>();
+        this.mMap = new Map<PagerCell, View>();
     }
 
     get pager() {
-        return this._pager;
+        return this.mPager;
     }
 
     get indicatorView() {
-        return this._indicatorView;
+        return this.mIndicatorView;
     }
 
     createNativeView() {
         const nativeView = UIView.new();
-        this._layout = UICollectionViewFlowLinearLayoutImpl.initWithOwner(new WeakRef(this));
-        this._layout.scrollDirection = UICollectionViewScrollDirection.Horizontal;
-        this._layout.minimumInteritemSpacing = 0;
-        const pager = (this._pager = UICollectionView.alloc().initWithFrameCollectionViewLayout(CGRectZero, this._layout));
+        this.mLayout = UICollectionViewFlowLinearLayoutImpl.initWithOwner(new WeakRef(this));
+        this.mLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal;
+        this.mLayout.minimumInteritemSpacing = 0;
+        const pager = (this.mPager = UICollectionView.alloc().initWithFrameCollectionViewLayout(CGRectZero, this.mLayout));
         pager.backgroundColor = UIColor.clearColor;
         pager.autoresizesSubviews = false;
         pager.autoresizingMask = UIViewAutoresizing.None;
@@ -144,19 +142,19 @@ export class Pager extends PagerBase {
         super.initNativeView();
         const nativeView = this.pager;
         nativeView.registerClassForCellWithReuseIdentifier(PagerCell.class(), this._defaultTemplate.key);
-        nativeView.dataSource = this._dataSource = UICollectionViewDataSourceImpl.initWithOwner(new WeakRef(this));
+        nativeView.dataSource = this.mDataSource = UICollectionViewDataSourceImpl.initWithOwner(new WeakRef(this));
         nativeView.scrollEnabled = !this.disableSwipe;
         if (this.orientation === 'vertical') {
-            this._layout.scrollDirection = UICollectionViewScrollDirection.Vertical;
+            this.mLayout.scrollDirection = UICollectionViewScrollDirection.Vertical;
             nativeView.alwaysBounceVertical = true;
             nativeView.alwaysBounceHorizontal = false;
         } else {
-            this._layout.scrollDirection = UICollectionViewScrollDirection.Horizontal;
+            this.mLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal;
             nativeView.alwaysBounceHorizontal = true;
             nativeView.alwaysBounceVertical = false;
         }
         this._setIndicator(this.indicator);
-        this._delegate = UICollectionDelegateImpl.initWithOwner(new WeakRef(this));
+        this.mDelegate = UICollectionDelegateImpl.initWithOwner(new WeakRef(this));
         this._setNativeClipToBounds();
         this._initAutoPlay(this.autoPlay);
     }
@@ -238,33 +236,33 @@ export class Pager extends PagerBase {
     }
 
     private _setIndicator(value: Indicator) {
-        if (this._indicatorView) {
-            this._indicatorView.removeFromSuperview();
+        if (this.mIndicatorView) {
+            this.mIndicatorView.removeFromSuperview();
         }
         switch (value) {
             case Indicator.None:
-                this._indicatorView = CHIPageControlAji.new();
+                this.mIndicatorView = CHIPageControlAji.new();
                 break;
             case Indicator.Worm:
-                this._indicatorView = CHIPageControlAleppo.new();
+                this.mIndicatorView = CHIPageControlAleppo.new();
                 break;
             case Indicator.Fill:
-                this._indicatorView = CHIPageControlChimayo.new();
+                this.mIndicatorView = CHIPageControlChimayo.new();
                 break;
             case Indicator.Swap:
-                this._indicatorView = CHIPageControlPuya.new();
+                this.mIndicatorView = CHIPageControlPuya.new();
                 break;
             case Indicator.THIN_WORM:
-                this._indicatorView = CHIPageControlJalapeno.new();
+                this.mIndicatorView = CHIPageControlJalapeno.new();
                 break;
             case Indicator.Flat:
-                this._indicatorView = CHIPageControlJaloro.new();
+                this.mIndicatorView = CHIPageControlJaloro.new();
                 break;
             default:
                 break;
         }
-        this._indicatorView.tintColor = UIColor.whiteColor;
-        this._indicatorView.currentPageTintColor = UIColor.whiteColor;
+        this.mIndicatorView.tintColor = UIColor.whiteColor;
+        this.mIndicatorView.currentPageTintColor = UIColor.whiteColor;
     }
 
     //@ts-ignore
@@ -280,17 +278,17 @@ export class Pager extends PagerBase {
 
     public [orientationProperty.setNative](value: Orientation) {
         if (value === 'horizontal') {
-            this._layout.scrollDirection = UICollectionViewScrollDirection.Horizontal;
+            this.mLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal;
         } else {
-            this._layout.scrollDirection = UICollectionViewScrollDirection.Vertical;
+            this.mLayout.scrollDirection = UICollectionViewScrollDirection.Vertical;
         }
     }
 
     public eachChildView(callback: (child: View) => boolean): void {
-        this._map.forEach((view, key) => callback(view));
+        this.mMap.forEach((view, key) => callback(view));
     }
     public eachChild(callback: (child: ViewBase) => boolean) {
-        this._map.forEach((view, key) => callback(view));
+        this.mMap.forEach((view, key) => callback(view));
     }
 
     _updateScrollPosition() {
@@ -327,19 +325,19 @@ export class Pager extends PagerBase {
             this.indicatorView.numberOfPages = value.length;
         }
         // remove old instance
-        if (this._observableArrayInstance) {
-            this._observableArrayInstance.off(ObservableArray.changeEvent, this._observableArrayHandler);
-            this._observableArrayInstance = null;
+        if (this.mObservableArrayInstance) {
+            this.mObservableArrayInstance.off(ObservableArray.changeEvent, this._observableArrayHandler);
+            this.mObservableArrayInstance = null;
         }
         if (value instanceof ObservableArray) {
-            this._observableArrayInstance = value as any;
-            this._observableArrayInstance.on(ObservableArray.changeEvent, this._observableArrayHandler);
+            this.mObservableArrayInstance = value as any;
+            this.mObservableArrayInstance.on(ObservableArray.changeEvent, this._observableArrayHandler);
         } else {
             this.refresh();
         }
 
         if (!value) {
-            this._isInit = false;
+            this.mIsInit = false;
         }
         selectedIndexProperty.coerce(this);
     }
@@ -382,8 +380,8 @@ export class Pager extends PagerBase {
         if (!this.pager) {
             return;
         }
-        if (this.indicatorView && this._observableArrayInstance && this._observableArrayInstance.length) {
-            this.indicatorView.numberOfPages = this._observableArrayInstance.length;
+        if (this.indicatorView && this.mObservableArrayInstance && this.mObservableArrayInstance.length) {
+            this.indicatorView.numberOfPages = this.mObservableArrayInstance.length;
         }
 
         const collectionView = this.pager;
@@ -391,7 +389,7 @@ export class Pager extends PagerBase {
             try {
                 let offset = 0;
                 collectionView.performBatchUpdatesCompletion(() => {
-                    this._isRefreshing = true;
+                    this.mIsRefreshing = true;
                     const array = [];
                     switch (args.action) {
                         case ChangeType.Add:
@@ -429,7 +427,7 @@ export class Pager extends PagerBase {
                     }
                     this._initAutoPlay(this.autoPlay);
                     if (this.itemCount === 0) {
-                        this._isInit = false;
+                        this.mIsInit = false;
                     }
                 }, null);
             } catch (err) {}
@@ -464,7 +462,7 @@ export class Pager extends PagerBase {
             }
         }
         dispatch_async(main_queue, () => {
-            if (this._dataSource.collectionViewNumberOfItemsInSection(this.pager, 0) > maxMinIndex) {
+            if (this.mDataSource.collectionViewNumberOfItemsInSection(this.pager, 0) > maxMinIndex) {
                 this.pager.scrollToItemAtIndexPathAtScrollPositionAnimated(
                     NSIndexPath.indexPathForItemInSection(maxMinIndex, 0),
                     this.orientation === 'vertical' ? UICollectionViewScrollPosition.CenteredVertically : UICollectionViewScrollPosition.CenteredHorizontally,
@@ -487,10 +485,10 @@ export class Pager extends PagerBase {
             return;
         }
         this._isDataDirty = false;
-        this._lastLayoutKey = this._innerWidth + '_' + this._innerHeight;
+        this.mLastLayoutKey = this.mInnerWidth + '_' + this.mInnerHeight;
 
         // clear bindingContext when it is not observable because otherwise bindings to items won't reevaluate
-        this._map.forEach((view, nativeView, map) => {
+        this.mMap.forEach((view, nativeView, map) => {
             if (!(view.bindingContext instanceof Observable)) {
                 view.bindingContext = null;
             }
@@ -512,11 +510,11 @@ export class Pager extends PagerBase {
         if (this.showIndicator && this.indicatorView) {
             this.nativeView.addSubview(this.indicatorView);
         }
-        if (this._isDataDirty && this._innerWidth !== undefined && this._innerHeight !== undefined) {
+        if (this._isDataDirty && this.mInnerWidth !== undefined && this.mInnerHeight !== undefined) {
             this.refresh();
         }
 
-        this.pager.delegate = this._delegate;
+        this.pager.delegate = this.mDelegate;
         if (!this.items && this._childrenCount > 0) {
             selectedIndexProperty.coerce(this);
             this._updateScrollPosition();
@@ -531,17 +529,17 @@ export class Pager extends PagerBase {
     }
 
     public disposeNativeView() {
-        this._delegate = null;
-        this._dataSource = null;
-        if (this.pager) {
-            this.pager.delegate = null;
-            this._pager = null;
+        this.mDelegate = null;
+        this.mDataSource = null;
+        if (this.mPager) {
+            this.mPager.delegate = null;
+            this.mPager = null;
         }
-        this._indicatorView = null;
-        this._layout = null;
-        if (this._observableArrayInstance) {
-            this._observableArrayInstance.off(ObservableArray.changeEvent, this._observableArrayHandler);
-            this._observableArrayInstance = null;
+        this.mIndicatorView = null;
+        this.mLayout = null;
+        if (this.mObservableArrayInstance) {
+            this.mObservableArrayInstance.off(ObservableArray.changeEvent, this._observableArrayHandler);
+            this.mObservableArrayInstance = null;
         }
         this.clearRealizedCells();
         super.disposeNativeView();
@@ -549,11 +547,11 @@ export class Pager extends PagerBase {
 
     private clearRealizedCells() {
         const that = new WeakRef<Pager>(this);
-        this._map.forEach(function (value, key: PagerCell) {
+        this.mMap.forEach(function (value, key: PagerCell) {
             that.get()._removeContainer(key);
             that.get()._clearCellViews(key);
         }, that);
-        this._map.clear();
+        this.mMap.clear();
     }
     private _clearCellViews(cell: PagerCell) {
         // if (cell && cell.view) {
@@ -573,8 +571,8 @@ export class Pager extends PagerBase {
         }
         // No need to request layout when we are removing cells.
         cell.owner = undefined;
-        const preparing = this._preparingCell;
-        this._preparingCell = true;
+        const preparing = this.mPreparingCell;
+        this.mPreparingCell = true;
         if (view.parent && !(view.parent instanceof Pager)) {
             if (!(view.parent instanceof Pager)) {
                 this._removeView(view.parent);
@@ -582,8 +580,8 @@ export class Pager extends PagerBase {
                 view.parent._removeView(view);
             }
         }
-        this._preparingCell = preparing;
-        this._map.delete(cell);
+        this.mPreparingCell = preparing;
+        this.mMap.delete(cell);
     }
 
     [indicatorProperty.setNative](value: Indicator) {
@@ -605,19 +603,19 @@ export class Pager extends PagerBase {
     }
 
     [disableSwipeProperty.setNative](value: boolean) {
-        this._pager.scrollEnabled = !value;
-        this._disableSwipe = value;
+        this.mPager.scrollEnabled = !value;
+        this.mDisableSwipe = value;
     }
 
     [contentInsetAdjustmentBehaviorProperty.setNative](value: ContentInsetAdjustmentBehavior) {
-        this._pager.contentInsetAdjustmentBehavior = value as any;
+        this.mPager.contentInsetAdjustmentBehavior = value as any;
     }
     get disableAnimation(): boolean {
-        return this._disableAnimation;
+        return this.mDisableAnimation;
     }
 
     set disableAnimation(value: boolean) {
-        this._disableAnimation = value;
+        this.mDisableAnimation = value;
     }
 
     public _removeContainer(cell: PagerCell, index?: number): void {
@@ -641,7 +639,7 @@ export class Pager extends PagerBase {
 
             view.parent._removeView(view);
         }
-        this._map.delete(cell);
+        this.mMap.delete(cell);
     }
 
     // called by N when the size actually changed
@@ -660,7 +658,7 @@ export class Pager extends PagerBase {
 
     public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        this._map.forEach((childView: any, pagerCell) => {
+        this.mMap.forEach((childView: any, pagerCell) => {
             View.measureChild(this, childView, childView._currentWidthMeasureSpec, childView._currentHeightMeasureSpec);
         });
     }
@@ -668,8 +666,8 @@ export class Pager extends PagerBase {
     protected updateInnerSize() {
         const width = this.getMeasuredWidth();
         const height = this.getMeasuredHeight();
-        this._innerWidth = width - this.effectivePaddingLeft - this.effectivePaddingRight;
-        this._innerHeight = height - this.effectivePaddingTop - this.effectivePaddingBottom;
+        this.mInnerWidth = width - this.effectivePaddingLeft - this.effectivePaddingRight;
+        this.mInnerHeight = height - this.effectivePaddingTop - this.effectivePaddingBottom;
     }
     public onLayout(left: number, top: number, right: number, bottom: number) {
         super.onLayout(left, top, right, bottom);
@@ -689,7 +687,7 @@ export class Pager extends PagerBase {
         layoutView.invalidateLayout();
 
         const size = this._getSize();
-        this._map.forEach((childView, pagerCell) => {
+        this.mMap.forEach((childView, pagerCell) => {
             const width = layout.toDevicePixels(size.width);
             const height = layout.toDevicePixels(size.height);
             View.layoutChild(this, childView, 0, 0, width, height);
@@ -697,22 +695,22 @@ export class Pager extends PagerBase {
 
         // there is no need to call refresh if it was triggered before with same size.
         // this refresh is just to handle size change
-        const layoutKey = this._innerWidth + '_' + this._innerHeight;
-        if (this._lastLayoutKey !== layoutKey) {
+        const layoutKey = this.mInnerWidth + '_' + this.mInnerHeight;
+        if (this.mLastLayoutKey !== layoutKey) {
             this.refresh();
         }
     }
 
     public requestLayout(): void {
         // When preparing cell don't call super - no need to invalidate our measure when cell desiredSize is changed.
-        if (!this._preparingCell) {
+        if (!this.mPreparingCell) {
             super.requestLayout();
         }
     }
 
     public _prepareCell(cell: PagerCell, indexPath: NSIndexPath) {
         try {
-            this._preparingCell = true;
+            this.mPreparingCell = true;
             const index = indexPath.row;
 
             let view = cell.view;
@@ -751,7 +749,7 @@ export class Pager extends PagerBase {
             if (!cell.view) {
                 cell.owner = new WeakRef(view);
             } else if (cell.view !== view) {
-                this._map.delete(cell);
+                this.mMap.delete(cell);
                 this._removeContainer(cell, index);
                 (cell.view.nativeViewProtected as UIView).removeFromSuperview();
                 cell.owner = new WeakRef(view);
@@ -759,7 +757,7 @@ export class Pager extends PagerBase {
             if (view) {
                 view.bindingContext = bindingContext;
             }
-            this._map.set(cell, view);
+            this.mMap.set(cell, view);
 
             if (view && !view.parent) {
                 this._addView(view);
@@ -785,7 +783,7 @@ export class Pager extends PagerBase {
 
             this._layoutCell(view, indexPath);
         } finally {
-            this._preparingCell = false;
+            this.mPreparingCell = false;
         }
     }
 
@@ -908,9 +906,9 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
     public collectionViewWillDisplayCellForItemAtIndexPath(collectionView: UICollectionView, cell: UICollectionViewCell, indexPath: NSIndexPath) {
         const owner = this._owner && this._owner.get();
         if (owner) {
-            if (!owner._isInit) {
+            if (!owner.mIsInit) {
                 owner._updateScrollPosition();
-                owner._isInit = true;
+                owner.mIsInit = true;
             }
             if (owner.items && indexPath.row === owner.lastIndex - owner.loadMoreCount) {
                 owner.notify<EventData>({
@@ -1133,7 +1131,7 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
             const index = indexPath.row;
             const data = owner._childrenViews[index];
             const viewType = data.type;
-            owner._preparingCell = true;
+            owner.mPreparingCell = true;
             collectionView.registerClassForCellWithReuseIdentifier(PagerCell.class(), `static-${viewType}`);
             cell = collectionView.dequeueReusableCellWithReuseIdentifierForIndexPath(`static-${viewType}`, indexPath) || PagerCell.initWithEmptyBackground();
             cell.index = index;
@@ -1172,7 +1170,7 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
                 innerView.view = new WeakRef(view);
                 innerView.addSubview(view.nativeViewProtected);
                 cell.contentView.addSubview(innerView);
-                owner._map.set(cell, view);
+                owner.mMap.set(cell, view);
                 // } else {
                 //     cell.contentView.addSubview(view.nativeViewProtected);
                 // }
@@ -1187,7 +1185,7 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
             if (view && (view as any).isLayoutRequired) {
                 View.layoutChild(owner, view, 0, 0, width, height);
             }
-            owner._preparingCell = false;
+            owner.mPreparingCell = false;
             return cell;
         }
 

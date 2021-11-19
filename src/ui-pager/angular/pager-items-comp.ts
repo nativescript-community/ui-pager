@@ -21,22 +21,12 @@ import {
     ViewContainerRef,
     ɵisListLikeIterable as isListLikeIterable
 } from '@angular/core';
-import {
-    Pager,
-    PagerError,
-    PagerItem,
-    PagerLog
-} from '@nativescript-community/ui-pager';
-import {
-    getSingleViewRecursive,
-    isInvisibleNode,
-    registerElement
-} from '@nativescript/angular';
-import { EventData, isIOS, KeyedTemplate, LayoutBase, Template, Trace, View } from '@nativescript/core';
+import { Pager, PagerError, PagerItem, PagerLog } from '@nativescript-community/ui-pager';
+import { extractSingleViewRecursive, isInvisibleNode, registerElement } from '@nativescript/angular';
+import { EventData, KeyedTemplate, LayoutBase, Template, Trace, View, isIOS } from '@nativescript/core';
 import { ObservableArray } from '@nativescript/core/data/observable-array';
 import { profile } from '@nativescript/core/profiling';
 import { ItemEventData, ItemsSource } from '@nativescript/core/ui/list-view';
-
 
 registerElement('Pager', () => Pager);
 registerElement('PagerItem', () => PagerItem);
@@ -50,28 +40,13 @@ export interface PagerTemplatedItemsView {
 
     refresh(): void;
 
-    on(
-        event: 'itemDisposing' | 'itemLoading',
-        callback: (args: ItemEventData) => void,
-        thisArg?: any
-    );
+    on(event: 'itemDisposing' | 'itemLoading', callback: (args: ItemEventData) => void, thisArg?: any);
 
-    off(
-        event: 'itemLoading' | 'itemDisposing',
-        callback: (args: EventData) => void,
-        thisArg?: any
-    );
-
+    off(event: 'itemLoading' | 'itemDisposing', callback: (args: EventData) => void, thisArg?: any);
 }
 
 export class ItemContext {
-    constructor(
-        public $implicit?: any,
-        public item?: any,
-        public index?: number,
-        public even?: boolean,
-        public odd?: boolean
-    ) {}
+    constructor(public $implicit?: any, public item?: any, public index?: number, public even?: boolean, public odd?: boolean) {}
 }
 
 export interface SetupItemViewArgs {
@@ -81,10 +56,9 @@ export interface SetupItemViewArgs {
     context: ItemContext;
 }
 @Component({
-    template: '',
+    template: ''
 })
-export abstract class TemplatedItemsComponent
-implements DoCheck, OnDestroy, AfterContentInit {
+export abstract class TemplatedItemsComponent implements DoCheck, OnDestroy, AfterContentInit {
     public abstract get nativeElement(): Pager;
 
     protected templatedItemsView: Pager;
@@ -92,14 +66,12 @@ implements DoCheck, OnDestroy, AfterContentInit {
     protected _differ: IterableDiffer<KeyedTemplate>;
     protected _templateMap: Map<string, KeyedTemplate>;
     private _selectedIndex: number;
-    @ViewChild('loader', { read: ViewContainerRef, static: false })
-    loader: ViewContainerRef;
+    @ViewChild('loader', { read: ViewContainerRef, static: false }) loader: ViewContainerRef;
 
     @Output()
     public setupItemView = new EventEmitter<SetupItemViewArgs>();
 
-    @ContentChild(TemplateRef, { static: false })
-    itemTemplateQuery: TemplateRef<ItemContext>;
+    @ContentChild(TemplateRef, { static: false }) itemTemplateQuery: TemplateRef<ItemContext>;
 
     itemTemplate: TemplateRef<ItemContext>;
 
@@ -115,9 +87,7 @@ implements DoCheck, OnDestroy, AfterContentInit {
             needDiffer = false;
         }
         if (needDiffer && !this._differ && isListLikeIterable(value)) {
-            this._differ = this._iterableDiffers
-                .find(this._items)
-                .create((_index, item) => item);
+            this._differ = this._iterableDiffers.find(this._items).create((_index, item) => item);
         }
 
         this.templatedItemsView.items = this._items;
@@ -134,23 +104,17 @@ implements DoCheck, OnDestroy, AfterContentInit {
     }
 
     ngAfterViewInit() {
-        if (!!(this._selectedIndex)) {
+        if (!!this._selectedIndex) {
             setTimeout(() => {
                 if (isIOS) {
-                    this.templatedItemsView.scrollToIndexAnimated(
-                        this._selectedIndex,
-                        false
-                    );
+                    this.templatedItemsView.scrollToIndexAnimated(this._selectedIndex, false);
                 }
                 this.templatedItemsView.selectedIndex = this._selectedIndex;
             });
         }
     }
 
-    constructor(
-        _elementRef: ElementRef,
-        private _iterableDiffers: IterableDiffers
-    ) {
+    constructor(_elementRef: ElementRef, private _iterableDiffers: IterableDiffers) {
         this.templatedItemsView = _elementRef.nativeElement;
 
         this.templatedItemsView.on('itemLoading', this.onItemLoading, this);
@@ -166,11 +130,7 @@ implements DoCheck, OnDestroy, AfterContentInit {
 
     ngOnDestroy() {
         this.templatedItemsView.off('itemLoading', this.onItemLoading, this);
-        this.templatedItemsView.off(
-            'itemDisposing',
-            this.onItemDisposing,
-            this
-        );
+        this.templatedItemsView.off('itemDisposing', this.onItemDisposing, this);
     }
 
     private setItemTemplates() {
@@ -203,7 +163,7 @@ implements DoCheck, OnDestroy, AfterContentInit {
 
         const keyedTemplate = {
             key,
-            createView: this.getItemTemplateViewFactory(template),
+            createView: this.getItemTemplateViewFactory(template)
         };
 
         this._templateMap.set(key, keyedTemplate);
@@ -218,11 +178,8 @@ implements DoCheck, OnDestroy, AfterContentInit {
         if (!this.items) return;
 
         const index = args.index;
-        const items = (<any>args.object).items;
-        const currentItem =
-            typeof items.getItem === 'function'
-                ? items.getItem(index)
-                : items[index];
+        const items = (args.object as any).items;
+        const currentItem = typeof items.getItem === 'function' ? items.getItem(index) : items[index];
         let viewRef: EmbeddedViewRef<ItemContext>;
 
         if (args.view) {
@@ -233,33 +190,21 @@ implements DoCheck, OnDestroy, AfterContentInit {
             viewRef = args.view[NG_VIEW];
             // Getting angular view from original element (in cases when ProxyViewContainer
             // is used NativeScript internally wraps it in a StackLayout)
-            if (
-                !viewRef &&
-                args.view instanceof LayoutBase &&
-                args.view.getChildrenCount() > 0
-            ) {
+            if (!viewRef && args.view instanceof LayoutBase && args.view.getChildrenCount() > 0) {
                 viewRef = args.view.getChildAt(0)[NG_VIEW];
             }
 
             if (!viewRef && Trace.isEnabled()) {
-                PagerError(
-                    `ViewReference not found for item ${index}. View recycling is not working`
-                );
+                PagerError(`ViewReference not found for item ${index}. View recycling is not working`);
             }
         }
 
         if (!viewRef) {
             if (Trace.isEnabled()) {
-                PagerLog(
-                    `onItemLoading: ${index} - Creating view from template`
-                );
+                PagerLog(`onItemLoading: ${index} - Creating view from template`);
             }
 
-            viewRef = this.loader.createEmbeddedView(
-                this.itemTemplate,
-                new ItemContext(),
-                0
-            );
+            viewRef = this.loader.createEmbeddedView(this.itemTemplate, new ItemContext(), 0);
             args.view = getItemViewRoot(viewRef);
             args.view[NG_VIEW] = viewRef;
         }
@@ -278,45 +223,31 @@ implements DoCheck, OnDestroy, AfterContentInit {
 
         if (args.view) {
             if (Trace.isEnabled()) {
-                PagerLog(
-                    `onItemDisposing: ${args.index} - Removing angular view`
-                );
+                PagerLog(`onItemDisposing: ${args.index} - Removing angular view`);
             }
 
             viewRef = args.view[NG_VIEW];
             // Getting angular view from original element (in cases when ProxyViewContainer
             // is used NativeScript internally wraps it in a StackLayout)
-            if (
-                !viewRef &&
-                args.view instanceof LayoutBase &&
-                args.view.getChildrenCount() > 0
-            ) {
+            if (!viewRef && args.view instanceof LayoutBase && args.view.getChildrenCount() > 0) {
                 viewRef = args.view.getChildAt(0)[NG_VIEW];
             }
 
             if (!viewRef && Trace.isEnabled()) {
-                PagerError(
-                    `ViewReference not found for item ${args.index}. View disposing is not working`
-                );
+                PagerError(`ViewReference not found for item ${args.index}. View disposing is not working`);
             }
         }
 
         if (viewRef) {
             if (Trace.isEnabled()) {
-                PagerLog(
-                    `onItemDisposing: ${args.index} - Disposing view reference`
-                );
+                PagerLog(`onItemDisposing: ${args.index} - Disposing view reference`);
             }
 
             viewRef.destroy();
         }
     }
 
-    public setupViewRef(
-        viewRef: EmbeddedViewRef<ItemContext>,
-        data: any,
-        index: number
-    ): void {
+    public setupViewRef(viewRef: EmbeddedViewRef<ItemContext>, data: any, index: number): void {
         const context = viewRef.context;
         context.$implicit = data;
         context.item = data;
@@ -328,19 +259,13 @@ implements DoCheck, OnDestroy, AfterContentInit {
             view: viewRef,
             data,
             index,
-            context,
+            context
         });
     }
 
-    protected getItemTemplateViewFactory(
-        template: TemplateRef<ItemContext>
-    ): () => View {
+    protected getItemTemplateViewFactory(template: TemplateRef<ItemContext>): () => View {
         return () => {
-            const viewRef = this.loader.createEmbeddedView(
-                template,
-                new ItemContext(),
-                0
-            );
+            const viewRef = this.loader.createEmbeddedView(template, new ItemContext(), 0);
             const resultView = getItemViewRoot(viewRef);
             resultView[NG_VIEW] = viewRef;
 
@@ -349,10 +274,7 @@ implements DoCheck, OnDestroy, AfterContentInit {
     }
 
     @profile
-    private detectChangesOnChild(
-        viewRef: EmbeddedViewRef<ItemContext>,
-        index: number
-    ) {
+    private detectChangesOnChild(viewRef: EmbeddedViewRef<ItemContext>, index: number) {
         if (Trace.isEnabled()) {
             PagerLog(`Manually detect changes in child: ${index}`);
         }
@@ -387,19 +309,14 @@ export interface ComponentView {
 
 export type RootLocator = (nodes: any[], nestLevel: number) => View;
 
-export function getItemViewRoot(
-    viewRef: ComponentView,
-    rootLocator: RootLocator = getSingleViewRecursive as any
-): View {
+export function getItemViewRoot(viewRef: ComponentView, rootLocator: RootLocator = extractSingleViewRecursive as any): View {
     return rootLocator(viewRef.rootNodes, 0);
 }
 
-export const TEMPLATED_ITEMS_COMPONENT = new InjectionToken<
-TemplatedItemsComponent
->('TemplatedItemsComponent');
+export const TEMPLATED_ITEMS_COMPONENT = new InjectionToken<TemplatedItemsComponent>('TemplatedItemsComponent');
 
 @Directive({
-    selector: '[pagerItem]',
+    selector: '[pagerItem]'
 })
 export class PagerItemDirective implements OnInit {
     private item: PagerItem;
@@ -427,17 +344,12 @@ export class PagerItemDirective implements OnInit {
 
         const viewRef = this.viewContainer.createEmbeddedView(this.templateRef);
         // Filter out text nodes and comments
-        const realViews = viewRef.rootNodes.filter(
-            (node) => !isInvisibleNode(node)
-        );
+        const realViews = viewRef.rootNodes.filter((node) => !isInvisibleNode(node));
 
         if (realViews.length > 0) {
             const view = realViews[0];
             this.item.addChild(view);
-            this.owner.nativeElement._addChildFromBuilder(
-                'PagerItem',
-                this.item
-            );
+            this.owner.nativeElement._addChildFromBuilder('PagerItem', this.item);
         }
     }
 }
