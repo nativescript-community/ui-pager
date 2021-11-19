@@ -1,5 +1,5 @@
 import { ChangeType, Color, Device, ObservableArray, Property, Screen, StackLayout, View, ViewBase, profile } from '@nativescript/core';
-import {  KeyedTemplate } from '@nativescript/core/ui/core/view';
+import { KeyedTemplate } from '@nativescript/core/ui/core/view';
 import { isString } from '@nativescript/core/utils/types';
 import { layout } from '@nativescript/core/utils/utils';
 import {
@@ -29,20 +29,14 @@ import {
 export * from './index.common';
 export { ItemsSource, Transformer } from './index.common';
 
-function notifyForItemAtIndex(
-    owner,
-    nativeView: any,
-    view: any,
-    eventName: string,
-    index: number
-) {
+function notifyForItemAtIndex(owner, nativeView: any, view: any, eventName: string, index: number) {
     const args = {
         eventName,
         object: owner,
         index,
         view,
         ios: undefined,
-        android: nativeView,
+        android: nativeView
     };
     owner.notify(args);
     return args;
@@ -69,10 +63,7 @@ export class Pager extends PagerBase {
     private _pageListener: any;
     public _realizedItems = new Map<android.view.View, View>();
     public _childrenViewsType = new Map<number, View>();
-    public _realizedTemplates = new Map<
-    string,
-    Map<android.view.View, View>
-    >();
+    public _realizedTemplates = new Map<string, Map<android.view.View, View>>();
     lastEvent = 0;
     private _lastSpacing = 0;
     private _lastPeaking = 0;
@@ -113,13 +104,9 @@ export class Pager extends PagerBase {
             this._pager.setNestedScrollingEnabled(true);
         }
         if (this.orientation === 'vertical') {
-            this._pager.setOrientation(
-                androidx.viewpager2.widget.ViewPager2.ORIENTATION_VERTICAL
-            );
+            this._pager.setOrientation(androidx.viewpager2.widget.ViewPager2.ORIENTATION_VERTICAL);
         } else {
-            this._pager.setOrientation(
-                androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
-            );
+            this._pager.setOrientation(androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL);
         }
 
         initPagerChangeCallback();
@@ -131,20 +118,9 @@ export class Pager extends PagerBase {
         this.pager.setUserInputEnabled(!this.disableSwipe);
         this.on(View.layoutChangedEvent, this.onLayoutChange, this);
         const LayoutParams = android.widget.RelativeLayout.LayoutParams;
-        nativeView.addView(
-            this.pager,
-            new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT
-            )
-        );
-        this._indicatorView = new (com).rd.PageIndicatorView2(
-            this._context
-        );
-        const params = new LayoutParams(
-            LayoutParams.WRAP_CONTENT,
-            LayoutParams.WRAP_CONTENT
-        );
+        nativeView.addView(this.pager, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        this._indicatorView = new com.rd.PageIndicatorView2(this._context);
+        const params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
         params.addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
         params.addRule(android.widget.RelativeLayout.CENTER_HORIZONTAL);
@@ -164,9 +140,7 @@ export class Pager extends PagerBase {
         this._oldDisableAnimation = this.disableAnimation;
         // Disable animation to set currentItem w/o animation
         this.disableAnimation = true;
-        this.pager.registerOnPageChangeCallback(
-            this._pageListener
-        );
+        this.pager.registerOnPageChangeCallback(this._pageListener);
         this.pager.setAdapter(this._pagerAdapter);
         if (this._androidViewId < 0) {
             this._androidViewId = android.view.View.generateViewId();
@@ -191,7 +165,7 @@ export class Pager extends PagerBase {
     }
 
     protected _removeChildView(index: number) {
-        const type =this._childrenViews[index].type;
+        const type = this._childrenViews[index].type;
         this._childrenViewsType.delete(type);
         super._removeChildView(index);
     }
@@ -214,14 +188,10 @@ export class Pager extends PagerBase {
         const newSpacing = size !== this._lastSpacing;
         if (newSpacing) {
             if (this.marginTransformer) {
-                this.compositeTransformer.removeTransformer(
-                    this.marginTransformer
-                );
+                this.compositeTransformer.removeTransformer(this.marginTransformer);
             }
 
-            this.marginTransformer = new androidx.viewpager2.widget.MarginPageTransformer(
-                size
-            );
+            this.marginTransformer = new androidx.viewpager2.widget.MarginPageTransformer(size);
             this.compositeTransformer.addTransformer(this.marginTransformer);
             this._lastSpacing = size;
         }
@@ -253,7 +223,7 @@ export class Pager extends PagerBase {
     }
 
     private _setIndicator(value: Indicator) {
-        const AnimationType = (com).rd.animation.type.AnimationType;
+        const AnimationType = com.rd.animation.type.AnimationType;
         switch (value) {
             case Indicator.None:
                 this.indicatorView.setAnimationType(AnimationType.NONE);
@@ -308,29 +278,17 @@ export class Pager extends PagerBase {
         if (this.pagerAdapter) {
             switch (args.action) {
                 case ChangeType.Add:
-                    this.pagerAdapter.notifyItemRangeInserted(
-                        args.index,
-                        args.addedCount
-                    );
+                    this.pagerAdapter.notifyItemRangeInserted(args.index, args.addedCount);
                     break;
                 case ChangeType.Delete:
-                    this.pagerAdapter.notifyItemRangeRemoved(
-                        args.index,
-                        args.removed.length
-                    );
+                    this.pagerAdapter.notifyItemRangeRemoved(args.index, args.removed.length);
                     break;
-                case  ChangeType.Splice:
+                case ChangeType.Splice:
                     if (args.removed.length > 0) {
-                        this.pagerAdapter.notifyItemRangeRemoved(
-                            args.index,
-                            args.removed.length
-                        );
+                        this.pagerAdapter.notifyItemRangeRemoved(args.index, args.removed.length);
                     }
                     if (args.addedCount > 0) {
-                        this.pagerAdapter.notifyItemRangeInserted(
-                            args.index,
-                            args.addedCount
-                        );
+                        this.pagerAdapter.notifyItemRangeInserted(args.index, args.addedCount);
                     }
                     break;
                 case ChangeType.Update:
@@ -352,10 +310,7 @@ export class Pager extends PagerBase {
         this._pagerAdapter = null;
         this._transformers = [];
         if (this._observableArrayInstance) {
-            this._observableArrayInstance.off(
-                ObservableArray.changeEvent,
-                this._observableArrayHandler
-            );
+            this._observableArrayInstance.off(ObservableArray.changeEvent, this._observableArrayHandler);
             this._observableArrayInstance = null;
         }
         super.disposeNativeView();
@@ -380,14 +335,14 @@ export class Pager extends PagerBase {
 
     [indicatorColorProperty.setNative](value: Color | string) {
         if (this.indicatorView) {
-            const color = (!value || value instanceof Color)? (value as Color) :new Color(value);
+            const color = !value || value instanceof Color ? (value as Color) : new Color(value);
             this.indicatorView.setUnselectedColor(color ? color.android : null);
         }
     }
 
     [indicatorSelectedColorProperty.setNative](value: Color | string) {
         if (this.indicatorView) {
-            const color = (!value || value instanceof Color)? (value as Color) :new Color(value);
+            const color = !value || value instanceof Color ? (value as Color) : new Color(value);
             this.indicatorView.setSelectedColor(color ? color.android : null);
         }
     }
@@ -407,10 +362,7 @@ export class Pager extends PagerBase {
             this.indicatorView.setCount(this._childrenCount);
         }
         if (this._observableArrayInstance) {
-            this._observableArrayInstance.off(
-                ObservableArray.changeEvent,
-                this._observableArrayHandler
-            );
+            this._observableArrayInstance.off(ObservableArray.changeEvent, this._observableArrayHandler);
             this._observableArrayInstance = null;
         }
 
@@ -420,10 +372,7 @@ export class Pager extends PagerBase {
                 if (!adapter) return;
                 selectedIndexProperty.coerce(this);
                 this._observableArrayInstance = value as any;
-                this._observableArrayInstance.on(
-                    ObservableArray.changeEvent,
-                    this._observableArrayHandler
-                );
+                this._observableArrayInstance.on(ObservableArray.changeEvent, this._observableArrayHandler);
             } else {
                 this.refresh();
                 selectedIndexProperty.coerce(this);
@@ -432,9 +381,7 @@ export class Pager extends PagerBase {
     }
 
     private _updateScrollPosition() {
-        const index = this.circularMode
-            ? this.selectedIndex + 1
-            : this.selectedIndex;
+        const index = this.circularMode ? this.selectedIndex + 1 : this.selectedIndex;
         if (this.pager.getCurrentItem() !== index) {
             this.indicatorView.setInteractiveAnimation(false);
             this.pager.setCurrentItem(index, false);
@@ -444,7 +391,7 @@ export class Pager extends PagerBase {
             this._initAutoPlay(this.autoPlay);
         });
     }
-    initStaticPagerAdapter () {
+    initStaticPagerAdapter() {
         if (!this.items && this._childrenCount > 0) {
             initStaticPagerStateAdapter();
             if (this.pager && !(this._pagerAdapter instanceof StaticPagerStateAdapter)) {
@@ -452,10 +399,7 @@ export class Pager extends PagerBase {
                 this.pager.setAdapter(this._pagerAdapter);
                 selectedIndexProperty.coerce(this);
                 setTimeout(() => {
-                    this.pager.setCurrentItem(
-                        this.selectedIndex,
-                        false
-                    );
+                    this.pager.setCurrentItem(this.selectedIndex, false);
                     if (this.indicatorView) {
                         this.indicatorView.setSelection(this.selectedIndex);
                     }
@@ -531,13 +475,9 @@ export class Pager extends PagerBase {
     }
 
     [itemTemplatesProperty.setNative](value: KeyedTemplate[]) {
-        this._itemTemplatesInternal = new Array<KeyedTemplate>(
-            this._defaultTemplate
-        );
+        this._itemTemplatesInternal = new Array<KeyedTemplate>(this._defaultTemplate);
         if (value) {
-            this._itemTemplatesInternal = this._itemTemplatesInternal.concat(
-                value
-            );
+            this._itemTemplatesInternal = this._itemTemplatesInternal.concat(value);
         }
 
         this._pagerAdapter = new PagerRecyclerAdapter(new WeakRef(this));
@@ -568,13 +508,9 @@ export class Pager extends PagerBase {
 
     public [orientationProperty.setNative](value: Orientation) {
         if (value === 'vertical') {
-            this._pager.setOrientation(
-                androidx.viewpager2.widget.ViewPager2.ORIENTATION_VERTICAL
-            );
+            this._pager.setOrientation(androidx.viewpager2.widget.ViewPager2.ORIENTATION_VERTICAL);
         } else {
-            this._pager.setOrientation(
-                androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
-            );
+            this._pager.setOrientation(androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL);
         }
     }
 
@@ -678,9 +614,7 @@ export class Pager extends PagerBase {
     }
 
     get itemCount(): number {
-        return this._childrenCount
-            ? this._childrenCount + (this.circularMode ? 2 : 0)
-            : 0;
+        return this._childrenCount ? this._childrenCount + (this.circularMode ? 2 : 0) : 0;
     }
 
     get lastIndex(): number {
@@ -697,7 +631,7 @@ export const pagesCountProperty = new Property<Pager, number>({
     valueConverter: (v) => parseInt(v, 10),
     valueChanged: (pager: Pager, oldValue, newValue) => {
         pager.updatePagesCount(pager.pagesCount);
-    },
+    }
 });
 pagesCountProperty.register(Pager);
 
@@ -709,8 +643,7 @@ function initPagerChangeCallback() {
     }
 
     @NativeClass
-    class PageChangeCallbackImpl extends androidx.viewpager2.widget.ViewPager2
-            .OnPageChangeCallback {
+    class PageChangeCallbackImpl extends androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback {
         private readonly owner: WeakRef<Pager>;
 
         constructor(owner: WeakRef<Pager>) {
@@ -724,7 +657,7 @@ function initPagerChangeCallback() {
             if (owner) {
                 owner.notify({
                     eventName: Pager.swipeEvent,
-                    object: owner,
+                    object: owner
                 });
             }
         }
@@ -749,30 +682,18 @@ function initPagerChangeCallback() {
                     selectedIndex: position,
                     currentPosition: position + positionOffset,
                     scrollX: owner.horizontalOffset,
-                    scrollY: owner.verticalOffset,
+                    scrollY: owner.verticalOffset
                 });
-                if (
-                    owner.items &&
-                    position ===
-                        owner.pagerAdapter.lastIndex() - owner.loadMoreCount
-                ) {
-                    owner.notify({eventName: LOADMOREITEMS, object: owner});
+                if (owner.items && position === owner.pagerAdapter.lastIndex() - owner.loadMoreCount) {
+                    owner.notify({ eventName: LOADMOREITEMS, object: owner });
                 }
 
                 if (owner.showIndicator && owner.indicatorView) {
-                    const progress = Pager.getProgress(
-                        owner.indicatorView,
-                        position,
-                        positionOffset,
-                        false
-                    );
+                    const progress = Pager.getProgress(owner.indicatorView, position, positionOffset, false);
                     const selectingPosition = progress[0];
                     const selectingProgress = progress[1];
                     owner.indicatorView.setInteractiveAnimation(true);
-                    owner.indicatorView.setProgress(
-                        selectingPosition,
-                        selectingProgress
-                    );
+                    owner.indicatorView.setProgress(selectingPosition, selectingProgress);
                 }
             }
         }
@@ -783,29 +704,25 @@ function initPagerChangeCallback() {
                 if (owner.lastEvent === 0 && state === 1) {
                     owner.notify({
                         eventName: Pager.swipeStartEvent,
-                        object: owner,
+                        object: owner
                     });
                     owner.lastEvent = 1;
                 } else if (owner.lastEvent === 1 && state === 1) {
                     owner.notify({
                         eventName: Pager.swipeOverEvent,
-                        object: owner,
+                        object: owner
                     });
                     owner.lastEvent = 1;
                 } else if (owner.lastEvent === 1 && state === 2) {
                     owner.notify({
                         eventName: Pager.swipeEndEvent,
-                        object: owner,
+                        object: owner
                     });
                     owner.lastEvent = 2;
                 } else {
                     owner.lastEvent = 0;
                 }
-                if (
-                    owner.isLayoutValid &&
-                    state ===
-                        androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_IDLE
-                ) {
+                if (owner.isLayoutValid && state === androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_IDLE) {
                     // ts-ignore
                     const count = owner.pagerAdapter.getItemCount();
                     const index = owner.pager.getCurrentItem();
@@ -814,10 +731,7 @@ function initPagerChangeCallback() {
                             // last item
                             owner.indicatorView.setInteractiveAnimation(false);
                             owner.pager.setCurrentItem(count - 2, false);
-                            selectedIndexProperty.nativeValueChange(
-                                owner,
-                                count - 3
-                            );
+                            selectedIndexProperty.nativeValueChange(owner, count - 3);
                             owner.indicatorView.setSelected(count - 3);
                             owner.indicatorView.setInteractiveAnimation(true);
                         } else if (index === count - 1) {
@@ -828,10 +742,7 @@ function initPagerChangeCallback() {
                             selectedIndexProperty.nativeValueChange(owner, 0);
                             owner.indicatorView.setInteractiveAnimation(true);
                         } else {
-                            selectedIndexProperty.nativeValueChange(
-                                owner,
-                                index - 1
-                            );
+                            selectedIndexProperty.nativeValueChange(owner, index - 1);
                         }
                     } else {
                         selectedIndexProperty.nativeValueChange(owner, index);
@@ -875,8 +786,7 @@ function initPagerRecyclerAdapter() {
             }
             const template = owner._itemTemplatesInternal[type];
 
-            let view: View =
-                template.createView();
+            let view: View = template.createView();
 
             if (!view && owner._itemViewLoader !== undefined) {
                 view = owner._itemViewLoader(template.key);
@@ -888,21 +798,13 @@ function initPagerRecyclerAdapter() {
                 sp[PLACEHOLDER] = true;
             }
             owner._addView(sp);
-            sp.nativeView.setLayoutParams(
-                new android.view.ViewGroup.LayoutParams(
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT
-                )
-            );
+            sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             owner._realizedItems.set(sp.nativeView, sp);
 
             initPagerViewHolder();
 
-            return new PagerViewHolder(
-                new WeakRef(sp),
-                new WeakRef(owner)
-            );
+            return new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
         }
 
         getPosition(index: number): number {
@@ -970,9 +872,7 @@ function initPagerRecyclerAdapter() {
 
         public getItemCount(): number {
             const owner = this.owner ? this.owner.get() : null;
-            return owner && owner.items && owner.items.length
-                ? owner.items.length + (owner.circularMode ? 2 : 0)
-                : 0;
+            return owner && owner.items && owner.items.length ? owner.items.length + (owner.circularMode ? 2 : 0) : 0;
         }
 
         public getItemViewType(index: number) {
@@ -1015,7 +915,6 @@ function initPagerRecyclerAdapter() {
     PagerRecyclerAdapter = PagerRecyclerAdapterImpl as any;
 }
 
-
 let StaticPagerStateAdapter;
 
 function initStaticPagerStateAdapter() {
@@ -1048,26 +947,16 @@ function initStaticPagerStateAdapter() {
             }
             owner._addView(sp);
 
-            sp.nativeView.setLayoutParams(
-                new android.view.ViewGroup.LayoutParams(
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT
-                )
-            );
-
+            sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             initPagerViewHolder();
 
-            return new PagerViewHolder(
-                new WeakRef(sp),
-                new WeakRef(owner)
-            );
+            return new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
         }
 
         onBindViewHolder(holder: any, index: number): void {
             const owner = this.owner ? this.owner.get() : null;
             if (owner) {
-
                 const args = {
                     eventName: ITEMLOADING,
                     object: owner,
@@ -1101,7 +990,6 @@ function initStaticPagerStateAdapter() {
             return null;
         }
 
-
         public getItemId(i: number) {
             const owner = this.owner ? this.owner.get() : null;
             let id = i;
@@ -1116,7 +1004,7 @@ function initStaticPagerStateAdapter() {
 
         public getItemCount(): number {
             const owner = this.owner ? this.owner.get() : null;
-            return owner && owner._childrenViews?.length || 0;
+            return (owner && owner._childrenViews?.length) || 0;
         }
 
         public getItemViewType(index: number) {
@@ -1126,7 +1014,6 @@ function initStaticPagerStateAdapter() {
             }
             return index;
         }
-
     }
 
     StaticPagerStateAdapter = StaticPagerStateAdapterImpl as any;
@@ -1140,16 +1027,11 @@ function initPagerViewHolder() {
     }
 
     @NativeClass
-    class PagerViewHolderImpl
-        extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        constructor(
-            private owner: WeakRef<View>,
-            private pager: WeakRef<Pager>
-        ) {
+    class PagerViewHolderImpl extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
+        constructor(private owner: WeakRef<View>, private pager: WeakRef<Pager>) {
             super(owner.get().nativeViewProtected);
             return global.__native(this);
         }
-
 
         get view(): View {
             return this.owner ? this.owner.get() : null;
@@ -1168,8 +1050,7 @@ function initZoomOutPageTransformer() {
 
     @NativeClass
     @Interfaces([androidx.viewpager2.widget.ViewPager2.PageTransformer])
-    class ZoomOutPageTransformerImpl extends java.lang.Object
-        implements androidx.viewpager2.widget.ViewPager2.PageTransformer {
+    class ZoomOutPageTransformerImpl extends java.lang.Object implements androidx.viewpager2.widget.ViewPager2.PageTransformer {
         owner: WeakRef<Pager>;
 
         constructor() {
@@ -1202,8 +1083,7 @@ function initZoomInPageTransformer() {
 
     @NativeClass
     @Interfaces([androidx.viewpager2.widget.ViewPager2.PageTransformer])
-    class ZoomInPageTransformerImpl extends java.lang.Object
-        implements androidx.viewpager2.widget.ViewPager2.PageTransformer {
+    class ZoomInPageTransformerImpl extends java.lang.Object implements androidx.viewpager2.widget.ViewPager2.PageTransformer {
         owner: WeakRef<Pager>;
 
         constructor() {
@@ -1212,15 +1092,12 @@ function initZoomInPageTransformer() {
         }
 
         public transformPage(view, position) {
-            const scale =
-                position < 0 ? position + 1.0 : Math.abs(1.0 - position);
+            const scale = position < 0 ? position + 1.0 : Math.abs(1.0 - position);
             view.setScaleX(scale);
             view.setScaleY(scale);
             view.setPivotX(view.getWidth() * 0.5);
             view.setPivotY(view.getHeight() * 0.5);
-            view.setAlpha(
-                view < -1.0 || position > 1.0 ? 0.0 : 1.0 - (scale - 1.0)
-            );
+            view.setAlpha(view < -1.0 || position > 1.0 ? 0.0 : 1.0 - (scale - 1.0));
         }
     }
 
