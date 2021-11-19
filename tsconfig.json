@@ -3,7 +3,7 @@
     "compilerOptions": {
         "paths": {
             "@nativescript-community/ui-pager": ["src/ui-pager"],
-            "@nativescript-community/ui-pager/*": ["src/ui-pager/*"],
+            "@nativescript-community/ui-pager/*": ["src/ui-pager/*"]
         }
     }
 }
