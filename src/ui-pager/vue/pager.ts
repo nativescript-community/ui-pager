@@ -5,36 +5,36 @@ function getItemContext(item, index = -1, alias = this.$props['+alias'], index_a
         [alias]: item,
         [index_alias || '$index']: index,
         $even: index % 2 === 0,
-        $odd: index % 2 !== 0,
+        $odd: index % 2 !== 0
     };
 }
 
 export default {
     model: {
         prop: 'selectedIndex',
-        event: 'selectedIndexChange',
+        event: 'selectedIndexChange'
     },
     props: {
         items: {
             //@ts-ignore
-            type: Array | Object,
+            type: Array | Object
         },
         '+alias': {
             type: String,
-            default: 'item',
+            default: 'item'
         },
         '+index': {
             type: String,
-            default: '$index',
+            default: '$index'
         },
         selectedIndex: {
             type: Number,
-            default: 0,
+            default: 0
         },
         itemTemplateSelector: {
             type: Function,
-            default: undefined,
-        },
+            default: undefined
+        }
     },
     template: `
     <NativePager
@@ -54,15 +54,15 @@ export default {
                 this.$refs.pagerView.setAttribute('items', newVal);
                 this.$refs.pagerView.nativeView.refresh();
             },
-            deep: true,
-        },
+            deep: true
+        }
     },
     computed: {
         listeners() {
             return Object.assign({}, this.$listeners, {
-                selectedIndexChange: this.onSelectedIndexChange,
+                selectedIndexChange: this.onSelectedIndexChange
             });
-        },
+        }
     },
     created() {
         this.getItemContext = getItemContext.bind(this);
@@ -77,7 +77,6 @@ export default {
                 : (item, index, items) => this.$templates.selectorFn(this.getItemContext(item, index));
             pagerView.setAttribute('itemTemplateSelector', itemTemplateSelector);
         }
-
     },
     methods: {
         onItemLoading(args) {
@@ -89,7 +88,7 @@ export default {
             const currentItem = args.bindingContext;
             const name = args.object._itemTemplateSelector(currentItem, index, items);
             const context = this.getItemContext(currentItem, index);
-            const oldVnode = (args.view && args.view[VUE_VIEW]);
+            const oldVnode = args.view && args.view[VUE_VIEW];
             args.view = this.$templates.patchTemplate(name, context, oldVnode);
         },
         onItemDisposing(args) {
@@ -103,13 +102,11 @@ export default {
         onSelectedIndexChange({ value }) {
             this.$emit('selectedIndexChange', {
                 value,
-                selectedIndex: value ,
+                selectedIndex: value,
                 object: {
                     selectedIndex: value
                 }
             });
-        },
-    },
-
-
+        }
+    }
 };
