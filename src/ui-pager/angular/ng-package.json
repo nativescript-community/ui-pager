@@ -1,0 +1,9 @@
+{
+    "dest": "../../../packages/ui-pager/angular",
+    "lib": {
+      "entryFile": "index.ts"
+    },
+    "allowedNonPeerDependencies": [
+      "."
+    ]
+}
