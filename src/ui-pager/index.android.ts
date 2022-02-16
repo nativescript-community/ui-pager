@@ -328,7 +328,6 @@ export class Pager extends PagerBase {
         return this._pagerAdapter;
     }
 
-    //@ts-ignore
     get _childrenCount(): number {
         return this.items?.length || this._childrenViews?.length || 0;
     }

@@ -265,7 +265,6 @@ export class Pager extends PagerBase {
         this.mIndicatorView.currentPageTintColor = UIColor.whiteColor;
     }
 
-    //@ts-ignore
     public get _childrenCount() {
         return this.items?.length || this._childrenViews?.length || 0;
     }
