@@ -4,8 +4,9 @@ import { PagerModule } from "@nativescript-community/ui-pager/angular";
 
 import { StaticPagerComponent } from './static-pager/static-pager.component';
 import { BasicPagerComponent } from './basic-pager/basic-pager.component';
+import { IndicatorComponent } from './indicator/indicator.component';
 
-export const COMPONENTS = [StaticPagerComponent, BasicPagerComponent];
+export const COMPONENTS = [StaticPagerComponent, BasicPagerComponent, IndicatorComponent];
 @NgModule({
     imports: [PagerModule],
     exports: [PagerModule],
@@ -17,6 +18,7 @@ export function installPlugin() { }
 
 export const demos = [
     { name: 'Static Pager', path: 'static-pager', component: StaticPagerComponent },
-    { name: 'Basic Pager', path: 'basic-pager', component: BasicPagerComponent }
+    { name: 'Basic Pager', path: 'basic-pager', component: BasicPagerComponent },
+    { name: 'Indicator', path: 'indicator', component: IndicatorComponent }
 ];
 

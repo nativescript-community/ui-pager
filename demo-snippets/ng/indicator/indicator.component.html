@@ -1,0 +1,24 @@
+<ActionBar>
+    <NavigationButton android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+    <Label text="Indicator"></Label>
+</ActionBar>
+
+<StackLayout>
+    <Pager
+        [items]="items"
+        height="300"
+        [selectedIndex]="selectedIndex"
+        (selectedIndexChange)="onIndexChanged($event)"
+        indicator="fill"
+        showIndicator="true"
+    >
+        <ng-template let-i="index" let-item="item">
+            <GridLayout
+                [backgroundColor]="item.color"
+            >
+                <Label class="label" [text]="item.title"></Label>
+            </GridLayout>
+        </ng-template>
+    </Pager>
+    <Button text="Reset" (tap)="resetPager()"></Button>
+</StackLayout>
