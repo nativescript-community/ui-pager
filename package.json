@@ -54,11 +54,6 @@
         "@nativescript-community/plugin-seed-tools": "file:tools"
     },
     "devDependencies": {},
-    "dependenciesMeta": {
-        "@nativescript-community/plugin-seed-tools": {
-            "injected": true
-        }
-    },
     "ntl": {
         "descriptions": {
             "build": "Build the plugin",
@@ -74,6 +69,11 @@
             "demo.vue.android": "Runs the Vue demo on Android.",
             "demo.vue.ios": "Runs the Vue demo on iOS.",
             "watch": "Watch for changes in the plugin source and re-build."
+        }
+    },
+    "dependenciesMeta": {
+        "@nativescript-community/plugin-seed-tools": {
+            "injected": true
         }
     }
 }
