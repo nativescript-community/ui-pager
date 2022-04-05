@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.35](https://github.com/nativescript-community/ui-pager/compare/v13.0.34...v13.0.35) (2022-03-15)
+
+
+### Bug Fixes
+
+* **android:** set indicator properly ([7836e84](https://github.com/nativescript-community/ui-pager/commit/7836e84c81e1372d565b3e7a41dd7d70c7651155))
+
+
+
+
+
+## [13.0.34](https://github.com/nativescript-community/ui-pager/compare/v13.0.33...v13.0.34) (2022-01-19)
+
+
+### Bug Fixes
+
+* better suited ios indicator size ([81941e6](https://github.com/nativescript-community/ui-pager/commit/81941e6eb555a176a25ebc363ae91463eb38b5e4))
+
+
+
+
+
 ## [13.0.33](https://github.com/nativescript-community/ui-pager/compare/v13.0.32...v13.0.33) (2021-11-17)
 
 

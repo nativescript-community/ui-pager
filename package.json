@@ -42,8 +42,7 @@
         "sync": "node ./tools/sync.js",
         "sync.test": "node ./tools/sync.js",
         "tsc": "cpy '**/*.d.ts' '../plugin' --parents --cwd=src && tsc -skipLibCheck -d",
-        "update": "node ./tools/update.js",
-        "watch": "npm run tsc -- -w"
+        "update": "node ./tools/update.js"
     },
     "commitlint": {
         "extends": [
@@ -53,7 +52,6 @@
     "dependencies": {
         "@nativescript-community/plugin-seed-tools": "file:tools"
     },
-    "devDependencies": {},
     "ntl": {
         "descriptions": {
             "build": "Build the plugin",

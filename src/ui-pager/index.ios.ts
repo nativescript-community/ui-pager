@@ -142,6 +142,9 @@ export class Pager extends PagerBase {
         super.initNativeView();
         const nativeView = this.pager;
         nativeView.registerClassForCellWithReuseIdentifier(PagerCell.class(), this._defaultTemplate.key);
+        nativeView.backgroundColor = UIColor.clearColor;
+        nativeView.autoresizesSubviews = false;
+        nativeView.autoresizingMask = 0;
         nativeView.dataSource = this.mDataSource = UICollectionViewDataSourceImpl.initWithOwner(new WeakRef(this));
         nativeView.scrollEnabled = !this.disableSwipe;
         if (this.orientation === 'vertical') {
@@ -263,6 +266,22 @@ export class Pager extends PagerBase {
         }
         this.mIndicatorView.tintColor = UIColor.whiteColor;
         this.mIndicatorView.currentPageTintColor = UIColor.whiteColor;
+
+        switch (value) {
+            case Indicator.None:
+            case Indicator.Worm:
+            case Indicator.Fill:
+            case Indicator.Swap:
+            case Indicator.THIN_WORM:
+            case Indicator.Disabled:
+                this.mIndicatorView.radius = 4;
+                break;
+
+            case Indicator.Flat:
+                this.mIndicatorView.radius = 2;
+                this.mIndicatorView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.7, 0.5);
+                break;
+        }
     }
 
     public get _childrenCount() {

@@ -273,6 +273,7 @@ export class Pager extends PagerBase {
     private _observableArrayHandler = (args) => {
         if (this.indicatorView && this.showIndicator) {
             this.indicatorView.setCount(this._childrenCount);
+            this.indicatorView.setSelected(args.index);
         }
         if (this.pagerAdapter) {
             // com.nativescript.pager.Utils.updateCollection(
