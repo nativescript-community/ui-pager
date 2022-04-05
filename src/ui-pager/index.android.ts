@@ -71,7 +71,7 @@ export class Pager extends PagerBase {
     private marginTransformer: any;
     private _transformers: any[];
     private _selectedIndexBeforeLoad = 0;
-    private _pager;
+    private _pager: androidx.viewpager2.widget.ViewPager2;
     private _indicatorView;
 
     constructor() {
@@ -109,9 +109,6 @@ export class Pager extends PagerBase {
             this._pager.setOrientation(androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL);
         }
 
-        initPagerChangeCallback();
-        this._pageListener = new PageChangeCallback(new WeakRef(this));
-
         initPagerRecyclerAdapter();
         this._pagerAdapter = new PagerRecyclerAdapter(new WeakRef(this));
         this.compositeTransformer = new androidx.viewpager2.widget.CompositePageTransformer();
@@ -140,6 +137,8 @@ export class Pager extends PagerBase {
         this._oldDisableAnimation = this.disableAnimation;
         // Disable animation to set currentItem w/o animation
         this.disableAnimation = true;
+        initPagerChangeCallback();
+        this._pageListener = new PageChangeCallback(new WeakRef(this));
         this.pager.registerOnPageChangeCallback(this._pageListener);
         this.pager.setAdapter(this._pagerAdapter);
         if (this._androidViewId < 0) {
@@ -276,6 +275,15 @@ export class Pager extends PagerBase {
             this.indicatorView.setCount(this._childrenCount);
         }
         if (this.pagerAdapter) {
+            // com.nativescript.pager.Utils.updateCollection(
+            //     JSON.stringify({
+            //       action: args.action,
+            //       index: args.index,
+            //       addedCount: args.addedCount,
+            //       removedCount: args.removed ? args.removed.length : 0
+            //     }),
+            //     this.pagerAdapter
+            //   );
             switch (args.action) {
                 case ChangeType.Add:
                     this.pagerAdapter.notifyItemRangeInserted(args.index, args.addedCount);
@@ -307,6 +315,8 @@ export class Pager extends PagerBase {
         this._realizedItems.clear();
         this._realizedTemplates.clear();
         this._pageListener = null;
+        // setAdapter(null) will destroy views
+        this.pager.setAdapter(null);
         this._pagerAdapter = null;
         this._transformers = [];
         if (this._observableArrayInstance) {
@@ -1049,7 +1059,7 @@ function initZoomOutPageTransformer() {
 
     @NativeClass
     @Interfaces([androidx.viewpager2.widget.ViewPager2.PageTransformer])
-    class ZoomOutPageTransformerImpl extends java.lang.Object implements androidx.viewpager2.widget.ViewPager2.PageTransformer {
+    class ZoomOutPageTransformerImpl extends androidx.viewpager2.widget.ViewPager2.PageTransformer {
         owner: WeakRef<Pager>;
 
         constructor() {
@@ -1082,7 +1092,7 @@ function initZoomInPageTransformer() {
 
     @NativeClass
     @Interfaces([androidx.viewpager2.widget.ViewPager2.PageTransformer])
-    class ZoomInPageTransformerImpl extends java.lang.Object implements androidx.viewpager2.widget.ViewPager2.PageTransformer {
+    class ZoomInPageTransformerImpl extends androidx.viewpager2.widget.ViewPager2.PageTransformer {
         owner: WeakRef<Pager>;
 
         constructor() {
