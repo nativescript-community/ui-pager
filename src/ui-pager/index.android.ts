@@ -950,6 +950,8 @@ function initStaticPagerStateAdapter() {
 
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
+            owner._realizedItems.set(sp.nativeView, sp);
+
             initPagerViewHolder();
 
             return new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
