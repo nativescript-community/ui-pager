@@ -97,7 +97,6 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
     public autoPlayDelay: number;
     public autoPlay: boolean;
     public static selectedIndexChangedEvent = 'selectedIndexChanged';
-    public static selectedIndexChangeEvent = 'selectedIndexChange';
     public static scrollEvent = 'scroll';
     public static swipeEvent = 'swipe';
     public static swipeStartEvent = 'swipeStart';
@@ -373,6 +372,14 @@ export const selectedIndexProperty = new CoercibleProperty<PagerBase, number>({
     name: 'selectedIndex',
     defaultValue: -1,
     // affectsLayout: global.isIOS,
+    valueChanged: (target, oldValue, newValue) => {
+        target.notify({
+            eventName: PagerBase.selectedIndexChangedEvent,
+            object: target,
+            oldIndex: oldValue,
+            newIndex: newValue
+        });
+    },
     coerceValue: (target, value) => {
         const items = target._childrenCount;
         if (items) {
