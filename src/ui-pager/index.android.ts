@@ -412,7 +412,7 @@ export class Pager extends PagerBase {
     }
 
     [selectedIndexProperty.setNative](value: number) {
-        if (this.isLoaded && this.isLayoutValid && this.pager) {
+        if (this.isLoaded && this.pager) {
             const index = this.circularMode ? value + 1 : value;
             if (this.pager.getCurrentItem() !== index) {
                 //   this.indicatorView.setInteractiveAnimation(!this.disableAnimation);
