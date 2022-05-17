@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.36](https://github.com/nativescript-community/ui-pager/compare/v13.0.35...v13.0.36) (2022-05-17)
+
+
+### Bug Fixes
+
+* Added missing notify for selectedIndexChangedEvent. ([f92ca87](https://github.com/nativescript-community/ui-pager/commit/f92ca875a3b90b751e4f428bd7f18b96b4ff3360))
+* **android:** Children property inheritance is broken for static pager. ([19e0a49](https://github.com/nativescript-community/ui-pager/commit/19e0a499113eee2e20bb74b256625d545708632f))
+* Triggering layout update inside selectedIndexChanged event blocks navigation. ([627c1f7](https://github.com/nativescript-community/ui-pager/commit/627c1f74315f7d3d1c8afff858126713d6c35a7b))
+
+
+
+
+
 ## [13.0.35](https://github.com/nativescript-community/ui-pager/compare/v13.0.34...v13.0.35) (2022-03-15)
 
 
