@@ -12,15 +12,15 @@
                     <StackLayout marginTop="200">
                         <StackLayout marginBottom="50">
                             <Label :text="item.field1" />
-                            <StackLayout v-if="item.field1" backgroundColor="red" height="10" width="10" />
+                            <StackLayout v-show="item.field1" backgroundColor="red" height="10" width="10" />
                         </StackLayout>
                         <StackLayout marginBottom="50">
                             <Label :text="item.field2" />
-                            <StackLayout v-if="item.field2" backgroundColor="green" height="10" width="10" />
+                            <StackLayout v-show="item.field2" backgroundColor="green" height="10" width="10" />
                         </StackLayout>
                         <StackLayout marginBottom="50">
                             <Label :text="item.field3" />
-                            <StackLayout v-if="item.field3" backgroundColor="blue" height="10" width="10"/>
+                            <StackLayout v-show="item.field3" backgroundColor="blue" height="10" width="10"/>
                         </StackLayout>
                     </StackLayout>
                 </v-template>
