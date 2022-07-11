@@ -992,11 +992,11 @@ function initStaticPagerStateAdapter() {
 
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
-            owner._realizedItems.set(sp.nativeView, sp);
 
             initPagerViewHolder();
-
-            return new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
+            const holder = new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
+            owner._viewHolders.add(new WeakRef(holder));
+            return holder;
         }
 
         onBindViewHolder(holder: any, index: number): void {
