@@ -1,11 +1,8 @@
 import { ChangeType, Color, EventData, KeyedTemplate, Observable, ObservableArray, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
 import { layout } from '@nativescript/core/utils/utils';
 import {
-    ITEMDISPOSING,
-    ITEMLOADING,
     Indicator,
     ItemEventData,
-    LOADMOREITEMS,
     Orientation,
     PagerBase,
     autoPlayProperty,
@@ -635,7 +632,7 @@ export class Pager extends PagerBase {
         let view = cell.view;
 
         const args = {
-            eventName: ITEMDISPOSING,
+            eventName: Pager.itemDisposingEvent,
             object: this,
             index,
             android: undefined,
@@ -737,7 +734,7 @@ export class Pager extends PagerBase {
             }
             const bindingContext = this._getDataItem(indexPath.row);
             const args = {
-                eventName: ITEMLOADING,
+                eventName: Pager.itemLoadingEvent,
                 object: this,
                 index,
                 android: undefined,
@@ -925,7 +922,7 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
             }
             if (owner.items && indexPath.row === owner.lastIndex - owner.loadMoreCount) {
                 owner.notify<EventData>({
-                    eventName: LOADMOREITEMS,
+                    eventName: Pager.loadMoreItemsEvent,
                     object: owner
                 });
             }

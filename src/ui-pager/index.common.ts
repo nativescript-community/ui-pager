@@ -28,9 +28,6 @@ import { layout } from '@nativescript/core/utils/utils';
 
 export type Orientation = 'horizontal' | 'vertical';
 
-export const ITEMLOADING = 'itemLoading';
-export const ITEMDISPOSING = 'itemDisposing';
-export const LOADMOREITEMS = 'loadMoreItems';
 export namespace knownTemplates {
     export const itemTemplate = 'itemTemplate';
 }
@@ -99,15 +96,16 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
     public circularMode: boolean;
     public autoPlayDelay: number;
     public autoPlay: boolean;
-    public static selectedIndexChangedEvent = 'selectedIndexChanged';
+    // This one works along with existing NS property change event system
     public static selectedIndexChangeEvent = 'selectedIndexChange';
     public static scrollEvent = 'scroll';
     public static swipeEvent = 'swipe';
     public static swipeStartEvent = 'swipeStart';
     public static swipeOverEvent = 'swipeOver';
     public static swipeEndEvent = 'swipeEnd';
-    public static loadMoreItemsEvent = LOADMOREITEMS;
-    public static itemLoadingEvent = ITEMLOADING;
+    public static loadMoreItemsEvent = 'loadMoreItems';
+    public static itemLoadingEvent = 'itemLoading';
+    public static itemDisposingEvent = 'itemDisposing';
     public orientation: Orientation;
     public _effectiveItemHeight: number;
     public _effectiveItemWidth: number;

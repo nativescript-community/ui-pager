@@ -47,6 +47,7 @@
 * [Installation](#installation)
 * [API](#api)
 	* [Properties](#properties)
+  * [Events](#events)
 * [Usage in Angular](#usage-in-angular)
 	* [Examples](#examples)
 * [Usage in React](#usage-in-react)
@@ -107,7 +108,41 @@ Run the following command from the root of your project:
 Pager for NativeScript supports the core ObservableArray module part of the core NativeScript modules collection. Using an ObservableArray instance as a source for Pager will ensure that changes in the source collection will be automatically taken care of by the control.
 ```
 
+### Properties
 
+| Property | Type |
+| - | - |
+| items | `array` or `ItemsSource` 
+| selectedIndex | `number` |
+| canGoRight | `boolean` |
+| canGoLeft | `boolean` |
+| spacing | `PercentLengthType` |
+| peaking | `PercentLengthType` |
+| perPage | `number` |
+| indicator | `string`  ('disable', 'none', 'worm', 'fill', 'swap', 'thin_worm', 'flat')|
+| circularMode | `boolean` |
+| autoPlayDelay | `number` |
+| autoPlay | `boolean` |
+| orientation | `string` ('horizontal' or 'vertical') |
+| autoPlay | `boolean` |
+| disableSwipe | `boolean` |
+| showIndicator | `boolean` |
+| indicatorColor | `Color` or `string` |
+| indicatorSelectedColor | `Color` or `string` |
+
+### Events
+
+| Event | Type |
+| - | - |
+| selectedIndexChange | `{ object: View, propertyName: string, oldValue: any, value: any }` |
+| scroll | `{ object: View, selectedIndex: number, currentPosition: number, scrollX: number, scrollY: number }` |
+| swipe | `{ object: View }` |
+| swipeStart | `{ object: View }` |
+| swipeOver | `{ object: View }` |
+| swipeEnd | `{ object: View }` |
+| loadMoreItems | `{ object: View }` |
+| itemLoading | `{ object: View, android: any, ios: any, index: number, view: View }` |
+| itemDisposing (iOS only) | `{ object: View, android: any, ios: any, index: number, view: View }` |
 
 [](#usage-in-angular)
 

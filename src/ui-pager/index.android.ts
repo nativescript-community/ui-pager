@@ -3,10 +3,8 @@ import { KeyedTemplate } from '@nativescript/core/ui/core/view';
 import { isString } from '@nativescript/core/utils/types';
 import { layout } from '@nativescript/core/utils/utils';
 import {
-    ITEMLOADING,
     Indicator,
     ItemEventData,
-    LOADMOREITEMS,
     Orientation,
     PagerBase,
     Transformer,
@@ -450,7 +448,7 @@ export class Pager extends PagerBase {
     }
 
     [selectedIndexProperty.setNative](value: number) {
-        if (this.isLoaded && this.isLayoutValid && this.pager) {
+        if (this.isLoaded && this.pager) {
             const index = this.circularMode ? value + 1 : value;
             if (this.pager.getCurrentItem() !== index) {
                 //   this.indicatorView.setInteractiveAnimation(!this.disableAnimation);
@@ -731,7 +729,7 @@ function initPagerChangeCallback() {
                     scrollY: owner.verticalOffset
                 });
                 if (owner.items && position === owner.pagerAdapter.lastIndex() - owner.loadMoreCount) {
-                    owner.notify({ eventName: LOADMOREITEMS, object: owner });
+                    owner.notify({ eventName: Pager.loadMoreItemsEvent, object: owner });
                 }
 
                 if (owner.showIndicator && owner.indicatorView) {
@@ -881,7 +879,7 @@ function initPagerRecyclerAdapter() {
                 }
                 const bindingContext = owner._getDataItem(index);
                 const args = {
-                    eventName: ITEMLOADING,
+                    eventName: Pager.itemLoadingEvent,
                     object: owner,
                     android: holder,
                     ios: undefined,
@@ -994,6 +992,8 @@ function initStaticPagerStateAdapter() {
 
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
+            owner._realizedItems.set(sp.nativeView, sp);
+
             initPagerViewHolder();
 
             return new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
@@ -1003,7 +1003,7 @@ function initStaticPagerStateAdapter() {
             const owner = this.owner ? this.owner.get() : null;
             if (owner) {
                 const args = {
-                    eventName: ITEMLOADING,
+                    eventName: Pager.itemLoadingEvent,
                     object: owner,
                     android: holder,
                     ios: undefined,
