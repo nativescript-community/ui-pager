@@ -8,7 +8,6 @@ import {
     LOADMOREITEMS,
     Orientation,
     PagerBase,
-    PagerItem,
     autoPlayProperty,
     autoplayDelayProperty,
     disableSwipeProperty,
@@ -24,19 +23,6 @@ import {
 
 export * from './index.common';
 export { ItemsSource, Transformer } from './index.common';
-
-function notifyForItemAtIndex(owner, nativeView: any, view: any, eventName: string, index: number) {
-    const args = {
-        eventName,
-        object: owner,
-        index,
-        view,
-        ios: nativeView,
-        android: undefined
-    };
-    owner.notify(args);
-    return args;
-}
 
 const main_queue = dispatch_get_current_queue();
 
@@ -160,6 +146,19 @@ export class Pager extends PagerBase {
         this.mDelegate = UICollectionDelegateImpl.initWithOwner(new WeakRef(this));
         this._setNativeClipToBounds();
         this._initAutoPlay(this.autoPlay);
+    }
+
+    getChildView(index: number): View {
+        if (this._childrenViews) {
+            return this._childrenViews[index].view;
+        }
+        let result: View;
+        if (this.nativeViewProtected) {
+            const cell = this.mPager.cellForItemAtIndexPath(NSIndexPath.indexPathForRowInSection(index, 0)) as PagerCell;
+            return cell?.view;
+        }
+
+        return result;
     }
 
     _getRealWidthHeight(): { width: number; height: number } {
@@ -315,7 +314,7 @@ export class Pager extends PagerBase {
         if (!view || size === 0) {
             return;
         }
-        this._scrollToIndexAnimated(this.selectedIndex, false);
+        this.scrollToIndexAnimated(this.selectedIndex, false);
     }
 
     [selectedIndexProperty.setNative](value: number) {
@@ -454,7 +453,7 @@ export class Pager extends PagerBase {
 
     _onItemsChanged(oldValue: any, newValue: any): void {}
 
-    _scrollToIndexAnimated(index: number, animate: boolean) {
+    scrollToIndexAnimated(index: number, animate: boolean) {
         if (!this.pager) return;
 
         const contentSize = this.pager.contentSize;
@@ -479,21 +478,17 @@ export class Pager extends PagerBase {
                 return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
             }
         }
-        dispatch_async(main_queue, () => {
-            if (this.mDataSource.collectionViewNumberOfItemsInSection(this.pager, 0) > maxMinIndex) {
-                this.pager.scrollToItemAtIndexPathAtScrollPositionAnimated(
-                    NSIndexPath.indexPathForItemInSection(maxMinIndex, 0),
-                    this.orientation === 'vertical' ? UICollectionViewScrollPosition.CenteredVertically : UICollectionViewScrollPosition.CenteredHorizontally,
-                    !!animate
-                );
-            }
+        // dispatch_async(main_queue, () => {
+        if (this.mDataSource.collectionViewNumberOfItemsInSection(this.pager, 0) > maxMinIndex) {
+            this.pager.scrollToItemAtIndexPathAtScrollPositionAnimated(
+                NSIndexPath.indexPathForItemInSection(maxMinIndex, 0),
+                this.orientation === 'vertical' ? UICollectionViewScrollPosition.CenteredVertically : UICollectionViewScrollPosition.CenteredHorizontally,
+                !!animate
+            );
+        }
 
-            selectedIndexProperty.nativeValueChange(this, maxMinIndex);
-        });
-    }
-
-    public scrollToIndexAnimated(index: number, animate: boolean) {
-        this._scrollToIndexAnimated(index, animate);
+        selectedIndexProperty.nativeValueChange(this, maxMinIndex);
+        // });
     }
 
     @profile

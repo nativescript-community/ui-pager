@@ -9,7 +9,6 @@ import {
     LOADMOREITEMS,
     Orientation,
     PagerBase,
-    PagerItem,
     Transformer,
     autoPlayProperty,
     autoplayDelayProperty,
@@ -61,7 +60,9 @@ export class Pager extends PagerBase {
     private _pagerAdapter: PagerRecyclerAdapter;
     private _views: any[];
     private _pageListener: any;
-    public _realizedItems = new Map<android.view.View, View>();
+    // used to store viewHolder and thus their corresponding Views
+    // used to "destroy" cells when possible
+    _viewHolders = new Set<WeakRef<PagerViewHolder>>();
     public _childrenViewsType = new Map<number, View>();
     public _realizedTemplates = new Map<string, Map<android.view.View, View>>();
     lastEvent = 0;
@@ -161,6 +162,27 @@ export class Pager extends PagerBase {
         } else {
             this._indicatorView.setCount(0);
         }
+    }
+
+    private enumerateViewHolders<T = any>(cb: (v: PagerViewHolder) => T) {
+        let result: T, v: PagerViewHolder;
+        for (let it = this._viewHolders.values(), cellItemView: WeakRef<PagerViewHolder> = null; (cellItemView = it.next().value); ) {
+            v = cellItemView?.get();
+            if (v) {
+                result = cb(v);
+                if (result) {
+                    return result;
+                }
+            }
+        }
+        return result;
+    }
+
+    getChildView(index: number): View {
+        if (this._childrenViews) {
+            return this._childrenViews[index].view;
+        }
+        return this.enumerateViewHolders<View>((v) => (v.getAdapterPosition() === index ? v.view : undefined));
     }
 
     protected _removeChildView(index: number) {
@@ -309,11 +331,16 @@ export class Pager extends PagerBase {
             this._initAutoPlay(this.autoPlay);
         }
     };
-
+    disposeViewHolderViews() {
+        this.enumerateViewHolders((v) => {
+            this._removeViewCore(v.view);
+        });
+        this._viewHolders = new Set();
+    }
     public disposeNativeView() {
         this.off(View.layoutChangedEvent, this.onLayoutChange, this);
         this._childrenViews = null;
-        this._realizedItems.clear();
+        this.disposeViewHolderViews();
         this._realizedTemplates.clear();
         this._pageListener = null;
         // setAdapter(null) will destroy views
@@ -465,13 +492,22 @@ export class Pager extends PagerBase {
         // this._android.setAdapter(null);
         super.onUnloaded();
     }
-
-    eachChildView(callback: (child: View) => boolean): void {
-        if (this._realizedItems && this._realizedItems.size > 0) {
-            this._realizedItems.forEach((view, key) => {
-                callback(view);
-            });
-        }
+    eachChild(callback: (child: ViewBase) => boolean) {
+        super.eachChild(callback);
+        // used for css updates (like theme change)
+        this.enumerateViewHolders((v) => {
+            const view = v.view;
+            if (view) {
+                if (view.parent instanceof Pager) {
+                    callback(view);
+                } else {
+                    // in some cases (like item is unloaded from another place (like angular) view.parent becomes undefined)
+                    if (view.parent) {
+                        callback(view.parent);
+                    }
+                }
+            }
+        });
     }
 
     updateAdapter() {
@@ -810,11 +846,10 @@ function initPagerRecyclerAdapter() {
             owner._addView(sp);
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
-            owner._realizedItems.set(sp.nativeView, sp);
-
             initPagerViewHolder();
-
-            return new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
+            const holder = new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
+            owner._viewHolders.add(new WeakRef(holder));
+            return holder;
         }
 
         getPosition(index: number): number {
@@ -1029,7 +1064,13 @@ function initStaticPagerStateAdapter() {
     StaticPagerStateAdapter = StaticPagerStateAdapterImpl as any;
 }
 
-let PagerViewHolder;
+interface PagerViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    // tslint:disable-next-line:no-misused-new
+    new (owner: WeakRef<View>, pager: WeakRef<Pager>): PagerViewHolder;
+    view: View;
+}
+// eslint-disable-next-line no-redeclare
+let PagerViewHolder: PagerViewHolder;
 
 function initPagerViewHolder() {
     if (PagerViewHolder) {
@@ -1044,7 +1085,7 @@ function initPagerViewHolder() {
         }
 
         get view(): View {
-            return this.owner ? this.owner.get() : null;
+            return this.owner?.get();
         }
     }
 
@@ -1060,7 +1101,7 @@ function initZoomOutPageTransformer() {
 
     @NativeClass
     @Interfaces([androidx.viewpager2.widget.ViewPager2.PageTransformer])
-    class ZoomOutPageTransformerImpl extends androidx.viewpager2.widget.ViewPager2.PageTransformer {
+    class ZoomOutPageTransformerImpl extends java.lang.Object {
         owner: WeakRef<Pager>;
 
         constructor() {
@@ -1093,7 +1134,7 @@ function initZoomInPageTransformer() {
 
     @NativeClass
     @Interfaces([androidx.viewpager2.widget.ViewPager2.PageTransformer])
-    class ZoomInPageTransformerImpl extends androidx.viewpager2.widget.ViewPager2.PageTransformer {
+    class ZoomInPageTransformerImpl extends java.lang.Object {
         owner: WeakRef<Pager>;
 
         constructor() {
