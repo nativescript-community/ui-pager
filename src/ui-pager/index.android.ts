@@ -60,7 +60,7 @@ export class Pager extends PagerBase {
     private _pageListener: any;
     // used to store viewHolder and thus their corresponding Views
     // used to "destroy" cells when possible
-    _viewHolders = new Set<WeakRef<PagerViewHolder>>();
+    _viewHolders = new Set<PagerViewHolder>();
     public _childrenViewsType = new Map<number, View>();
     public _realizedTemplates = new Map<string, Map<android.view.View, View>>();
     lastEvent = 0;
@@ -164,9 +164,8 @@ export class Pager extends PagerBase {
 
     private enumerateViewHolders<T = any>(cb: (v: PagerViewHolder) => T) {
         let result: T, v: PagerViewHolder;
-        for (let it = this._viewHolders.values(), cellItemView: WeakRef<PagerViewHolder> = null; (cellItemView = it.next().value); ) {
-            v = cellItemView?.get();
-            if (v) {
+        for (let it = this._viewHolders.values(), cellItemView: PagerViewHolder = null; (cellItemView = it.next().value); ) {
+            if (cellItemView) {
                 result = cb(v);
                 if (result) {
                     return result;
@@ -331,7 +330,12 @@ export class Pager extends PagerBase {
     };
     disposeViewHolderViews() {
         this.enumerateViewHolders((v) => {
-            this._removeViewCore(v.view);
+            const view = v.view;
+            if (view && view.isLoaded) {
+                view.callUnloaded();
+            }
+            view._isAddedToNativeVisualTree = false;
+            view._tearDownUI();
         });
         this._viewHolders = new Set();
     }
@@ -841,12 +845,14 @@ function initPagerRecyclerAdapter() {
             } else {
                 sp[PLACEHOLDER] = true;
             }
-            owner._addView(sp);
+            sp._setupAsRootView(owner._context);
+            sp._isAddedToNativeVisualTree = true;
+            sp.callLoaded();
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             initPagerViewHolder();
             const holder = new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
-            owner._viewHolders.add(new WeakRef(holder));
+            owner._viewHolders.add(holder);
             return holder;
         }
 
@@ -988,14 +994,14 @@ function initStaticPagerStateAdapter() {
             } else {
                 sp[PLACEHOLDER] = true;
             }
-            owner._addView(sp);
-
+            sp._setupAsRootView(owner._context);
+            sp._isAddedToNativeVisualTree = true;
+            sp.callLoaded();
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
-
 
             initPagerViewHolder();
             const holder = new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
-            owner._viewHolders.add(new WeakRef(holder));
+            owner._viewHolders.add(holder);
             return holder;
         }
 
