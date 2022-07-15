@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.38](https://github.com/nativescript-community/ui-pager/compare/v13.0.37...v13.0.38) (2022-07-15)
+
+
+### Bug Fixes
+
+* **android:** regression fix ([7a33ae0](https://github.com/nativescript-community/ui-pager/commit/7a33ae03c9b7d9b057bc74f6a2c40d471b308d13))
+* **android:** set page listener in initNativeView ([6e9273f](https://github.com/nativescript-community/ui-pager/commit/6e9273fe9ac18636a31a270ea5ec0981924d6363))
+* switch bug example to v-show ([cfede99](https://github.com/nativescript-community/ui-pager/commit/cfede991d32ef929ff51c8923210357ee5aea9eb))
+
+
+### Features
+
+* `getChildView` working with templates ([76e5d85](https://github.com/nativescript-community/ui-pager/commit/76e5d85d5d7eefd5e22fc39b0d2583da647b26e2))
+
+
+
+
+
 ## [13.0.37](https://github.com/nativescript-community/ui-pager/compare/v13.0.36...v13.0.37) (2022-05-17)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager
