@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.39](https://github.com/nativescript-community/ui-pager/compare/v13.0.38...v13.0.39) (2022-07-15)
+
+
+### Bug Fixes
+
+* **android:** oups ([b4c4399](https://github.com/nativescript-community/ui-pager/commit/b4c439906c978da054302a548c9c3411657cd130))
+
+
+
+
+
 ## [13.0.38](https://github.com/nativescript-community/ui-pager/compare/v13.0.37...v13.0.38) (2022-07-15)
 
 
