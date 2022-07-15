@@ -166,7 +166,7 @@ export class Pager extends PagerBase {
         let result: T, v: PagerViewHolder;
         for (let it = this._viewHolders.values(), cellItemView: PagerViewHolder = null; (cellItemView = it.next().value); ) {
             if (cellItemView) {
-                result = cb(v);
+                result = cb(cellItemView);
                 if (result) {
                     return result;
                 }
