@@ -335,6 +335,8 @@ export class Pager extends PagerBase {
                 view.callUnloaded();
             }
             view._isAddedToNativeVisualTree = false;
+            //@ts-ignore
+            view.parent = null;
             view._tearDownUI();
         });
         this._viewHolders = new Set();
@@ -846,6 +848,8 @@ function initPagerRecyclerAdapter() {
                 sp[PLACEHOLDER] = true;
             }
             sp._setupAsRootView(owner._context);
+            //@ts-ignore
+            sp.parent = owner;
             sp._isAddedToNativeVisualTree = true;
             sp.callLoaded();
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
@@ -995,6 +999,8 @@ function initStaticPagerStateAdapter() {
                 sp[PLACEHOLDER] = true;
             }
             sp._setupAsRootView(owner._context);
+            //@ts-ignore
+            sp.parent = owner;
             sp._isAddedToNativeVisualTree = true;
             sp.callLoaded();
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
