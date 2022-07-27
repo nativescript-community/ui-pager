@@ -331,13 +331,14 @@ export class Pager extends PagerBase {
     disposeViewHolderViews() {
         this.enumerateViewHolders((v) => {
             const view = v.view;
-            if (view && view.isLoaded) {
-                view.callUnloaded();
-            }
-            view._isAddedToNativeVisualTree = false;
-            //@ts-ignore
-            view.parent = null;
-            view._tearDownUI();
+            // if (view && view.isLoaded) {
+            //     view.callUnloaded();
+            // }
+            this._removeViewCore(view)
+            // view._isAddedToNativeVisualTree = false;
+            // //@ts-ignore
+            // view.parent = null;
+            // view._tearDownUI();
         });
         this._viewHolders = new Set();
     }
@@ -847,11 +848,12 @@ function initPagerRecyclerAdapter() {
             } else {
                 sp[PLACEHOLDER] = true;
             }
-            sp._setupAsRootView(owner._context);
-            //@ts-ignore
-            sp.parent = owner;
-            sp._isAddedToNativeVisualTree = true;
-            sp.callLoaded();
+            owner._addView(sp);
+            // sp._setupAsRootView(owner._context);
+            // //@ts-ignore
+            // sp.parent = owner;
+            // sp._isAddedToNativeVisualTree = true;
+            // sp.callLoaded();
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             initPagerViewHolder();
@@ -998,11 +1000,12 @@ function initStaticPagerStateAdapter() {
             } else {
                 sp[PLACEHOLDER] = true;
             }
-            sp._setupAsRootView(owner._context);
-            //@ts-ignore
-            sp.parent = owner;
-            sp._isAddedToNativeVisualTree = true;
-            sp.callLoaded();
+            owner._addView(sp);
+            // sp._setupAsRootView(owner._context);
+            // //@ts-ignore
+            // sp.parent = owner;
+            // sp._isAddedToNativeVisualTree = true;
+            // sp.callLoaded();
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             initPagerViewHolder();
