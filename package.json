@@ -50,7 +50,7 @@
         ]
     },
     "dependencies": {
-        "@nativescript-community/plugin-seed-tools": "file:tools"
+        "@nativescript-community/plugin-seed-tools": "link:tools"
     },
     "ntl": {
         "descriptions": {
@@ -73,5 +73,10 @@
         "@nativescript-community/plugin-seed-tools": {
             "injected": true
         }
+    },
+    "engines": {
+        "npm": "please use yarn or pnpm",
+        "yarn": ">= 1.19.1",
+        "pnpm": ">= 7.0.0"
     }
 }

@@ -2,6 +2,6 @@
     "name": "@nativescript-community/template-snippet",
     "version": "0.0.1",
     "dependencies": {
-        "@nativescript-community/ui-pager": "file:../packages/ui-pager"
+        "@nativescript-community/ui-pager": "link:../packages/ui-pager"
     }
 }
