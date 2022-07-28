@@ -1,6 +1,6 @@
 {
     "name": "@nativescript-community/ui-pager",
-    "version": "13.0.40",
+    "version": "13.0.41",
     "description": "A NativeScript Pager / Carousel component that allows the user to swipe left and right through pages of data. ",
     "main": "index",
     "typings": "index.d.ts",
