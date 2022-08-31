@@ -334,7 +334,7 @@ export class Pager extends PagerBase {
             // if (view && view.isLoaded) {
             //     view.callUnloaded();
             // }
-            this._removeViewCore(view)
+            this._removeViewCore(view);
             // view._isAddedToNativeVisualTree = false;
             // //@ts-ignore
             // view.parent = null;
@@ -857,7 +857,7 @@ function initPagerRecyclerAdapter() {
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             initPagerViewHolder();
-            const holder = new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
+            const holder = new PagerViewHolder(sp, new WeakRef(owner));
             owner._viewHolders.add(holder);
             return holder;
         }
@@ -1009,7 +1009,7 @@ function initStaticPagerStateAdapter() {
             sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             initPagerViewHolder();
-            const holder = new PagerViewHolder(new WeakRef(sp), new WeakRef(owner));
+            const holder = new PagerViewHolder(sp, new WeakRef(owner));
             owner._viewHolders.add(holder);
             return holder;
         }
@@ -1081,7 +1081,7 @@ function initStaticPagerStateAdapter() {
 
 interface PagerViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
     // tslint:disable-next-line:no-misused-new
-    new (owner: WeakRef<View>, pager: WeakRef<Pager>): PagerViewHolder;
+    new (owner: View, pager: WeakRef<Pager>): PagerViewHolder;
     view: View;
 }
 // eslint-disable-next-line no-redeclare
@@ -1094,13 +1094,13 @@ function initPagerViewHolder() {
 
     @NativeClass
     class PagerViewHolderImpl extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        constructor(private owner: WeakRef<View>, private pager: WeakRef<Pager>) {
-            super(owner.get().nativeViewProtected);
+        constructor(private owner: View, private pager: WeakRef<Pager>) {
+            super(owner.nativeViewProtected);
             return global.__native(this);
         }
 
         get view(): View {
-            return this.owner?.get();
+            return this.owner;
         }
     }
 
