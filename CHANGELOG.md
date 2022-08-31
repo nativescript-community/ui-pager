@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.43](https://github.com/nativescript-community/ui-pager/compare/v13.0.42...v13.0.43) (2022-08-31)
+
+
+### Bug Fixes
+
+* **android:** prevent weakref being released and causing crashes ([e67ef9d](https://github.com/nativescript-community/ui-pager/commit/e67ef9d3ebb4bc25686a7a9b250b7997dc912f82))
+
+
+
+
+
 ## [13.0.42](https://github.com/nativescript-community/ui-pager/compare/v13.0.40...v13.0.42) (2022-07-28)
 
 
