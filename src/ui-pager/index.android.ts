@@ -372,7 +372,7 @@ export class Pager extends PagerBase {
     }
 
     get _childrenCount(): number {
-        return this.items?.length || this._childrenViews?.length || 0;
+        return (this.items && this.items.length) || (this._childrenViews && this._childrenViews.length) || 0;
     }
 
     [indicatorColorProperty.setNative](value: Color | string) {
