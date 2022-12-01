@@ -1,5 +1,5 @@
 import { ChangeType, Color, EventData, KeyedTemplate, Observable, ObservableArray, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
-import { layout } from '@nativescript/core/utils/utils';
+import { layout } from '@nativescript/core/utils/layout-helper';
 import {
     Indicator,
     ItemEventData,

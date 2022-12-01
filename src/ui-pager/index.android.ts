@@ -1,7 +1,7 @@
 import { ChangeType, Color, Device, ObservableArray, Property, Screen, StackLayout, View, ViewBase, profile } from '@nativescript/core';
 import { KeyedTemplate } from '@nativescript/core/ui/core/view';
 import { isString } from '@nativescript/core/utils/types';
-import { layout } from '@nativescript/core/utils/utils';
+import { layout } from '@nativescript/core/utils/layout-helper';
 import {
     Indicator,
     ItemEventData,
