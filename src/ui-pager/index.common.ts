@@ -24,7 +24,7 @@ import {
     makeValidator,
     removeWeakEventListener
 } from '@nativescript/core';
-import { layout } from '@nativescript/core/utils/utils';
+import { layout } from '@nativescript/core/utils/layout-helper';
 
 export type Orientation = 'horizontal' | 'vertical';
 

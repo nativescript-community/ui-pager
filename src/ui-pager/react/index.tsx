@@ -226,6 +226,7 @@ export class _Pager extends React.Component<Props, State> {
         const {
             // Only used by the class component; not the JSX element.
             forwardedRef,
+            //@ts-ignore
             children,
             _debug,
             cellFactories,
@@ -274,7 +275,7 @@ export class _PagerItem extends React.Component<PagerItemAttributes, {}> {
     render() {
         const {
             forwardedRef,
-
+            //@ts-ignore
             children,
             // view, /* We disallow this at the typings level. */
             ...rest
