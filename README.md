@@ -1,4 +1,66 @@
-<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️--><!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
+<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
+[](#demos-and-development)
+
+## Demos and Development
+
+
+### Repo Setup
+
+The package manager used to install and link dependencies must be `pnpm` or `yarn`. `npm` wont work.
+
+To develop and test:
+if you use `yarn` then run `yarn`
+if you use `pnpm` then run `pnpm i`
+
+**Interactive Menu:**
+
+To start the interactive menu, run `npm start` (or `yarn start` or `pnpm start`). This will list all of the commonly used scripts.
+
+### Build
+
+```bash
+npm run build.all
+```
+
+### Demos
+
+```bash
+npm run demo.[ng|react|svelte|vue].[ios|android]
+
+npm run demo.svelte.ios # Example
+```
+
+
+[](#contributing)
+
+## Contributing
+
+### Update repo 
+
+You can update the repo files quite easily
+
+First update the submodules
+
+```bash
+npm run update
+```
+
+Then commit the changes
+Then update common files
+
+```bash
+npm run sync
+```
+Then you can run `yarn|pnpm`, commit changed files if any
+
+### Publish
+
+The publishing is completely handled by `lerna` (you can add `-- --bump major` to force a major release)
+Simply run 
+```shell
+npm run publish
+```
+<br><br><!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
 <!--  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -47,7 +109,6 @@
 * [Installation](#installation)
 * [API](#api)
 	* [Properties](#properties)
-  * [Events](#events)
 * [Usage in Angular](#usage-in-angular)
 	* [Examples](#examples)
 * [Usage in React](#usage-in-react)
@@ -108,41 +169,7 @@ Run the following command from the root of your project:
 Pager for NativeScript supports the core ObservableArray module part of the core NativeScript modules collection. Using an ObservableArray instance as a source for Pager will ensure that changes in the source collection will be automatically taken care of by the control.
 ```
 
-### Properties
 
-| Property | Type |
-| - | - |
-| items | `array` or `ItemsSource` 
-| selectedIndex | `number` |
-| canGoRight | `boolean` |
-| canGoLeft | `boolean` |
-| spacing | `PercentLengthType` |
-| peaking | `PercentLengthType` |
-| perPage | `number` |
-| indicator | `string`  ('disable', 'none', 'worm', 'fill', 'swap', 'thin_worm', 'flat')|
-| circularMode | `boolean` |
-| autoPlayDelay | `number` |
-| autoPlay | `boolean` |
-| orientation | `string` ('horizontal' or 'vertical') |
-| autoPlay | `boolean` |
-| disableSwipe | `boolean` |
-| showIndicator | `boolean` |
-| indicatorColor | `Color` or `string` |
-| indicatorSelectedColor | `Color` or `string` |
-
-### Events
-
-| Event | Type |
-| - | - |
-| selectedIndexChange | `{ object: View, propertyName: string, oldValue: any, value: any }` |
-| scroll | `{ object: View, selectedIndex: number, currentPosition: number, scrollX: number, scrollY: number }` |
-| swipe | `{ object: View }` |
-| swipeStart | `{ object: View }` |
-| swipeOver | `{ object: View }` |
-| swipeEnd | `{ object: View }` |
-| loadMoreItems | `{ object: View }` |
-| itemLoading | `{ object: View, android: any, ios: any, index: number, view: View }` |
-| itemDisposing (iOS only) | `{ object: View, android: any, ios: any, index: number, view: View }` |
 
 [](#usage-in-angular)
 
