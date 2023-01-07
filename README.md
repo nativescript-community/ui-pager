@@ -106,6 +106,7 @@ Run the following command from the root of your project:
 | showIndicator | `boolean` |
 | indicatorColor | `Color` or `string` |
 | indicatorSelectedColor | `Color` or `string` |
+| transformers | `string` ('scale') |
 
 
 ```
