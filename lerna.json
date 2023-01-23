@@ -1,5 +1,5 @@
 {
-    "version": "14.0.0",
+    "version": "14.0.1",
     "packages": [
         "packages/*"
     ],
@@ -17,7 +17,10 @@
             "private": false,
             "ignoreChanges": [
                 "*.md"
-            ]
+            ],
+            "publishConfig": {
+                "access": "public"
+            }
         },
         "version": {
             "conventionalCommits": true,
