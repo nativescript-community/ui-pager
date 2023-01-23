@@ -1117,26 +1117,29 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
         const owner = this._owner ? this._owner.get() : null;
         const originalLayoutAttribute = super.layoutAttributesForElementsInRect(rect);
         const visibleLayoutAttributes = [];
-        if (owner) {
-            if (owner.transformers && owner.transformers.indexOf('scale') > -1) {
+        if (owner && owner.transformers) {
+            const transformsArray = owner.transformers
+                .split(' ')
+                .map((s) => Pager.mRegisteredTransformers[s])
+                .filter((s) => !!s);
+            if (transformsArray.length) {
+                const collectionView = this.collectionView;
                 const count = originalLayoutAttribute.count;
                 for (let i = 0; i < count; i++) {
                     const attributes = originalLayoutAttribute.objectAtIndex(i);
                     visibleLayoutAttributes[i] = attributes;
-                    const frame = attributes.frame;
-                    const width = attributes.frame.size.width * 0.75;
-                    const height = attributes.frame.size.height * 0.75;
-                    attributes.frame.size.width = width;
-                    attributes.frame.size.height = height;
-                    const spacing = owner.convertToSize(owner.spacing);
-                    const distance = Math.abs(this.collectionView.contentOffset.x + this.collectionView.contentInset.left + spacing - frame.origin.x);
-                    const scale = Math.min(Math.max(1 - distance / this.collectionView.bounds.size.width, 0.75), 1);
-                    attributes.transform = CGAffineTransformScale(attributes.transform, 1, scale);
+                    for (const transformer of transformsArray) {
+                        const nativeTransformer = Pager.mRegisteredTransformers[transformer];
+                        if (nativeTransformer) {
+                            nativeTransformer(i, attributes, owner, collectionView);
+                        }
+                    }
                 }
-            } else {
-                return originalLayoutAttribute;
             }
+        } else {
+            return originalLayoutAttribute;
         }
+
         return visibleLayoutAttributes as any;
     }
 

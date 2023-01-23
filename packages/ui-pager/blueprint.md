@@ -113,3 +113,19 @@ Vue.use(Pager);
   - A simple pager example using static content.
 - [Basic Pager](demo-snippets/vue/BasicPager.vue)
   - A simple pager example using dynamic content.
+
+
+## Custom Transformer
+
+You can define custom transformer for iOS/Android
+
+You can follow the `Scale` example for [iOS](src/ui-pager/transformers/Scale.ios.ts) and [Android](src/ui-pager/transformers/Scale.android.ts) to create your custom transformer.
+
+Then you can register your transformer on app start with (this example registered the included but not registered Scale transformer): 
+```ts
+import { Pager } from '@nativescript-community/ui-pager';
+import transformer from '@nativescript-community/ui-pager/transformers/Scale';
+
+Pager.registerTransformer('scale', transformer)
+```
+Then you can use that transformer with the `transformer` property of `Pager`

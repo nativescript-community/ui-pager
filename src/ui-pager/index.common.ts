@@ -109,6 +109,11 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
 
     abstract refresh(): void;
 
+    static mRegisteredTransformers = {};
+    public static registerTransformer(key: string, transformer) {
+        PagerBase.mRegisteredTransformers[key] = transformer;
+    }
+
     public indicator: {
         setProgress(position: number, progress: number);
         setSelection(index: number, animated?: boolean);

@@ -58,11 +58,9 @@ export class Pager extends PagerBase {
     lastEvent = 0;
     private _lastSpacing = 0;
     private _lastPeaking = 0;
-    private compositeTransformer: any;
-    private marginTransformer: any;
-    private _transformers: any[];
-    private _selectedIndexBeforeLoad = 0;
-    // private _pager: androidx.viewpager2.widget.ViewPager2;
+    private compositeTransformer: androidx.viewpager2.widget.CompositePageTransformer;
+    private marginTransformer: androidx.viewpager2.widget.MarginPageTransformer;
+    private _transformers: androidx.viewpager2.widget.ViewPager2.PageTransformer[];
 
     constructor() {
         super();
@@ -216,9 +214,9 @@ export class Pager extends PagerBase {
             this.compositeTransformer.removeTransformer(transformer);
         });
         for (const transformer of transformsArray) {
-            if (transformer === Transformer.SCALE) {
-                initZoomOutPageTransformer();
-                const nativeTransformer = new ZoomOutPageTransformer();
+            const nativeTransformerClass = Pager.mRegisteredTransformers[transformer];
+            if (nativeTransformerClass) {
+                const nativeTransformer = new nativeTransformerClass();
                 nativeTransformer.owner = new WeakRef<Pager>(this);
                 this._transformers.push(nativeTransformer);
                 this.compositeTransformer.addTransformer(nativeTransformer);
@@ -999,67 +997,4 @@ function initPagerViewHolder() {
     }
 
     PagerViewHolder = PagerViewHolderImpl as any;
-}
-
-let ZoomOutPageTransformer;
-
-function initZoomOutPageTransformer() {
-    if (ZoomOutPageTransformer) {
-        return;
-    }
-
-    @NativeClass
-    @Interfaces([androidx.viewpager2.widget.ViewPager2.PageTransformer])
-    class ZoomOutPageTransformerImpl extends java.lang.Object {
-        owner: WeakRef<Pager>;
-
-        constructor() {
-            super();
-            return global.__native(this);
-        }
-
-        public transformPage(view, position) {
-            const MIN_SCALE = 0.85;
-            if (position <= 1 || position >= -1) {
-                const scale = Math.max(MIN_SCALE, 1 - Math.abs(position));
-                view.setScaleX(scale);
-                view.setScaleY(scale);
-            } else {
-                view.setScaleX(1);
-                view.setScaleY(1);
-            }
-        }
-    }
-
-    ZoomOutPageTransformer = ZoomOutPageTransformerImpl as any;
-}
-
-let ZoomInPageTransformer;
-
-function initZoomInPageTransformer() {
-    if (ZoomInPageTransformer) {
-        return;
-    }
-
-    @NativeClass
-    @Interfaces([androidx.viewpager2.widget.ViewPager2.PageTransformer])
-    class ZoomInPageTransformerImpl extends java.lang.Object {
-        owner: WeakRef<Pager>;
-
-        constructor() {
-            super();
-            return global.__native(this);
-        }
-
-        public transformPage(view, position) {
-            const scale = position < 0 ? position + 1.0 : Math.abs(1.0 - position);
-            view.setScaleX(scale);
-            view.setScaleY(scale);
-            view.setPivotX(view.getWidth() * 0.5);
-            view.setPivotY(view.getHeight() * 0.5);
-            view.setAlpha(view < -1.0 || position > 1.0 ? 0.0 : 1.0 - (scale - 1.0));
-        }
-    }
-
-    ZoomInPageTransformer = ZoomInPageTransformerImpl as any;
 }
