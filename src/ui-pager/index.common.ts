@@ -17,6 +17,7 @@ import {
     Property,
     Template,
     Trace,
+    Utils,
     View,
     ViewBase,
     addWeakEventListener,
@@ -24,7 +25,6 @@ import {
     makeValidator,
     removeWeakEventListener
 } from '@nativescript/core';
-import { layout } from '@nativescript/core/utils/layout-helper';
 
 export type Orientation = 'horizontal' | 'vertical';
 
@@ -67,16 +67,6 @@ export enum Transformer {
     SCALE = 'scale'
 }
 
-export enum Indicator {
-    Disabled = 'disable',
-    None = 'none',
-    Worm = 'worm',
-    Fill = 'fill',
-    Swap = 'swap',
-    THIN_WORM = 'thin_worm',
-    Flat = 'flat'
-}
-
 const booleanConverter = (v: any): boolean => String(v) === 'true';
 
 let UNIQUE_VIEW_TYPE = 0;
@@ -92,7 +82,6 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
     public spacing: CoreTypes.PercentLengthType;
     public peaking: CoreTypes.PercentLengthType;
     public perPage: number;
-    public indicator: Indicator;
     public circularMode: boolean;
     public autoPlayDelay: number;
     public autoPlay: boolean;
@@ -114,17 +103,48 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
     public _childrenViews: { view: PagerItem; type: number }[];
     abstract readonly _childrenCount: number;
     public disableSwipe: boolean = false;
-    public showIndicator: boolean;
-    public indicatorColor: Color | string;
-    public indicatorSelectedColor: Color | string;
-    // TODO: get rid of such hacks.
     public static knownFunctions = ['itemTemplateSelector', 'itemIdGenerator']; // See component-builder.ts isKnownFunction
+
+    protected mObservableArrayInstance: ObservableArray<any>;
 
     abstract refresh(): void;
 
+    public indicator: {
+        setProgress(position: number, progress: number);
+        setSelection(index: number, animated?: boolean);
+        setCount(count: number);
+        withoutAnimation(callback: Function);
+        getCount(): number;
+        getSelection(): number;
+        setInteractiveAnimation(animated?: boolean);
+    };
+    setIndicator(indicator) {
+        this.indicator = indicator;
+    }
+
     disposeNativeView() {
         this._childrenViews = [];
+        if (this.mObservableArrayInstance) {
+            this.mObservableArrayInstance.off(ObservableArray.changeEvent, this._observableArrayHandler);
+            this.mObservableArrayInstance = null;
+        }
         super.disposeNativeView();
+    }
+
+    protected abstract _observableArrayHandler(arg): void;
+
+    setObservableArrayInstance(value) {
+        if (this.mObservableArrayInstance) {
+            this.mObservableArrayInstance.off(ObservableArray.changeEvent, this._observableArrayHandler);
+            this.mObservableArrayInstance = null;
+        }
+        if (value instanceof ObservableArray) {
+            this.mObservableArrayInstance = value as any;
+            this.mObservableArrayInstance.on(ObservableArray.changeEvent, this._observableArrayHandler);
+        } else {
+            this.refresh();
+        }
+        selectedIndexProperty.coerce(this);
     }
 
     getChildView(index: number): View {
@@ -286,30 +306,30 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
     public convertToSize(length): number {
         let size = 0;
         if (this.orientation === 'horizontal') {
-            size = global.isIOS ? layout.getMeasureSpecSize((this as any)._currentWidthMeasureSpec) : this.getMeasuredWidth();
+            size = global.isIOS ? Utils.layout.getMeasureSpecSize((this as any)._currentWidthMeasureSpec) : this.getMeasuredWidth();
         } else {
-            size = global.isIOS ? layout.getMeasureSpecSize((this as any)._currentHeightMeasureSpec) : this.getMeasuredHeight();
+            size = global.isIOS ? Utils.layout.getMeasureSpecSize((this as any)._currentHeightMeasureSpec) : this.getMeasuredHeight();
         }
 
         let converted = 0;
         if (length && length.unit === 'px') {
             converted = length.value;
         } else if (length && length.unit === 'dip') {
-            converted = layout.toDevicePixels(length.value);
+            converted = Utils.layout.toDevicePixels(length.value);
         } else if (length && length.unit === '%') {
             converted = size * length.value;
         } else if (typeof length === 'string') {
             if (length.indexOf('px') > -1) {
                 converted = parseInt(length.replace('px', ''), 10);
             } else if (length.indexOf('dip') > -1) {
-                converted = layout.toDevicePixels(parseInt(length.replace('dip', ''), 10));
+                converted = Utils.layout.toDevicePixels(parseInt(length.replace('dip', ''), 10));
             } else if (length.indexOf('%') > -1) {
                 converted = size * (parseInt(length.replace('%', ''), 10) / 100);
             } else {
-                converted = layout.toDevicePixels(parseInt(length, 10));
+                converted = Utils.layout.toDevicePixels(parseInt(length, 10));
             }
         } else if (typeof length === 'number') {
-            converted = layout.toDevicePixels(length);
+            converted = Utils.layout.toDevicePixels(length);
         }
 
         if (isNaN(converted)) {
@@ -342,18 +362,6 @@ function onItemTemplateChanged(pager: PagerBase, oldValue, newValue) {
     pager.itemTemplateUpdated(oldValue, newValue);
 }
 
-export const indicatorColorProperty = new Property<PagerBase, Color | string>({
-    name: 'indicatorColor'
-});
-
-indicatorColorProperty.register(PagerBase);
-
-export const indicatorSelectedColorProperty = new Property<PagerBase, Color | string>({
-    name: 'indicatorSelectedColor'
-});
-
-indicatorSelectedColorProperty.register(PagerBase);
-
 export const circularModeProperty = new Property<PagerBase, boolean>({
     name: 'circularMode',
     defaultValue: false,
@@ -361,13 +369,6 @@ export const circularModeProperty = new Property<PagerBase, boolean>({
 });
 
 circularModeProperty.register(PagerBase);
-
-export const indicatorProperty = new Property<PagerBase, Indicator>({
-    name: 'indicator',
-    defaultValue: Indicator.None
-});
-
-indicatorProperty.register(PagerBase);
 
 export const selectedIndexProperty = new CoercibleProperty<PagerBase, number>({
     name: 'selectedIndex',

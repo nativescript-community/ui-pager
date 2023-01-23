@@ -8,6 +8,7 @@ import RenderIssue from './RenderIssue.vue';
 
 export function installPlugin() {
     Vue.use(Pager);
+    Vue.registerElement('PagerIndicator', () => require('@nativescript-community/ui-pager-indicator').PagerIndicator);
 }
 
 export const demos = [

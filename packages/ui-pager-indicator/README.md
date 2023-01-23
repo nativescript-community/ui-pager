@@ -18,14 +18,14 @@
       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<h1 align="center">@nativescript-community/ui-pager</h1>
+<h1 align="center">@nativescript-community/ui-pager-indicator</h1>
 <p align="center">
-		<a href="https://npmcharts.com/compare/@nativescript-community/ui-pager?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@nativescript-community/ui-pager.svg" height="20"/></a>
-<a href="https://www.npmjs.com/package/@nativescript-community/ui-pager"><img alt="NPM Version" src="https://img.shields.io/npm/v/@nativescript-community/ui-pager.svg" height="20"/></a>
+		<a href="https://npmcharts.com/compare/@nativescript-community/ui-pager-indicator?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@nativescript-community/ui-pager-indicator.svg" height="20"/></a>
+<a href="https://www.npmjs.com/package/@nativescript-community/ui-pager-indicator"><img alt="NPM Version" src="https://img.shields.io/npm/v/@nativescript-community/ui-pager-indicator.svg" height="20"/></a>
 	</p>
 
 <p align="center">
-  <b>A NativeScript Pager / Carousel component that allows the user to swipe left and right through pages of data. </b></br>
+  <b>A NativeScript Indicator for Pager / Carousel /CollectionView</b></br>
   <sub><sub>
 </p>
 
@@ -67,7 +67,7 @@
 ## Installation
 Run the following command from the root of your project:
 
-`ns plugin add @nativescript-community/ui-pager`
+`ns plugin add @nativescript-community/ui-pager-indicator`
 
 
 [](#api)
@@ -79,8 +79,22 @@ Run the following command from the root of your project:
 | Property | Type |
 | - | - |
 | items | `array` or `ItemsSource` 
-| color | `Color` or `string` |
-| selectedColor | `Color` or `string` |
+| selectedIndex | `number` |
+| canGoRight | `boolean` |
+| canGoLeft | `boolean` |
+| spacing | `PercentLengthType` |
+| peaking | `PercentLengthType` |
+| perPage | `number` |
+| indicator | `string`  ('disable', 'none', 'worm', 'fill', 'swap', 'thin_worm', 'flat')|
+| circularMode | `boolean` |
+| autoPlayDelay | `number` |
+| autoPlay | `boolean` |
+| orientation | `string` ('horizontal' or 'vertical') |
+| autoPlay | `boolean` |
+| disableSwipe | `boolean` |
+| showIndicator | `boolean` |
+| indicatorColor | `Color` or `string` |
+| indicatorSelectedColor | `Color` or `string` |
 
 
 ```
@@ -96,7 +110,7 @@ Pager for NativeScript supports the core ObservableArray module part of the core
 Import the module into your project.
 
 ```typescript
-import { PagerModule } from "@nativescript-community/ui-pager-indicator/angular";
+import { PagerModule } from "@nativescript-community/ui-pager/angular";
 
 @NgModule({
     imports: [
@@ -120,7 +134,7 @@ import { PagerModule } from "@nativescript-community/ui-pager-indicator/angular"
 Import the module into your project.
 
 ```typescript
-import { Pager } from '@nativescript-community/ui-pager-indicator/react';
+import { Pager } from '@nativescript-community/ui-pager/react';
 ```
 
 ### Examples
@@ -137,8 +151,8 @@ Import the module into your project.
 ```typescript
 import { registerNativeViewElement } from 'svelte-native/dom';
 
-import PagerElement from '@nativescript-community/ui-pager-indicator/svelte';
-import { PagerItem } from '@nativescript-community/ui-pager-indicator';
+import PagerElement from '@nativescript-community/ui-pager/svelte';
+import { PagerItem } from '@nativescript-community/ui-pager';
 
 PagerElement.register();
 registerNativeViewElement('pageritem', () => PagerItem);
@@ -160,15 +174,17 @@ Import the module into your project.
 
 ```typescript
 import Vue from 'nativescript-vue';
-import Pager from '@nativescript-community/ui-pager-indicator/vue';
+import Pager from '@nativescript-community/ui-pager/vue';
 
 Vue.use(Pager);
 ```
 
 ### Examples
 
-- [Indicator Pager](demo-snippets/vue/Indicator.vue)
-  - A simple pager example using dynamic content and indicator.
+- [Static Pager](demo-snippets/vue/StaticPager.vue)
+  - A simple pager example using static content.
+- [Basic Pager](demo-snippets/vue/BasicPager.vue)
+  - A simple pager example using dynamic content.
 
 
 

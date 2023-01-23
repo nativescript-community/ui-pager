@@ -1,2 +1,1 @@
-/// <reference path="../../node_modules/@nativescript/types-android/lib/android/androidx-31.d.ts" />
-/// <reference path="./typings/objc!CHIPageControl.d.ts" />
+/// <reference path="../../node_modules/@nativescript/types-ios/lib/ios/objc-x86_64/objc!Dispatch.d.ts" />

@@ -4,10 +4,10 @@
         "rootDir": "../../src/ui-pager",
         "outDir": "./",
         "paths": {
-            "tns-core-modules": ["./node_modules/@nativescript/core"],
-            "tns-core-modules/*": ["./node_modules/@nativescript/core/*"]
+            "@nativescript-community/ui-pager": ["packages/ui-pager"],
+            "@nativescript-community/ui-pager/*": ["packages/ui-pager/*"]
         }
     },
-    "include": ["../../src/ui-pager/**/*", "../../references.d.ts", "../../src/references.d.ts"],
+    "include": ["../../src/ui-pager/**/*", "../../references.d.ts", "../../tools/references.d.ts", "../../src/references.d.ts"],
     "exclude": ["../../src/ui-pager/angular/**"]
 }

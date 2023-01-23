@@ -1,0 +1,13 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "rootDir": "../../src/ui-pager-indicator",
+        "outDir": "./",
+        "paths": {
+            "@nativescript-community/ui-pager-indicator": ["packages/ui-pager-indicator"],
+            "@nativescript-community/ui-pager-indicator/*": ["packages/ui-pager-indicator/*"]
+        }
+    },
+    "include": ["../../src/ui-pager-indicator/**/*", "../../references.d.ts", "../../tools/references.d.ts", "../../src/references.d.ts"],
+    "exclude": ["../../src/ui-pager-indicator/angular/**"]
+}
