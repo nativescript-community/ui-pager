@@ -88,6 +88,7 @@
 <li><a href="#examples-3">Examples</a></li>
 </ul>
 </li>
+<li><a href="#custom-transformer">Custom Transformer</a></li>
 </ul>
 <p><a href="#installation"></a></p>
 <p><a href="#installation"></a></p>
@@ -173,6 +174,10 @@
 <tr>
 <td>showIndicator</td>
 <td><code>boolean</code></td>
+</tr>
+<tr>
+<td>transformers</td>
+<td><code>string</code></td>
 </tr>
 </tbody></table>
 <pre><code><span class="hl-0">Pager</span><span class="hl-1"> </span><span class="hl-0">for</span><span class="hl-1"> </span><span class="hl-0">NativeScript</span><span class="hl-1"> </span><span class="hl-0">supports</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">core</span><span class="hl-1"> </span><span class="hl-0">ObservableArray</span><span class="hl-1"> </span><span class="hl-2">module</span><span class="hl-1"> </span><span class="hl-3">part</span><span class="hl-1"> </span><span class="hl-3">of</span><span class="hl-1"> </span><span class="hl-3">the</span><span class="hl-1"> </span><span class="hl-3">core</span><span class="hl-1"> </span><span class="hl-3">NativeScript</span><span class="hl-1"> </span><span class="hl-3">modules</span><span class="hl-1"> </span><span class="hl-3">collection</span><span class="hl-1">. </span><span class="hl-3">Using</span><span class="hl-1"> </span><span class="hl-3">an</span><span class="hl-1"> </span><span class="hl-3">ObservableArray</span><span class="hl-1"> </span><span class="hl-3">instance</span><span class="hl-1"> </span><span class="hl-3">as</span><span class="hl-1"> </span><span class="hl-3">a</span><span class="hl-1"> </span><span class="hl-3">source</span><span class="hl-1"> </span><span class="hl-3">for</span><span class="hl-1"> </span><span class="hl-3">Pager</span><span class="hl-1"> </span><span class="hl-3">will</span><span class="hl-1"> </span><span class="hl-3">ensure</span><span class="hl-1"> </span><span class="hl-3">that</span><span class="hl-1"> </span><span class="hl-3">changes</span><span class="hl-1"> </span><span class="hl-3">in</span><span class="hl-1"> </span><span class="hl-3">the</span><span class="hl-1"> </span><span class="hl-3">source</span><span class="hl-1"> </span><span class="hl-3">collection</span><span class="hl-1"> </span><span class="hl-3">will</span><span class="hl-1"> </span><span class="hl-3">be</span><span class="hl-1"> </span><span class="hl-3">automatically</span><span class="hl-1"> </span><span class="hl-3">taken</span><span class="hl-1"> </span><span class="hl-3">care</span><span class="hl-1"> </span><span class="hl-3">of</span><span class="hl-1"> </span><span class="hl-3">by</span><span class="hl-1"> </span><span class="hl-3">the</span><span class="hl-1"> </span><span class="hl-3">control</span><span class="hl-1">.</span>
@@ -261,31 +266,44 @@
 </ul>
 </li>
 <li><a href="demo-snippets/vue/BasicPager.vue">Basic Pager</a><ul>
-<li>A simple pager example using dynamic content.</details><details>
-<summary><b>ui-pager-indicator</b></summary>
-<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
-<!--  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  DO NOT EDIT THIS READEME DIRECTLY! Edit "bluesprint.md" instead.
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! --></li>
+<li>A simple pager example using dynamic content.</li>
 </ul>
 </li>
 </ul>
+<p><a href="#custom-transformer"></a></p>
+<p><a href="#custom-transformer"></a></p>
+
+<a href="#custom-transformer" id="custom-transformer" style="color: inherit; text-decoration: none;">
+  <h2>Custom Transformer</h2>
+</a>
+<p>You can define custom transformer for iOS/Android</p>
+<p>You can follow the <code>Scale</code> example for <a href="src/ui-pager/transformers/Scale.ios.ts">iOS</a> and <a href="src/ui-pager/transformers/Scale.android.ts">Android</a> to create your custom transformer.</p>
+<p>Then you can register your transformer on app start with (this example registered the included but not registered Scale transformer): </p>
+<pre><code class="language-ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-0">Pager</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-5">&#39;@nativescript-community/ui-pager&#39;</span><span class="hl-1">;</span><br/><span class="hl-4">import</span><span class="hl-1"> </span><span class="hl-0">transformer</span><span class="hl-1"> </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-5">&#39;@nativescript-community/ui-pager/transformers/Scale&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-0">Pager</span><span class="hl-1">.</span><span class="hl-6">registerTransformer</span><span class="hl-1">(</span><span class="hl-5">&#39;scale&#39;</span><span class="hl-1">, </span><span class="hl-0">transformer</span><span class="hl-1">)</span>
+</code></pre>
+<p>Then you can use that transformer with the <code>transformers</code> property of <code>Pager</code></p>
+</details><details>
+<summary><b>ui-pager-indicator</b></summary>
+<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
+<!--  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      DO NOT EDIT THIS READEME DIRECTLY! Edit "bluesprint.md" instead.
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <h1 align="center">@nativescript-community/ui-pager-indicator</h1>
 <p align="center">
         <a href="https://npmcharts.com/compare/@nativescript-community/ui-pager-indicator?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@nativescript-community/ui-pager-indicator.svg" height="20"/></a>
