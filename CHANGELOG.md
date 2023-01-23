@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [14.1.0](https://github.com/nativescript-community/ui-pager/compare/v14.0.3...v14.1.0) (2023-01-23)
+
+
+### Features
+
+* allow to register custom transformers ([5eed813](https://github.com/nativescript-community/ui-pager/commit/5eed813b11f07b689582a6ae63f1c6520c2b8916))
+
+
+
+
+
 ## [14.0.3](https://github.com/nativescript-community/ui-pager/compare/v14.0.2...v14.0.3) (2023-01-23)
 
 **Note:** Version bump only for package ui-pager
