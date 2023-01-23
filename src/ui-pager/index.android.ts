@@ -125,7 +125,7 @@ export class Pager extends PagerBase {
     }
 
     setIndicator(indicator) {
-        this.indicator = indicator;
+        super.setIndicator(indicator);
         if (indicator) {
             this.indicator.setCount(this.items ? this.items.length : 0);
             this.indicator.setSelection(this.selectedIndex, false);
