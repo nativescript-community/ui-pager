@@ -52,14 +52,6 @@
 	* [Examples](#examples-2)
 * [Usage in Vue](#usage-in-vue)
 	* [Examples](#examples-3)
-* [Demos and Development](#demos-and-development)
-	* [Repo Setup](#repo-setup)
-	* [Build](#build)
-	* [Demos](#demos)
-* [Contributing](#contributing)
-	* [Update repo ](#update-repo-)
-	* [Publish](#publish)
-* [Questions](#questions)
 
 
 [](#installation)
@@ -79,8 +71,20 @@ Run the following command from the root of your project:
 | Property | Type |
 | - | - |
 | items | `array` or `ItemsSource` 
-| color | `Color` or `string` |
-| selectedColor | `Color` or `string` |
+| selectedIndex | `number` |
+| canGoRight | `boolean` |
+| canGoLeft | `boolean` |
+| spacing | `PercentLengthType` |
+| peaking | `PercentLengthType` |
+| perPage | `number` |
+| indicator | `string`  ('disable', 'none', 'worm', 'fill', 'swap', 'thin_worm', 'flat')|
+| circularMode | `boolean` |
+| autoPlayDelay | `number` |
+| autoPlay | `boolean` |
+| orientation | `string` ('horizontal' or 'vertical') |
+| autoPlay | `boolean` |
+| disableSwipe | `boolean` |
+| showIndicator | `boolean` |
 
 
 ```
@@ -96,7 +100,7 @@ Pager for NativeScript supports the core ObservableArray module part of the core
 Import the module into your project.
 
 ```typescript
-import { PagerModule } from "@nativescript-community/ui-pager-indicator/angular";
+import { PagerModule } from "@nativescript-community/ui-pager/angular";
 
 @NgModule({
     imports: [
@@ -120,7 +124,7 @@ import { PagerModule } from "@nativescript-community/ui-pager-indicator/angular"
 Import the module into your project.
 
 ```typescript
-import { Pager } from '@nativescript-community/ui-pager-indicator/react';
+import { Pager } from '@nativescript-community/ui-pager/react';
 ```
 
 ### Examples
@@ -137,8 +141,8 @@ Import the module into your project.
 ```typescript
 import { registerNativeViewElement } from 'svelte-native/dom';
 
-import PagerElement from '@nativescript-community/ui-pager-indicator/svelte';
-import { PagerItem } from '@nativescript-community/ui-pager-indicator';
+import PagerElement from '@nativescript-community/ui-pager/svelte';
+import { PagerItem } from '@nativescript-community/ui-pager';
 
 PagerElement.register();
 registerNativeViewElement('pageritem', () => PagerItem);
@@ -160,83 +164,14 @@ Import the module into your project.
 
 ```typescript
 import Vue from 'nativescript-vue';
-import Pager from '@nativescript-community/ui-pager-indicator/vue';
+import Pager from '@nativescript-community/ui-pager/vue';
 
 Vue.use(Pager);
 ```
 
 ### Examples
 
-- [Indicator Pager](demo-snippets/vue/Indicator.vue)
-  - A simple pager example using dynamic content and indicator.
-
-
-
-[](#demos-and-development)
-
-## Demos and Development
-
-
-### Repo Setup
-
-The package manager used to install and link dependencies must be `pnpm` or `yarn`. `npm` wont work.
-
-To develop and test:
-if you use `yarn` then run `yarn`
-if you use `pnpm` then run `pnpm i`
-
-**Interactive Menu:**
-
-To start the interactive menu, run `npm start` (or `yarn start` or `pnpm start`). This will list all of the commonly used scripts.
-
-### Build
-
-```bash
-npm run build.all
-```
-
-### Demos
-
-```bash
-npm run demo.[ng|react|svelte|vue].[ios|android]
-
-npm run demo.svelte.ios # Example
-```
-
-
-[](#contributing)
-
-## Contributing
-
-### Update repo 
-
-You can update the repo files quite easily
-
-First update the submodules
-
-```bash
-npm run update
-```
-
-Then commit the changes
-Then update common files
-
-```bash
-npm run sync
-```
-Then you can run `yarn|pnpm`, commit changed files if any
-
-### Publish
-
-The publishing is completely handled by `lerna` (you can add `-- --bump major` to force a major release)
-Simply run 
-```shell
-npm run publish
-```
-
-
-[](#questions)
-
-## Questions
-
-If you have any questions/issues/comments please feel free to create an issue or start a conversation in the [NativeScript Community Discord](https://nativescript.org/discord).
+- [Static Pager](demo-snippets/vue/StaticPager.vue)
+  - A simple pager example using static content.
+- [Basic Pager](demo-snippets/vue/BasicPager.vue)
+  - A simple pager example using dynamic content.

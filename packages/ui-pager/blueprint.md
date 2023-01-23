@@ -21,8 +21,20 @@ Run the following command from the root of your project:
 | Property | Type |
 | - | - |
 | items | `array` or `ItemsSource` 
-| color | `Color` or `string` |
-| selectedColor | `Color` or `string` |
+| selectedIndex | `number` |
+| canGoRight | `boolean` |
+| canGoLeft | `boolean` |
+| spacing | `PercentLengthType` |
+| peaking | `PercentLengthType` |
+| perPage | `number` |
+| indicator | `string`  ('disable', 'none', 'worm', 'fill', 'swap', 'thin_worm', 'flat')|
+| circularMode | `boolean` |
+| autoPlayDelay | `number` |
+| autoPlay | `boolean` |
+| orientation | `string` ('horizontal' or 'vertical') |
+| autoPlay | `boolean` |
+| disableSwipe | `boolean` |
+| showIndicator | `boolean` |
 
 
 ```
@@ -35,7 +47,7 @@ Pager for NativeScript supports the core ObservableArray module part of the core
 Import the module into your project.
 
 ```typescript
-import { PagerModule } from "@nativescript-community/ui-pager-indicator/angular";
+import { PagerModule } from "@nativescript-community/ui-pager/angular";
 
 @NgModule({
     imports: [
@@ -56,7 +68,7 @@ import { PagerModule } from "@nativescript-community/ui-pager-indicator/angular"
 Import the module into your project.
 
 ```typescript
-import { Pager } from '@nativescript-community/ui-pager-indicator/react';
+import { Pager } from '@nativescript-community/ui-pager/react';
 ```
 
 ### Examples
@@ -70,8 +82,8 @@ Import the module into your project.
 ```typescript
 import { registerNativeViewElement } from 'svelte-native/dom';
 
-import PagerElement from '@nativescript-community/ui-pager-indicator/svelte';
-import { PagerItem } from '@nativescript-community/ui-pager-indicator';
+import PagerElement from '@nativescript-community/ui-pager/svelte';
+import { PagerItem } from '@nativescript-community/ui-pager';
 
 PagerElement.register();
 registerNativeViewElement('pageritem', () => PagerItem);
@@ -90,16 +102,14 @@ Import the module into your project.
 
 ```typescript
 import Vue from 'nativescript-vue';
-import Pager from '@nativescript-community/ui-pager-indicator/vue';
+import Pager from '@nativescript-community/ui-pager/vue';
 
 Vue.use(Pager);
 ```
 
 ### Examples
 
-- [Indicator Pager](demo-snippets/vue/Indicator.vue)
-  - A simple pager example using dynamic content and indicator.
-
-
-{{ load:../../tools/readme/demos-and-development.md }}
-{{ load:../../tools/readme/questions.md }}
+- [Static Pager](demo-snippets/vue/StaticPager.vue)
+  - A simple pager example using static content.
+- [Basic Pager](demo-snippets/vue/BasicPager.vue)
+  - A simple pager example using dynamic content.
