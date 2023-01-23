@@ -6,7 +6,7 @@
         </ActionBar>
 
         <StackLayout class="page">
-            <Pager for="item in items" height="100%">
+            <Pager for="item in items" height="100%" transformers="scale">
                 <v-template>
                     <GridLayout :backgroundColor="item.color">
                         <Label :text="item.title" />
@@ -18,6 +18,11 @@
 </template>
 
 <script>
+
+import { Pager } from '@nativescript-community/ui-pager';
+import transformer from '@nativescript-community/ui-pager/transformers/Scale';
+
+Pager.registerTransformer('scale', transformer)
 export default {
     data() {
         return {

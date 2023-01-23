@@ -35,6 +35,7 @@ Run the following command from the root of your project:
 | autoPlay | `boolean` |
 | disableSwipe | `boolean` |
 | showIndicator | `boolean` |
+| transformers | `string` |
 
 
 ```
@@ -128,4 +129,4 @@ import transformer from '@nativescript-community/ui-pager/transformers/Scale';
 
 Pager.registerTransformer('scale', transformer)
 ```
-Then you can use that transformer with the `transformer` property of `Pager`
+Then you can use that transformer with the `transformers` property of `Pager`

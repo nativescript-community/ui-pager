@@ -4,6 +4,7 @@ import Pager from '@nativescript-community/ui-pager/vue';
 import StaticPager from './StaticPager.vue';
 import BasicPager from './BasicPager.vue';
 import Indicator from './Indicator.vue';
+import Transformer from './Transformer.vue';
 import RenderIssue from './RenderIssue.vue';
 
 export function installPlugin() {
@@ -14,6 +15,7 @@ export function installPlugin() {
 export const demos = [
     { name: 'Static Pager', path: 'static', component: StaticPager },
     { name: 'Basic Pager', path: 'basic', component: BasicPager },
+    { name: 'Transformer', path: 'Transformer', component: Transformer },
     { name: 'Indicator', path: 'indicator', component: Indicator },
     { name: 'Render Issue', path: 'indicator', component: RenderIssue }
 ];
