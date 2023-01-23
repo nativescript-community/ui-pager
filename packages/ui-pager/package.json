@@ -5,10 +5,8 @@
     "main": "index",
     "typings": "index.d.ts",
     "sideEffects": false,
-    "private": false,
     "publishConfig": {
-        "access": "public",
-        "registry": "https://registry.npmjs.org/"
+        "access": "public"
     },
     "scripts": {
         "build": "npm run tsc",
@@ -69,5 +67,5 @@
     },
     "license": "Apache-2.0",
     "readmeFilename": "README.md",
-    "gitHead": "73ead4f2a1364ee699311078cb43817e6c6d6389"
+    "gitHead": "f335eb1be0357a0d94b470e3cdf6446b9d6c72ad"
 }
