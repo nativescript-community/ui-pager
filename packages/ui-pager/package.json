@@ -63,5 +63,6 @@
         "url": "https://github.com/nativescript-community/ui-pager"
     },
     "license": "Apache-2.0",
-    "readmeFilename": "README.md"
+    "readmeFilename": "README.md",
+    "gitHead": "25f7910e02b4f56f0caa5ceb1ed15ee0d43d3e79"
 }
