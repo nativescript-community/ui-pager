@@ -1118,7 +1118,10 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
         const originalLayoutAttribute = super.layoutAttributesForElementsInRect(rect);
         const visibleLayoutAttributes = NSMutableArray.alloc().init();
         if (owner && owner.transformers) {
-            const transformsArray = owner.transformers.split(' ');
+            const transformsArray = owner.transformers
+                .split(' ')
+                .map((s) => Pager.mRegisteredTransformers[s])
+                .filter((s) => !!s);
             if (transformsArray.length) {
                 const collectionView = this.collectionView;
                 const count = originalLayoutAttribute.count;
@@ -1126,10 +1129,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
                     const attributes = originalLayoutAttribute.objectAtIndex(i);
                     visibleLayoutAttributes.addObject(attributes);
                     for (const transformer of transformsArray) {
-                        const nativeTransformer = Pager.mRegisteredTransformers[transformer];
-                        if (nativeTransformer) {
-                            nativeTransformer(i, attributes, owner, collectionView);
-                        }
+                        transformer(i, attributes, owner, collectionView);
                     }
                 }
             }
