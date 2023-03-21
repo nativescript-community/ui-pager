@@ -1,7 +1,7 @@
 <template>
     <Page>
         <ActionBar>
-            <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
+            <NavigationButton text="Back" android.systemIcon="ic_menu_back" />
             <Label text="Basic Pager" />
         </ActionBar>
 

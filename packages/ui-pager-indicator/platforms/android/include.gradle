@@ -1,0 +1,14 @@
+repositories {
+	    mavenCentral()
+		maven { url 'https://jitpack.io' }
+	}
+
+android {
+	configurations {
+		all*.exclude group:'com.romandanylyk', module:'pageindicatorview'
+	}
+}
+
+dependencies {
+	implementation 'com.github.adrielcafe:PageIndicatorView:1.0.6'
+}

@@ -52,11 +52,7 @@
 	* [Examples](#examples-2)
 * [Usage in Vue](#usage-in-vue)
 	* [Examples](#examples-3)
-* [Demos and Development](#demos-and-development)
-	* [Setup](#setup)
-	* [Build](#build)
-	* [Demos](#demos)
-* [Questions](#questions)
+* [Custom Transformer](#custom-transformer)
 
 
 [](#installation)
@@ -90,8 +86,7 @@ Run the following command from the root of your project:
 | autoPlay | `boolean` |
 | disableSwipe | `boolean` |
 | showIndicator | `boolean` |
-| indicatorColor | `Color` or `string` |
-| indicatorSelectedColor | `Color` or `string` |
+| transformers | `string` |
 
 
 ```
@@ -185,46 +180,19 @@ Vue.use(Pager);
 
 
 
-[](#demos-and-development)
+[](#custom-transformer)
 
-## Demos and Development
+## Custom Transformer
 
+You can define custom transformer for iOS/Android
 
-### Setup
+You can follow the `Scale` example for [iOS](src/ui-pager/transformers/Scale.ios.ts) and [Android](src/ui-pager/transformers/Scale.android.ts) to create your custom transformer.
 
-To run the demos, you must clone this repo **recursively**.
+Then you can register your transformer on app start with (this example registered the included but not registered Scale transformer): 
+```ts
+import { Pager } from '@nativescript-community/ui-pager';
+import transformer from '@nativescript-community/ui-pager/transformers/Scale';
 
+Pager.registerTransformer('scale', transformer)
 ```
-git clone https://github.com/@nativescript-community/ui-pager.git --recursive
-```
-
-**Install Dependencies:**
-```bash
-npm i # or 'yarn install' or 'pnpm install'
-```
-
-**Interactive Menu:**
-
-To start the interactive menu, run `npm start` (or `yarn start` or `pnpm start`). This will list all of the commonly used scripts.
-
-### Build
-
-```bash
-npm run build
-
-npm run build.angular # or for Angular
-```
-
-### Demos
-
-```bash
-npm run demo.[ng|react|svelte|vue].[ios|android]
-
-npm run demo.svelte.ios # Example
-```
-
-[](#questions)
-
-## Questions
-
-If you have any questions/issues/comments please feel free to create an issue or start a conversation in the [NativeScript Community Discord](https://nativescript.org/discord).
+Then you can use that transformer with the `transformers` property of `Pager`

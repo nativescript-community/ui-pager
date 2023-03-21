@@ -201,7 +201,7 @@ declare namespace androidx {
 declare namespace androidx {
     export namespace viewpager2 {
         export namespace widget {
-            export class ViewPager2 {
+            export class ViewPager2 extends android.view.ViewGroup {
                 public static class: java.lang.Class<ViewPager2>;
                 public static ORIENTATION_HORIZONTAL: number;
                 public static ORIENTATION_VERTICAL: number;

@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.1](https://github.com/nativescript-community/ui-pager/compare/v14.1.0...v14.1.1) (2023-01-28)
+
+**Note:** Version bump only for package ui-pager
+
+
+
+
+
+# [14.1.0](https://github.com/nativescript-community/ui-pager/compare/v14.0.3...v14.1.0) (2023-01-23)
+
+
+### Features
+
+* allow to register custom transformers ([5eed813](https://github.com/nativescript-community/ui-pager/commit/5eed813b11f07b689582a6ae63f1c6520c2b8916))
+
+
+
+
+
+## [14.0.3](https://github.com/nativescript-community/ui-pager/compare/v14.0.2...v14.0.3) (2023-01-23)
+
+**Note:** Version bump only for package ui-pager
+
+
+
+
+
+## [14.0.2](https://github.com/nativescript-community/ui-pager/compare/v14.0.0...v14.0.2) (2023-01-23)
+
+**Note:** Version bump only for package ui-pager
+
+
+
+
+
+# [14.0.0](https://github.com/nativescript-community/ui-pager/compare/v13.0.44...v14.0.0) (2023-01-23)
+
+
+### Features
+
+* moved indicator into it's own package ([631859d](https://github.com/nativescript-community/ui-pager/commit/631859d077d4afcc52e4ac06a3ab1f326e64f593))
+
+
+### BREAKING CHANGES
+
+* You now create a `PagerIndicator`(from `@nativescript-community/ui-pager-indicator) and set `pagerViewId` on it to the id of your Pager.
+
+
+
+
+
 ## [13.0.44](https://github.com/nativescript-community/ui-pager/compare/v13.0.43...v13.0.44) (2022-12-01)
 
 **Note:** Version bump only for package nativescript-pager

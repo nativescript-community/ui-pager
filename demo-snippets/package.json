@@ -1,7 +1,9 @@
 {
     "name": "@nativescript-community/template-snippet",
+    "private": true,
     "version": "0.0.1",
     "dependencies": {
-        "@nativescript-community/ui-pager": "link:../packages/ui-pager"
+        "@nativescript-community/ui-pager": "link:../packages/ui-pager",
+        "@nativescript-community/ui-pager-indicator": "link:../packages/ui-pager-indicator"
     }
 }

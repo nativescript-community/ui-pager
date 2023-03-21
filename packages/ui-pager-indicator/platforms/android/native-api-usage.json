@@ -1,0 +1,7 @@
+{
+  "uses": [
+    "com.rd:PageIndicatorView2*",
+    "com.rd.animation.type:AnimationType*"
+  ]
+}
+

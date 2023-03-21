@@ -5,16 +5,17 @@
             <Label text="Indicator" />
         </ActionBar>
 
-        <StackLayout class="page">
-            <Pager ref="pager" for="item in items" :selectedIndex="selectedIndex" @selectedIndexChange="selectedIndexChange" height="300" indicator="fill" showIndicator="true">
+        <GridLayout class="page" rows="*,auto">
+            <Pager ref="pager" id="pager" :items="items" :selectedIndex="selectedIndex" @selectedIndexChange="selectedIndexChange">
                 <v-template>
                     <GridLayout :backgroundColor="item.color">
                         <Label :text="item.title" />
                     </GridLayout>
                 </v-template>
             </Pager>
-            <Button text="Reset" @tap="resetPager" />
-        </StackLayout>
+                <PagerIndicator pagerViewId="pager" type="fill" verticalAlignment="bottom" horizontalAlignment="center" marginBottom="10"/>
+                <Button row="1" text="Reset" @tap="resetPager" />
+        </GridLayout>
     </Page>
 </template>
 
