@@ -1,11 +1,10 @@
-import { ChangeType, Color, Device, ObservableArray, Property, Screen, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
+import { ChangeType, Device, Property, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
 import { KeyedTemplate } from '@nativescript/core/ui/core/view';
 import { isString } from '@nativescript/core/utils/types';
 import {
     ItemEventData,
     Orientation,
     PagerBase,
-    Transformer,
     autoPlayProperty,
     autoplayDelayProperty,
     disableSwipeProperty,

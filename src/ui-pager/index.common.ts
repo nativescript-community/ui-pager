@@ -3,17 +3,14 @@ import {
     Builder,
     CSSType,
     CoercibleProperty,
-    Color,
     ContainerView,
     CoreTypes,
     GridLayout,
     ItemsSource,
     KeyedTemplate,
     Label,
-    Length,
     Observable,
     ObservableArray,
-    PercentLength,
     Property,
     Template,
     Trace,
@@ -302,7 +299,7 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
         super.onLayout(left, top, right, bottom);
         this._effectiveItemWidth = this.getMeasuredWidth() - this.effectivePaddingLeft - this.effectivePaddingRight;
         this._effectiveItemHeight = this.getMeasuredHeight() - this.effectivePaddingTop - this.effectivePaddingBottom;
-        if (global.isIOS && this.iosOverflowSafeAreaEnabled) {
+        if (__IOS__ && this.iosOverflowSafeAreaEnabled) {
             const safeArea = this.getSafeAreaInsets();
             this._effectiveItemHeight += safeArea.top + safeArea.bottom;
         }
@@ -311,9 +308,9 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
     public convertToSize(length): number {
         let size = 0;
         if (this.orientation === 'horizontal') {
-            size = global.isIOS ? Utils.layout.getMeasureSpecSize((this as any)._currentWidthMeasureSpec) : this.getMeasuredWidth();
+            size = __IOS__ ? Utils.layout.getMeasureSpecSize((this as any)._currentWidthMeasureSpec) : this.getMeasuredWidth();
         } else {
-            size = global.isIOS ? Utils.layout.getMeasureSpecSize((this as any)._currentHeightMeasureSpec) : this.getMeasuredHeight();
+            size = __IOS__ ? Utils.layout.getMeasureSpecSize((this as any)._currentHeightMeasureSpec) : this.getMeasuredHeight();
         }
 
         let converted = 0;
@@ -378,7 +375,7 @@ circularModeProperty.register(PagerBase);
 export const selectedIndexProperty = new CoercibleProperty<PagerBase, number>({
     name: 'selectedIndex',
     defaultValue: -1,
-    // affectsLayout: global.isIOS,
+    // affectsLayout: __IOS__,
     coerceValue: (target, value) => {
         const items = target._childrenCount;
         if (items) {

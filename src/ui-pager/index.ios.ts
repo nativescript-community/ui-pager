@@ -1,4 +1,4 @@
-import { ChangeType, Color, EventData, KeyedTemplate, Observable, ObservableArray, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
+import { ChangeType, EventData, KeyedTemplate, Observable, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
 import {
     ItemEventData,
     Orientation,
@@ -9,8 +9,7 @@ import {
     itemTemplatesProperty,
     itemsProperty,
     orientationProperty,
-    selectedIndexProperty,
-    showIndicatorProperty
+    selectedIndexProperty
 } from './index.common';
 
 export * from './index.common';
