@@ -138,7 +138,7 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
             const index = this._childrenViews.findIndex((s) => s.view === view);
             if (index !== -1) {
                 // this._removeChildView(index);
-                if (this.isLoaded) {
+                if (this.isLoaded && this._isAddedToNativeVisualTree) {
                     this.refresh();
                 }
             }
