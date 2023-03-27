@@ -380,6 +380,9 @@ export class Pager extends PagerBase {
         }
         // dispatch_async(main_queue, () => {
         if (this.mDataSource.collectionViewNumberOfItemsInSection(this.nativeViewProtected, 0) > maxMinIndex) {
+            // when we have custom layouts (they don't occupy 100% of the parent) and we use custom transformers we need to call setContentOffsetAnimated to take size into account. 
+            // Reference: https://stackoverflow.com/a/53798708/6015400
+            this.nativeViewProtected.setContentOffsetAnimated(CGPointMake(1, 0), !!animate);
             this.nativeViewProtected.scrollToItemAtIndexPathAtScrollPositionAnimated(
                 NSIndexPath.indexPathForItemInSection(maxMinIndex, 0),
                 this.orientation === 'vertical' ? UICollectionViewScrollPosition.CenteredVertically : UICollectionViewScrollPosition.CenteredHorizontally,
