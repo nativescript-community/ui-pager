@@ -18,8 +18,7 @@ import {
     Output,
     TemplateRef,
     ViewChild,
-    ViewContainerRef,
-    ɵisListLikeIterable as isListLikeIterable
+    ViewContainerRef
 } from '@angular/core';
 import { Pager, PagerError, PagerItem, PagerLog } from '@nativescript-community/ui-pager';
 import { extractSingleViewRecursive, isInvisibleNode, registerElement } from '@nativescript/angular';
@@ -86,7 +85,7 @@ export abstract class TemplatedItemsComponent implements DoCheck, OnDestroy, Aft
         if (value instanceof ObservableArray) {
             needDiffer = false;
         }
-        if (needDiffer && !this._differ && isListLikeIterable(value)) {
+        if (needDiffer && !this._differ && Array.isArray(value)) {
             this._differ = this._iterableDiffers.find(this._items).create((_index, item) => item);
         }
 
