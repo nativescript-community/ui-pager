@@ -48,7 +48,7 @@ export class PagerIndicator extends PagerIndicatorBase {
     }
 
     setProgress(position: number, progress: number) {
-        this.nativeViewProtected.setWithProgressAnimated(progress, true);
+        NSCProgressHelper.setProgressWithPageControlProgressAnimated(this.nativeViewProtected, progress, true);
     }
     getCount(): number {
         return this.nativeViewProtected.numberOfPages;
@@ -58,7 +58,8 @@ export class PagerIndicator extends PagerIndicatorBase {
     }
     setInteractiveAnimation(animated?: boolean) {}
     setSelection(progress: number, animated: boolean = true) {
-        this.nativeViewProtected.setWithProgressAnimated(progress, animated);
+        console.log("Setting selection", progress, animated);
+        NSCProgressHelper.setProgressWithPageControlProgressAnimated(this.nativeViewProtected, progress, animated);
     }
     setCount(count: number) {
         this.nativeViewProtected.numberOfPages = count;

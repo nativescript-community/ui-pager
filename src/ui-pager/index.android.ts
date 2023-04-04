@@ -526,6 +526,8 @@ export class Pager extends PagerBase {
 
         if (isRightOverScrolled || isLeftOverScrolled) {
             selectedPosition = position;
+        }
+        if (isRightOverScrolled) {
             indicator.setSelection(selectedPosition);
         }
 
@@ -581,6 +583,12 @@ function initPagerChangeCallback() {
         onPageSelected(position: number) {
             const owner = this.owner && this.owner.get();
             if (owner) {
+                if (owner.lastEvent === 0 && !owner.circularMode) {
+                    // page changing without scroll so do the indicator etc.
+                    selectedIndexProperty.nativeValueChange(owner, position);
+                    owner.indicator?.setSelection(position, true);
+                }
+
                 owner.notify({
                     eventName: Pager.swipeEvent,
                     object: owner

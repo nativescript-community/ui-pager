@@ -63,6 +63,7 @@ class UICellView extends UIView {
 
 const PFLAG_FORCE_LAYOUT = 1;
 export class Pager extends PagerBase {
+
     lastEvent: number = 0;
     private mDisableSwipe: boolean = false;
     private mDisableAnimation: boolean = false;
@@ -177,6 +178,13 @@ export class Pager extends PagerBase {
         }
     }
 
+    /**
+     *
+     * Get the selected index from the position in the CollectionView
+     *
+     * @param index The position in the collectionView
+     * @returns The selected Index ( i.e. the number in the slides as the user would view it).
+     */
     getPosition(index: number): number {
         let position = index;
         if (this.circularMode) {
@@ -189,6 +197,39 @@ export class Pager extends PagerBase {
             }
         }
         return position;
+    }
+
+    /**
+     *
+     * Get  the position in the CollectionView from the selected index  
+     *
+     * @param index The position in the collectionView
+     * @returns The selected Index ( i.e. the number in the slides as the user would view it).
+     */
+    getIndex(index: number): number {
+        let position = index;
+        if (this.circularMode) {
+            if (position === 0) {
+                position = 1;
+            } else if (position === this.firstDummy) {
+                position = 0;
+            } else {
+                position = position + 1;
+            }
+        }
+        return position;
+    }
+
+    animateForFlip(index: number): boolean {
+        console.log("AnimateForFlip", index, this.firstDummy);
+        if (!this.circularMode) {
+            return true;
+        }
+
+        if (index !== this.firstDummy && index !== 0) {
+            return true;
+        }
+        return false;
     }
 
     get itemCount(): number {
@@ -269,9 +310,9 @@ export class Pager extends PagerBase {
     }
 
     [itemsProperty.setNative](value: any) {
-        // if (this.indicatorView && value && value.length) {
-        //     this.indicatorView.numberOfPages = value.length;
-        // }
+        if (this.indicator && value && value.length) {
+            this.indicator.setCount(value.length);
+        }
         this.setObservableArrayInstance(value);
 
         if (!value) {
@@ -297,9 +338,9 @@ export class Pager extends PagerBase {
         if (!this.nativeViewProtected) {
             return;
         }
-        // if (this.indicatorView && this.mObservableArrayInstance && this.mObservableArrayInstance.length) {
-        //     this.indicatorView.numberOfPages = this.mObservableArrayInstance.length;
-        // }
+        if (this.indicator && this.mObservableArrayInstance && this.mObservableArrayInstance.length) {
+            this.indicator.setCount(this.mObservableArrayInstance.length);
+        }
 
         const collectionView = this.nativeViewProtected;
         if (collectionView) {
@@ -328,7 +369,9 @@ export class Pager extends PagerBase {
                                     array.push(NSIndexPath.indexPathForRowInSection(args.index + i, 0));
                                 }
                                 collectionView.deleteItemsAtIndexPaths(array);
-                            } else {
+                            }
+
+                            if (args.addedCount > 0) {
                                 const addedArray = [];
                                 for (let i = 0; i < args.addedCount; i++) {
                                     addedArray.push(NSIndexPath.indexPathForRowInSection(args.index + i, 0));
@@ -354,6 +397,7 @@ export class Pager extends PagerBase {
     _onItemsChanged(oldValue: any, newValue: any): void {}
 
     scrollToIndexAnimated(index: number, animate: boolean) {
+        console.log('scrollToIndexAnimated', index, animate);
         if (!this.nativeViewProtected) return;
 
         const contentSize = this.nativeViewProtected.contentSize;
@@ -384,7 +428,7 @@ export class Pager extends PagerBase {
             // Reference: https://stackoverflow.com/a/53798708/6015400
             this.nativeViewProtected.setContentOffsetAnimated(CGPointMake(1, 0), !!animate);
             this.nativeViewProtected.scrollToItemAtIndexPathAtScrollPositionAnimated(
-                NSIndexPath.indexPathForItemInSection(maxMinIndex, 0),
+                NSIndexPath.indexPathForItemInSection(this.getIndex(maxMinIndex), 0),
                 this.orientation === 'vertical' ? UICollectionViewScrollPosition.CenteredVertically : UICollectionViewScrollPosition.CenteredHorizontally,
                 !!animate
             );
@@ -418,6 +462,10 @@ export class Pager extends PagerBase {
         this._updateScrollPosition();
         this._initAutoPlay(this.autoPlay);
         // });
+
+        if (this.indicator) {
+            this.indicator.setCount(this._childrenCount);
+        }
     }
 
     _isDataDirty = false;
@@ -750,6 +798,7 @@ class PagerCell extends UICollectionViewCell {
 @ObjCClass(UICollectionViewDelegate, UICollectionViewDelegateFlowLayout)
 class UICollectionDelegateImpl extends NSObject implements UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     private _owner: WeakRef<Pager>;
+    isScrolling = false;
 
     public static initWithOwner(owner: WeakRef<Pager>): UICollectionDelegateImpl {
         const delegate = UICollectionDelegateImpl.alloc().init() as UICollectionDelegateImpl;
@@ -839,8 +888,9 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
                 object: owner
             });
         }
+        console.log("Scroll ended");
     }
-
+     
     public scrollViewDidScroll(scrollView: UIScrollView): void {
         const owner = this._owner.get();
         if (owner) {
@@ -866,6 +916,12 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
             if (owner.selectedIndex !== index && !Number.isNaN(index)) {
                 //  selectedIndexProperty.nativeValueChange(owner, index);
             }
+            if (owner.indicator && !Number.isNaN(index)) {
+                if (owner.circularMode && (index === 0 || index === owner.firstDummy)) {
+                    } else {
+                    owner.indicator.setSelection(owner.getPosition(index));
+                }
+            }
             owner.notify({
                 object: owner,
                 eventName: Pager.scrollEvent,
@@ -887,18 +943,48 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
             //     NSIndexPath.indexPathForRowInSection(Math.round(width),0), UICollectionViewScrollPosition.CenteredHorizontally, true
             // );
 
-            // if(owner.circularMode){
-            //     if(nextIndex === 0){
-            //         selectedIndexProperty.nativeValueChange(owner, owner._childrenCount - 3);
-            //     }else if(nextIndex === owner._childrenCount -1){
-            //         selectedIndexProperty.nativeValueChange(owner, 0);
-            //     }else {
-            //         selectedIndexProperty.nativeValueChange(owner, nextIndex - 1);
-            //     }
-            // }else {
-            //     selectedIndexProperty.nativeValueChange(owner, nextIndex);
-            // }
+            if (owner.circularMode) {
+                console.log('CIRCULAR', index);
+          /*      if (index === 0) {
+                    selectedIndexProperty.nativeValueChange(owner, owner._childrenCount - 3);
+                } else if (index === owner._childrenCount - 1) {
+                    selectedIndexProperty.nativeValueChange(owner, 0);
+                } else {
+                    selectedIndexProperty.nativeValueChange(owner, index - 1);
+                }
+          */
+                if (!this.isScrolling) {
+                    this.isScrolling = true;
+                    const contentOffset = scrollView.contentOffset;
+                    const contentSize = scrollView.contentSize;
+                    const frameSize = scrollView.frame.size;
+                    if (contentOffset.x < 0) {
+                        scrollView.contentOffset = CGPointMake(contentSize.width - frameSize.width * 2, 0);
+                        if (owner.indicator) {
+                            owner.indicator.setSelection(owner.lastIndex, false);
+                        }
+                    } else if (contentOffset.x + frameSize.width > contentSize.width) {
+                        scrollView.contentOffset = CGPointMake(frameSize.width, 0);
+                        owner.indicator.setSelection(0, false);
+                    }
+                    console.log('Doing circular', contentOffset.x, frameSize.width, contentSize.width);
 
+                    if (contentOffset.x === 0) {
+                        console.log("Moving point 1");
+                        scrollView.contentOffset = CGPointMake(contentSize.width - frameSize.width * 2, 0);
+                        if (owner.indicator) {
+                            console.log("Moving point 2");
+                            owner.indicator.setSelection(owner.lastIndex, false);
+                        }
+                    } else if (contentOffset.x + frameSize.width === contentSize.width) {
+                        console.log("Moving point 3");
+                        scrollView.contentOffset = CGPointMake(frameSize.width, 0);
+                        console.log("Moving point 4");
+                        owner.indicator.setSelection(0, false);
+                    }
+                    this.isScrolling = false;
+                }
+            }
             /* if (!Number.isNaN(width)) {
                  let page = Math.ceil(width);
                  const doScroll = () => {
@@ -1180,7 +1266,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
             const flickedPages = Math.abs(Math.round(flickVelocity)) <= 1 ? 0 : Math.round(flickVelocity);
 
             const newPageIndex = currentPage + flickedPages;
-            selectedIndexProperty.nativeValueChange(owner, Math.min(Math.max(newPageIndex, 0), owner._childrenCount - 1));
+            selectedIndexProperty.nativeValueChange(owner, owner.getPosition(Math.min(Math.max(newPageIndex, 0), owner._childrenCount - 1)));
             // Calculate newHorizontalOffset.
             const newHorizontalOffset = newPageIndex * pageWidth - this.collectionView.contentInset.left;
 
@@ -1203,7 +1289,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
             const flickedPages = Math.abs(Math.round(flickVelocity)) <= 1 ? 0 : Math.round(flickVelocity);
 
             const newPageIndex = currentPage + flickedPages;
-            selectedIndexProperty.nativeValueChange(owner, Math.min(Math.max(newPageIndex, 0), owner._childrenCount - 1));
+            selectedIndexProperty.nativeValueChange(owner, owner.getPosition(Math.min(Math.max(newPageIndex, 0), owner._childrenCount - 1)));
             const newVerticalOffset = newPageIndex * pageHeight - this.collectionView.contentInset.top;
 
             return CGPointMake(proposedContentOffset.x, newVerticalOffset);
