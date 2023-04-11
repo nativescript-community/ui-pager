@@ -63,7 +63,6 @@ class UICellView extends UIView {
 
 const PFLAG_FORCE_LAYOUT = 1;
 export class Pager extends PagerBase {
-
     lastEvent: number = 0;
     private mDisableSwipe: boolean = false;
     private mDisableAnimation: boolean = false;
@@ -201,7 +200,7 @@ export class Pager extends PagerBase {
 
     /**
      *
-     * Get  the position in the CollectionView from the selected index  
+     * Get  the position in the CollectionView from the selected index
      *
      * @param index The position in the collectionView
      * @returns The selected Index ( i.e. the number in the slides as the user would view it).
@@ -221,7 +220,6 @@ export class Pager extends PagerBase {
     }
 
     animateForFlip(index: number): boolean {
-        console.log("AnimateForFlip", index, this.firstDummy);
         if (!this.circularMode) {
             return true;
         }
@@ -346,50 +344,59 @@ export class Pager extends PagerBase {
         if (collectionView) {
             try {
                 let offset = 0;
-                collectionView.performBatchUpdatesCompletion(() => {
-                    this.mIsRefreshing = true;
-                    const array = [];
-                    switch (args.action) {
-                        case ChangeType.Add:
-                            for (let i = 0; i < args.addedCount; i++) {
-                                array.push(NSIndexPath.indexPathForRowInSection(args.index + i, 0));
-                            }
-                            offset = collectionView.contentSize.width - collectionView.contentOffset.x;
-                            collectionView.insertItemsAtIndexPaths(array);
-                            break;
-                        case ChangeType.Delete:
-                            for (let i = 0; i < args.removed.length; i++) {
-                                array.push(NSIndexPath.indexPathForItemInSection(args.index + i, 0));
-                            }
-                            collectionView.deleteItemsAtIndexPaths(array);
-                            break;
-                        case ChangeType.Splice:
-                            if (args.removed && args.removed.length > 0) {
-                                for (let i = 0; i < args.removed.length; i++) {
+                collectionView.performBatchUpdatesCompletion(
+                    () => {
+                        this.mIsRefreshing = true;
+                        const array = [];
+                        switch (args.action) {
+                            case ChangeType.Add:
+                                for (let i = 0; i < args.addedCount; i++) {
                                     array.push(NSIndexPath.indexPathForRowInSection(args.index + i, 0));
                                 }
-                                collectionView.deleteItemsAtIndexPaths(array);
-                            }
-
-                            if (args.addedCount > 0) {
-                                const addedArray = [];
-                                for (let i = 0; i < args.addedCount; i++) {
-                                    addedArray.push(NSIndexPath.indexPathForRowInSection(args.index + i, 0));
+                                offset = collectionView.contentSize.width - collectionView.contentOffset.x;
+                                collectionView.insertItemsAtIndexPaths(array);
+                                break;
+                            case ChangeType.Delete:
+                                for (let i = 0; i < args.removed.length; i++) {
+                                    array.push(NSIndexPath.indexPathForItemInSection(args.index + i, 0));
                                 }
-                                collectionView.insertItemsAtIndexPaths(addedArray);
-                            }
-                            break;
-                        case ChangeType.Update:
-                            collectionView.reloadItemsAtIndexPaths([NSIndexPath.indexPathForRowInSection(args.index, 0)]);
-                            break;
-                        default:
-                            break;
+                                collectionView.deleteItemsAtIndexPaths(array);
+                                break;
+                            case ChangeType.Splice:
+                                if (args.removed && args.removed.length > 0) {
+                                    for (let i = 0; i < args.removed.length; i++) {
+                                        array.push(NSIndexPath.indexPathForRowInSection(args.index + i, 0));
+                                    }
+                                    collectionView.deleteItemsAtIndexPaths(array);
+                                }
+
+                                if (args.addedCount > 0) {
+                                    const addedArray = [];
+                                    for (let i = 0; i < args.addedCount; i++) {
+                                        addedArray.push(NSIndexPath.indexPathForRowInSection(args.index + i, 0));
+                                    }
+                                    collectionView.insertItemsAtIndexPaths(addedArray);
+                                }
+                                break;
+                            case ChangeType.Update:
+                                collectionView.reloadItemsAtIndexPaths([NSIndexPath.indexPathForRowInSection(args.index, 0)]);
+                                break;
+                            default:
+                                break;
+                        }
+                        this._initAutoPlay(this.autoPlay);
+                        if (this.itemCount === 0) {
+                            this.mIsInit = false;
+                            selectedIndexProperty.nativeValueChange(this, -1);
+                        }
+                    },
+                    () => {
+                        if (collectionView.indexPathsForVisibleItems.count > 0) {
+                            const currentIndex = collectionView.indexPathsForVisibleItems.objectAtIndex(0).item;
+                            selectedIndexProperty.nativeValueChange(this, this.getPosition(currentIndex));
+                        }
                     }
-                    this._initAutoPlay(this.autoPlay);
-                    if (this.itemCount === 0) {
-                        this.mIsInit = false;
-                    }
-                }, null);
+                );
             } catch (err) {}
         }
     };
@@ -397,7 +404,6 @@ export class Pager extends PagerBase {
     _onItemsChanged(oldValue: any, newValue: any): void {}
 
     scrollToIndexAnimated(index: number, animate: boolean) {
-        console.log('scrollToIndexAnimated', index, animate);
         if (!this.nativeViewProtected) return;
 
         const contentSize = this.nativeViewProtected.contentSize;
@@ -424,7 +430,7 @@ export class Pager extends PagerBase {
         }
         // dispatch_async(main_queue, () => {
         if (this.mDataSource.collectionViewNumberOfItemsInSection(this.nativeViewProtected, 0) > maxMinIndex) {
-            // when we have custom layouts (they don't occupy 100% of the parent) and we use custom transformers we need to call setContentOffsetAnimated to take size into account. 
+            // when we have custom layouts (they don't occupy 100% of the parent) and we use custom transformers we need to call setContentOffsetAnimated to take size into account.
             // Reference: https://stackoverflow.com/a/53798708/6015400
             this.nativeViewProtected.setContentOffsetAnimated(CGPointMake(1, 0), !!animate);
             this.nativeViewProtected.scrollToItemAtIndexPathAtScrollPositionAnimated(
@@ -888,9 +894,8 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
                 object: owner
             });
         }
-        console.log("Scroll ended");
     }
-     
+
     public scrollViewDidScroll(scrollView: UIScrollView): void {
         const owner = this._owner.get();
         if (owner) {
@@ -913,12 +918,9 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
             //     owner.indicatorView.progress = progress;
             // }
             const index = parseInt(progress.toFixed(0), 10);
-            if (owner.selectedIndex !== index && !Number.isNaN(index)) {
-                //  selectedIndexProperty.nativeValueChange(owner, index);
-            }
+
             if (owner.indicator && !Number.isNaN(index)) {
-                if (owner.circularMode && (index === 0 || index === owner.firstDummy)) {
-                    } else {
+                if (!(owner.circularMode && (index === 0 || index === owner.firstDummy))) {
                     owner.indicator.setSelection(owner.getPosition(index));
                 }
             }
@@ -944,44 +946,23 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
             // );
 
             if (owner.circularMode) {
-                console.log('CIRCULAR', index);
-          /*      if (index === 0) {
-                    selectedIndexProperty.nativeValueChange(owner, owner._childrenCount - 3);
-                } else if (index === owner._childrenCount - 1) {
-                    selectedIndexProperty.nativeValueChange(owner, 0);
-                } else {
-                    selectedIndexProperty.nativeValueChange(owner, index - 1);
-                }
-          */
                 if (!this.isScrolling) {
                     this.isScrolling = true;
                     const contentOffset = scrollView.contentOffset;
                     const contentSize = scrollView.contentSize;
                     const frameSize = scrollView.frame.size;
-                    if (contentOffset.x < 0) {
+                    if (contentOffset.x <= 0) {
                         scrollView.contentOffset = CGPointMake(contentSize.width - frameSize.width * 2, 0);
                         if (owner.indicator) {
                             owner.indicator.setSelection(owner.lastIndex, false);
                         }
-                    } else if (contentOffset.x + frameSize.width > contentSize.width) {
+                    } else if (contentOffset.x + frameSize.width >= contentSize.width) {
                         scrollView.contentOffset = CGPointMake(frameSize.width, 0);
-                        owner.indicator.setSelection(0, false);
+                        if (owner.indicator) {
+                            owner.indicator.setSelection(0, false);
+                        }
                     }
-                    console.log('Doing circular', contentOffset.x, frameSize.width, contentSize.width);
 
-                    if (contentOffset.x === 0) {
-                        console.log("Moving point 1");
-                        scrollView.contentOffset = CGPointMake(contentSize.width - frameSize.width * 2, 0);
-                        if (owner.indicator) {
-                            console.log("Moving point 2");
-                            owner.indicator.setSelection(owner.lastIndex, false);
-                        }
-                    } else if (contentOffset.x + frameSize.width === contentSize.width) {
-                        console.log("Moving point 3");
-                        scrollView.contentOffset = CGPointMake(frameSize.width, 0);
-                        console.log("Moving point 4");
-                        owner.indicator.setSelection(0, false);
-                    }
                     this.isScrolling = false;
                 }
             }
@@ -1266,7 +1247,9 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
             const flickedPages = Math.abs(Math.round(flickVelocity)) <= 1 ? 0 : Math.round(flickVelocity);
 
             const newPageIndex = currentPage + flickedPages;
-            selectedIndexProperty.nativeValueChange(owner, owner.getPosition(Math.min(Math.max(newPageIndex, 0), owner._childrenCount - 1)));
+            const actualIndex = Math.min(Math.max(owner.getPosition(newPageIndex), 0), owner._childrenCount - 1);
+            selectedIndexProperty.nativeValueChange(owner, actualIndex);
+
             // Calculate newHorizontalOffset.
             const newHorizontalOffset = newPageIndex * pageWidth - this.collectionView.contentInset.left;
 
@@ -1289,7 +1272,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
             const flickedPages = Math.abs(Math.round(flickVelocity)) <= 1 ? 0 : Math.round(flickVelocity);
 
             const newPageIndex = currentPage + flickedPages;
-            selectedIndexProperty.nativeValueChange(owner, owner.getPosition(Math.min(Math.max(newPageIndex, 0), owner._childrenCount - 1)));
+            selectedIndexProperty.nativeValueChange(owner, Math.min(Math.max(owner.getPosition(newPageIndex), 0), owner._childrenCount - 1));
             const newVerticalOffset = newPageIndex * pageHeight - this.collectionView.contentInset.top;
 
             return CGPointMake(proposedContentOffset.x, newVerticalOffset);

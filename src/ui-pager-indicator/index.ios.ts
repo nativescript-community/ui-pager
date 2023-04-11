@@ -58,7 +58,6 @@ export class PagerIndicator extends PagerIndicatorBase {
     }
     setInteractiveAnimation(animated?: boolean) {}
     setSelection(progress: number, animated: boolean = true) {
-        console.log("Setting selection", progress, animated);
         NSCProgressHelper.setProgressWithPageControlProgressAnimated(this.nativeViewProtected, progress, animated);
     }
     setCount(count: number) {
