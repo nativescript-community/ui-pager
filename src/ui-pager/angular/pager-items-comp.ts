@@ -18,11 +18,10 @@ import {
     Output,
     TemplateRef,
     ViewChild,
-    ViewContainerRef,
-    ɵisListLikeIterable as isListLikeIterable
+    ViewContainerRef
 } from '@angular/core';
 import { Pager, PagerError, PagerItem, PagerLog } from '@nativescript-community/ui-pager';
-import { extractSingleViewRecursive, isInvisibleNode, registerElement } from '@nativescript/angular';
+import { extractSingleViewRecursive, isInvisibleNode, isListLikeIterable, registerElement } from '@nativescript/angular';
 import { EventData, KeyedTemplate, LayoutBase, Template, Trace, View, isIOS } from '@nativescript/core';
 import { ObservableArray } from '@nativescript/core/data/observable-array';
 import { profile } from '@nativescript/core/profiling';
