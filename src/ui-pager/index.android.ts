@@ -255,6 +255,11 @@ export class Pager extends PagerBase {
             }
             this._initAutoPlay(this.autoPlay);
         }
+        if (this.indicator && this.mObservableArrayInstance && this.mObservableArrayInstance.length) {
+            this.indicator.setCount(this.mObservableArrayInstance.length);
+            this.pagerAdapter.notifyDataSetChanged();
+            this.scrollToIndexAnimated(0, false);
+        }
     };
     disposeViewHolderViews() {
         this.enumerateViewHolders((v) => {
@@ -318,7 +323,7 @@ export class Pager extends PagerBase {
             const indicator = this.indicator;
             const toDo = () => {
                 nativeView.setCurrentItem(index, false);
-                indicator.setSelection(this.selectedIndex, false);
+                if (indicator) indicator.setSelection(this.selectedIndex, false);
             };
             if (indicator) {
                 indicator.withoutAnimation(toDo);
@@ -363,10 +368,13 @@ export class Pager extends PagerBase {
     public scrollToIndexAnimated(index: number, animate: boolean) {
         const nativeView = this.nativeViewProtected;
         if (nativeView) {
-            nativeView.setCurrentItem(index, animate);
+            nativeView.setCurrentItem(this.pagerAdapter.getIndex(index), animate);
             if (!animate) {
                 // without animate we wont go through the delegate
                 selectedIndexProperty.nativeValueChange(this, index);
+                if (this.indicator) {
+                    this.indicator.setSelection(index, false);
+                }
             }
         }
     }
@@ -526,7 +534,6 @@ export class Pager extends PagerBase {
 
         if (isRightOverScrolled || isLeftOverScrolled) {
             selectedPosition = position;
-            indicator.setSelection(selectedPosition);
         }
 
         const slideToRightSide = selectedPosition === position && positionOffset !== 0;
@@ -581,6 +588,14 @@ function initPagerChangeCallback() {
         onPageSelected(position: number) {
             const owner = this.owner && this.owner.get();
             if (owner) {
+                if (owner.lastEvent === 0 && !owner.circularMode) {
+                    // page changing without scroll so do the indicator etc.
+                    selectedIndexProperty.nativeValueChange(owner, position);
+                    if (owner.indicator) {
+                        owner.indicator.setSelection(position, true);
+                    }
+                }
+
                 owner.notify({
                     eventName: Pager.swipeEvent,
                     object: owner
@@ -619,7 +634,10 @@ function initPagerChangeCallback() {
                     const selectingPosition = progress[0];
                     const selectingProgress = progress[1];
                     indicator.setInteractiveAnimation(true);
-                    indicator.setProgress(selectingPosition, selectingProgress);
+                    if (position < owner.lastIndex) {
+                        indicator.setSelection(position, false);
+                        indicator.setProgress(selectingPosition, selectingProgress);
+                    }
                 }
             }
         }
@@ -702,6 +720,7 @@ interface PagerRecyclerAdapter extends androidx.recyclerview.widget.RecyclerView
     new (owner: WeakRef<Pager>): PagerRecyclerAdapter;
     getPosition(index: number): number;
     lastIndex(): number;
+    getIndex(index: number): number;
 }
 // eslint-disable-next-line no-redeclare
 let PagerRecyclerAdapter: PagerRecyclerAdapter;
@@ -767,7 +786,27 @@ function initPagerRecyclerAdapter() {
             }
             return position;
         }
-
+        /**
+         *
+         * Get  the position in the CollectionView from the selected index
+         *
+         * @param index The position in the collectionView
+         * @returns The selected Index ( i.e. the number in the slides as the user would view it).
+         */
+        getIndex(index: number): number {
+            let position = index;
+            const owner = this.owner && this.owner.get();
+            if (owner && owner.circularMode) {
+                if (position === 0) {
+                    position = 1;
+                } else if (position === this.firstDummy()) {
+                    position = 0;
+                } else {
+                    position = position + 1;
+                }
+            }
+            return position;
+        }
         onBindViewHolder(holder: any, index: number): void {
             const owner = this.owner ? this.owner.get() : null;
             if (owner) {
