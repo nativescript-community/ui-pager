@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.4](https://github.com/nativescript-community/ui-pager/compare/v14.1.3...v14.1.4) (2023-05-09)
+
+
+### Bug Fixes
+
+* indicator in circular mode ([0b38d56](https://github.com/nativescript-community/ui-pager/commit/0b38d56d127822cb82563f2874809ac25bc573c4))
+* indicator linking and circular functionality ([7bb05e5](https://github.com/nativescript-community/ui-pager/commit/7bb05e5669c1501b9a3f2fcdced36b10d88a797c))
+
+
+
+
+
 ## [14.1.3](https://github.com/nativescript-community/ui-pager/compare/v14.1.2...v14.1.3) (2023-04-06)
 
 
