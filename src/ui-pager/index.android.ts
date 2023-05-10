@@ -19,20 +19,14 @@ import {
 export * from './index.common';
 export { ItemsSource, Transformer } from './index.common';
 
-function notifyForItemAtIndex(owner, nativeView: any, view: any, eventName: string, index: number) {
-    const args = {
-        eventName,
-        object: owner,
-        index,
-        view,
-        ios: undefined,
-        android: nativeView
-    };
-    owner.notify(args);
-    return args;
-}
-
 const PLACEHOLDER = 'PLACEHOLDER';
+const sdkVersion = parseInt(Device.sdkVersion, 10);
+
+export const pagesCountProperty = new Property<Pager, number>({
+    name: 'pagesCount',
+    defaultValue: -1,
+    valueConverter: parseInt
+});
 
 export class Pager extends PagerBase {
     nativeViewProtected: androidx.viewpager2.widget.ViewPager2;
@@ -59,6 +53,7 @@ export class Pager extends PagerBase {
     private _lastPeaking = 0;
     private compositeTransformer: androidx.viewpager2.widget.CompositePageTransformer;
     private marginTransformer: androidx.viewpager2.widget.MarginPageTransformer;
+    private peakingTransformer: com.nativescript.pager.PeakingTransformer;
     private _transformers: androidx.viewpager2.widget.ViewPager2.PageTransformer[];
 
     constructor() {
@@ -74,10 +69,9 @@ export class Pager extends PagerBase {
         this._views = value;
     }
 
-    @profile()
     public createNativeView() {
         const nativeView = new androidx.viewpager2.widget.ViewPager2(this._context);
-        const sdkVersion = parseInt(Device.sdkVersion, 10);
+        nativeView.setOffscreenPageLimit(-1);
         if (sdkVersion >= 21) {
             nativeView.setNestedScrollingEnabled(true);
         }
@@ -87,23 +81,24 @@ export class Pager extends PagerBase {
             nativeView.setOrientation(androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL);
         }
 
-        initPagerRecyclerAdapter();
-        this._pagerAdapter = new PagerRecyclerAdapter(new WeakRef(this));
-        this.compositeTransformer = new androidx.viewpager2.widget.CompositePageTransformer();
-        nativeView.setUserInputEnabled(!this.disableSwipe);
-        this.on(View.layoutChangedEvent, this.onLayoutChange, this);
         return nativeView;
     }
 
     public initNativeView() {
         super.initNativeView();
+        const nativeView = this.nativeViewProtected;
+        initPagerRecyclerAdapter();
+        this._pagerAdapter = new PagerRecyclerAdapter(new WeakRef(this));
+        this.compositeTransformer = new androidx.viewpager2.widget.CompositePageTransformer();
+        nativeView.setPageTransformer(this.compositeTransformer);
+        nativeView.setUserInputEnabled(!this.disableSwipe);
+        this.on(View.layoutChangedEvent, this.onLayoutChange, this);
         // Store disable animation value
         this._oldDisableAnimation = this.disableAnimation;
         // Disable animation to set currentItem w/o animation
         this.disableAnimation = true;
         initPagerChangeCallback();
         this._pageListener = new PageChangeCallback(new WeakRef(this));
-        const nativeView = this.nativeViewProtected;
         nativeView.registerOnPageChangeCallback(this._pageListener);
         nativeView.setAdapter(this._pagerAdapter);
         if (this._androidViewId < 0) {
@@ -116,8 +111,6 @@ export class Pager extends PagerBase {
             nativeView.setOffscreenPageLimit(3);
         }
 
-        this._setPeaking(this.peaking);
-        this._setSpacing(this.spacing);
         this._setTransformers(this.transformers ? this.transformers : '');
     }
 
@@ -160,48 +153,56 @@ export class Pager extends PagerBase {
         this.initStaticPagerAdapter();
     }
     onLayoutChange(args: any) {
-        this._setSpacing(args.object.spacing);
-        this._setPeaking(args.object.peaking);
-        this._setTransformers(this.transformers ? this.transformers : '');
+        if (this._lastPeaking) {
+            this[peakingProperty.setNative](this.peaking);
+        }
+        if (this._lastSpacing) {
+            this[spacingProperty.setNative](this.spacing);
+        }
+        // this._setTransformers(this.transformers ? this.transformers : '');
         this._updateScrollPosition();
         // Set disableAnimation to original value
         this.disableAnimation = this._oldDisableAnimation;
     }
 
-    private _setSpacing(value: any) {
+    [spacingProperty.setNative](value: any) {
+        console.log('spacingProperty', value);
         const size = this.convertToSize(value);
         const newSpacing = size !== this._lastSpacing;
         if (newSpacing) {
             if (this.marginTransformer) {
                 this.compositeTransformer.removeTransformer(this.marginTransformer);
+                this.marginTransformer = null;
             }
-
-            this.marginTransformer = new androidx.viewpager2.widget.MarginPageTransformer(size);
-            this.compositeTransformer.addTransformer(this.marginTransformer);
+            if (size !== 0) {
+                this.marginTransformer = new androidx.viewpager2.widget.MarginPageTransformer(size);
+                this.compositeTransformer.addTransformer(this.marginTransformer);
+                if (this.peakingTransformer) {
+                    this.compositeTransformer.removeTransformer(this.peakingTransformer);
+                    this.peakingTransformer = null;
+                }
+            }
             this._lastSpacing = size;
         }
     }
 
-    private _setPeaking(value: any) {
+    [peakingProperty.setNative](value: any) {
         const size = this.convertToSize(value);
         const newPeaking = size !== this._lastPeaking;
         if (newPeaking) {
             const nativeView = this.nativeViewProtected;
-            nativeView.setClipToPadding(false);
             const left = this.orientation === 'horizontal' ? size : 0;
             const top = this.orientation === 'horizontal' ? 0 : size;
+            const enabled = left !== 0 || top !== 0;
             nativeView.setPadding(left, top, left, top);
-            nativeView.setClipChildren(false);
+            nativeView.setClipChildren(!enabled);
+            nativeView.setClipToPadding(!enabled);
+            if (!this.peakingTransformer && !this.marginTransformer) {
+                this.peakingTransformer = new com.nativescript.pager.PeakingTransformer();
+                this.compositeTransformer.addTransformer(this.peakingTransformer);
+            }
             this._lastPeaking = size;
         }
-    }
-
-    [spacingProperty.setNative](value: any) {
-        this._setSpacing(value);
-    }
-
-    [peakingProperty.setNative](value: any) {
-        this._setPeaking(value);
     }
 
     private _setTransformers(transformers: string) {
@@ -212,6 +213,7 @@ export class Pager extends PagerBase {
         this._transformers.forEach((transformer) => {
             this.compositeTransformer.removeTransformer(transformer);
         });
+        console.log('_setTransformers', transformers);
         for (const transformer of transformsArray) {
             const nativeTransformerClass = Pager.mRegisteredTransformers[transformer];
             if (nativeTransformerClass) {
@@ -389,14 +391,6 @@ export class Pager extends PagerBase {
         }
     }
 
-    updatePagesCount(value: number) {
-        const nativeView = this.nativeViewProtected;
-        if (nativeView) {
-            this._pagerAdapter.notifyDataSetChanged();
-            nativeView.setOffscreenPageLimit(value);
-        }
-    }
-
     onUnloaded() {
         // this._android.setAdapter(null);
         super.onUnloaded();
@@ -469,6 +463,13 @@ export class Pager extends PagerBase {
             clearInterval(this._autoPlayInterval);
             this._autoPlayInterval = undefined;
             this._initAutoPlay(this.autoPlay);
+        }
+    }
+    [pagesCountProperty.setNative](value: number) {
+        const nativeView = this.nativeViewProtected;
+        if (nativeView && (value === -1 || value > 0)) {
+            this._pagerAdapter.notifyDataSetChanged();
+            nativeView.setOffscreenPageLimit(value);
         }
     }
 
@@ -558,14 +559,6 @@ export class Pager extends PagerBase {
     }
 }
 
-export const pagesCountProperty = new Property<Pager, number>({
-    name: 'pagesCount',
-    defaultValue: 0,
-    valueConverter: (v) => parseInt(v, 10),
-    valueChanged: (pager: Pager, oldValue, newValue) => {
-        pager.updatePagesCount(pager.pagesCount);
-    }
-});
 pagesCountProperty.register(Pager);
 
 let PageChangeCallback;

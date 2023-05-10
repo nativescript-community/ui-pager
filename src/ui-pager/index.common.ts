@@ -322,13 +322,13 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
             converted = size * length.value;
         } else if (typeof length === 'string') {
             if (length.indexOf('px') > -1) {
-                converted = parseInt(length.replace('px', ''), 10);
+                converted = parseFloat(length.replace('px', ''));
             } else if (length.indexOf('dip') > -1) {
                 converted = Utils.layout.toDevicePixels(parseInt(length.replace('dip', ''), 10));
             } else if (length.indexOf('%') > -1) {
-                converted = size * (parseInt(length.replace('%', ''), 10) / 100);
+                converted = size * (parseFloat(length.replace('%', '')) / 100);
             } else {
-                converted = Utils.layout.toDevicePixels(parseInt(length, 10));
+                converted = Utils.layout.toDevicePixels(parseFloat(length));
             }
         } else if (typeof length === 'number') {
             converted = Utils.layout.toDevicePixels(length);
