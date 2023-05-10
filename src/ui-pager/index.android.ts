@@ -166,7 +166,6 @@ export class Pager extends PagerBase {
     }
 
     [spacingProperty.setNative](value: any) {
-        console.log('spacingProperty', value);
         const size = this.convertToSize(value);
         const newSpacing = size !== this._lastSpacing;
         if (newSpacing) {
@@ -213,7 +212,6 @@ export class Pager extends PagerBase {
         this._transformers.forEach((transformer) => {
             this.compositeTransformer.removeTransformer(transformer);
         });
-        console.log('_setTransformers', transformers);
         for (const transformer of transformsArray) {
             const nativeTransformerClass = Pager.mRegisteredTransformers[transformer];
             if (nativeTransformerClass) {
