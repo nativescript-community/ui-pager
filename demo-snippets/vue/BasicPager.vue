@@ -5,19 +5,24 @@
             <Label text="Basic Pager" />
         </ActionBar>
 
-        <StackLayout class="page">
-            <Pager for="item in items" height="100%">
+        <GridLayout class="page" rows="*,auto">
+            <Pager ref="pager" for="item in items" height="100%">
                 <v-template>
                     <GridLayout :backgroundColor="item.color">
                         <Label :text="item.title" />
                     </GridLayout>
                 </v-template>
             </Pager>
-        </StackLayout>
+            <StackLayout orientation="horizontal" row="1">
+                <Button text="moveTo0" @tap="moveTo0"></Button>
+                <Button text="moveTo3" @tap="moveTo3"></Button>
+            </StackLayout>
+        </GridLayout>
     </Page>
 </template>
 
-<script>
+<script lang="ts">
+import { Pager } from '@nativescript-community/ui-pager/index.android';
 export default {
     data() {
         return {
@@ -27,6 +32,14 @@ export default {
                 {title: "Third", color: "#e74c3c"},
                 {title: "Fourth", color: "#9b59b6"},
             ]
+        }
+    },
+    methods: {
+        moveTo3() {
+            (this.$refs.pager.nativeView as Pager).scrollToIndexAnimated(3, true);
+        },
+        moveTo0() {
+            (this.$refs.pager.nativeView as Pager).scrollToIndexAnimated(0, false);
         }
     }
 };
