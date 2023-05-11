@@ -299,10 +299,6 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
         super.onLayout(left, top, right, bottom);
         this._effectiveItemWidth = this.getMeasuredWidth() - this.effectivePaddingLeft - this.effectivePaddingRight;
         this._effectiveItemHeight = this.getMeasuredHeight() - this.effectivePaddingTop - this.effectivePaddingBottom;
-        if (__IOS__ && this.iosOverflowSafeAreaEnabled) {
-            const safeArea = this.getSafeAreaInsets();
-            this._effectiveItemHeight += safeArea.top + safeArea.bottom;
-        }
     }
 
     public convertToSize(length): number {

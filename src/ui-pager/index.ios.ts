@@ -79,8 +79,8 @@ export class Pager extends PagerBase {
     mIsRefreshing: boolean = false;
     mIsInit: boolean = false;
 
-    public mInnerWidth: number = 0;
-    public mInnerHeight: number = 0;
+    // public mInnerWidth: number = 0;
+    // public mInnerHeight: number = 0;
     mLastLayoutKey: string;
 
     constructor() {
@@ -451,7 +451,7 @@ export class Pager extends PagerBase {
             return;
         }
         this._isDataDirty = false;
-        this.mLastLayoutKey = this.mInnerWidth + '_' + this.mInnerHeight;
+        this.mLastLayoutKey = this._effectiveItemWidth + '_' + this._effectiveItemHeight;
 
         // clear bindingContext when it is not observable because otherwise bindings to items won't reevaluate
         this.mMap.forEach((view, nativeView, map) => {
@@ -477,7 +477,7 @@ export class Pager extends PagerBase {
     _isDataDirty = false;
     public onLoaded() {
         super.onLoaded();
-        if (this._isDataDirty && this.mInnerWidth !== undefined && this.mInnerHeight !== undefined) {
+        if (this._isDataDirty && this._effectiveItemWidth !== undefined && this._effectiveItemHeight !== undefined) {
             this.refresh();
         }
 
@@ -604,15 +604,13 @@ export class Pager extends PagerBase {
         });
     }
     iosOverflowSafeAreaEnabledLayoutHackNeeded = true;
-    protected updateInnerSize() {
-        const width = this.getMeasuredWidth();
-        const height = this.getMeasuredHeight();
-        this.mInnerWidth = width - this.effectivePaddingLeft - this.effectivePaddingRight;
-        this.mInnerHeight = height - this.effectivePaddingTop - this.effectivePaddingBottom;
-    }
+
     public onLayout(left: number, top: number, right: number, bottom: number) {
         super.onLayout(left, top, right, bottom);
-        this.updateInnerSize();
+        if (this.iosOverflowSafeAreaEnabled) {
+            const safeArea = this.getSafeAreaInsets();
+            this._effectiveItemHeight += safeArea.top + safeArea.bottom;
+        }
         if (!this.nativeView) {
             return;
         }
@@ -625,15 +623,15 @@ export class Pager extends PagerBase {
         layoutView.invalidateLayout();
 
         const size = this._getSize();
+        const width = Utils.layout.toDevicePixels(size.width);
+        const height = Utils.layout.toDevicePixels(size.height);
         this.mMap.forEach((childView, pagerCell) => {
-            const width = Utils.layout.toDevicePixels(size.width);
-            const height = Utils.layout.toDevicePixels(size.height);
             View.layoutChild(this, childView, 0, 0, width, height);
         });
 
         // there is no need to call refresh if it was triggered before with same size.
         // this refresh is just to handle size change
-        const layoutKey = this.mInnerWidth + '_' + this.mInnerHeight;
+        const layoutKey = this._effectiveItemWidth + '_' + this._effectiveItemHeight;
         if (this.mLastLayoutKey !== layoutKey) {
             this.refresh();
         }
@@ -974,7 +972,6 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
                          scrollView.contentOffset = CGPointMake(Math.ceil(w) * page, scrollView.contentOffset.y);
                      }
                  };
-                 console.log('page', page, owner.itemCount, page === owner.itemCount);
                  if (page === 0) {
                      page = owner.itemCount - 2;
                      doScroll();
