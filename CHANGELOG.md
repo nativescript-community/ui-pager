@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.6](https://github.com/nativescript-community/ui-pager/compare/v14.1.5...v14.1.6) (2023-05-11)
+
+
+### Bug Fixes
+
+* **android:** peaking/spacing not updating on layout change (% values) ([5f900cf](https://github.com/nativescript-community/ui-pager/commit/5f900cf28f467020f9e502918a0ec6946f4ec912))
+
+
+
+
+
 ## [14.1.5](https://github.com/nativescript-community/ui-pager/compare/v14.1.4...v14.1.5) (2023-05-10)
 
 
