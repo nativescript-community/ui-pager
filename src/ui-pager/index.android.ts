@@ -85,6 +85,7 @@ export class Pager extends PagerBase {
     }
 
     public initNativeView() {
+        this.on(View.layoutChangedEvent, this.onLayoutChange, this);
         super.initNativeView();
         const nativeView = this.nativeViewProtected;
         initPagerRecyclerAdapter();
@@ -92,7 +93,6 @@ export class Pager extends PagerBase {
         this.compositeTransformer = new androidx.viewpager2.widget.CompositePageTransformer();
         nativeView.setPageTransformer(this.compositeTransformer);
         nativeView.setUserInputEnabled(!this.disableSwipe);
-        this.on(View.layoutChangedEvent, this.onLayoutChange, this);
         // Store disable animation value
         this._oldDisableAnimation = this.disableAnimation;
         // Disable animation to set currentItem w/o animation
@@ -153,10 +153,10 @@ export class Pager extends PagerBase {
         this.initStaticPagerAdapter();
     }
     onLayoutChange(args: any) {
-        if (this._lastPeaking) {
+        if (this.peaking) {
             this[peakingProperty.setNative](this.peaking);
         }
-        if (this._lastSpacing) {
+        if (this.spacing) {
             this[spacingProperty.setNative](this.spacing);
         }
         // this._setTransformers(this.transformers ? this.transformers : '');
@@ -182,6 +182,7 @@ export class Pager extends PagerBase {
                 }
             }
             this._lastSpacing = size;
+            this.refresh();
         }
     }
 
@@ -201,6 +202,7 @@ export class Pager extends PagerBase {
                 this.compositeTransformer.addTransformer(this.peakingTransformer);
             }
             this._lastPeaking = size;
+            this.refresh();
         }
     }
 
