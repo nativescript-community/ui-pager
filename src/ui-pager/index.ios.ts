@@ -1146,7 +1146,7 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
             const cellView: any = (cell as PagerCell).view;
             cellView.iosOverflowSafeArea = owner.iosOverflowSafeArea;
             cellView['iosIgnoreSafeArea'] = owner['iosIgnoreSafeArea'];
-            if (!owner.iosOverflowSafeAreaEnabled && cellView && cellView.isLayoutRequired) {
+            if (cellView && cellView.isLayoutRequired) {
                 View.layoutChild(owner, cellView, 0, 0, Utils.layout.toDevicePixels(size.width), Utils.layout.toDevicePixels(size.height));
             }
         }
