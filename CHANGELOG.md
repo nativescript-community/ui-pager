@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.7](https://github.com/nativescript-community/ui-pager/compare/v14.1.6...v14.1.7) (2023-09-18)
+
+
+### Bug Fixes
+
+* **android:** indicator issue ([6ae8929](https://github.com/nativescript-community/ui-pager/commit/6ae8929d59c36300dab947f185aa57de2fd61cf6))
+
+
+
+
+
 ## [14.1.6](https://github.com/nativescript-community/ui-pager/compare/v14.1.5...v14.1.6) (2023-05-11)
 
 
