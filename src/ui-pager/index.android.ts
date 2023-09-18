@@ -116,10 +116,12 @@ export class Pager extends PagerBase {
 
     setIndicator(indicator) {
         super.setIndicator(indicator);
-        if (indicator) {
-            this.indicator.setCount(this.items ? this.items.length : 0);
-            this.indicator.setSelection(this.selectedIndex, false);
-        }
+        setTimeout(() => {
+            if (indicator) {
+                this.indicator.setCount(this.items ? this.items.length : 0);
+                this.indicator.setSelection(this.selectedIndex, false);
+            }
+        });
     }
 
     private enumerateViewHolders<T = any>(cb: (v: PagerViewHolder) => T) {
