@@ -338,12 +338,13 @@ export class Pager extends PagerBase {
                 this._pagerAdapter = new StaticPagerStateAdapter(new WeakRef(this));
                 nativeView.setAdapter(this._pagerAdapter);
                 selectedIndexProperty.coerce(this);
-                setTimeout(() => {
-                    nativeView.setCurrentItem(this.selectedIndex, false);
-                    if (this.indicator) {
-                        this.indicator.setSelection(this.selectedIndex);
-                    }
-                }, 0);
+                // TODO
+                // setTimeout(() => {
+                nativeView.setCurrentItem(this.selectedIndex, false);
+                if (this.indicator) {
+                    this.indicator.setSelection(this.selectedIndex);
+                }
+                // }, 0);
             }
         }
     }
