@@ -4,18 +4,10 @@
 </ActionBar>
 
 <StackLayout>
-    <Pager
-        [items]="items"
-        height="300"
-        [selectedIndex]="selectedIndex"
-        (selectedIndexChange)="onIndexChanged($event)"
-        indicator="fill"
-        showIndicator="true"
-    >
+    <Pager [items]="items" height="300" [selectedIndex]="selectedIndex" (selectedIndexChange)="onIndexChanged($event)"
+        indicator="fill" showIndicator="true">
         <ng-template let-i="index" let-item="item">
-            <GridLayout
-                [backgroundColor]="item.color"
-            >
+            <GridLayout [backgroundColor]="item.color">
                 <Label class="label" [text]="item.title"></Label>
             </GridLayout>
         </ng-template>

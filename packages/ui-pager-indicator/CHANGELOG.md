@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.8](https://github.com/nativescript-community/ui-pager/compare/v14.1.7...v14.1.8) (2023-09-18)
+
+**Note:** Version bump only for package @nativescript-community/ui-pager-indicator
+
+
+
+
+
+## [14.1.7](https://github.com/nativescript-community/ui-pager/compare/v14.1.6...v14.1.7) (2023-09-18)
+
+**Note:** Version bump only for package @nativescript-community/ui-pager-indicator
+
+
+
+
+
+## [14.1.6](https://github.com/nativescript-community/ui-pager/compare/v14.1.5...v14.1.6) (2023-05-11)
+
+**Note:** Version bump only for package @nativescript-community/ui-pager-indicator
+
+
+
+
+
+## [14.1.5](https://github.com/nativescript-community/ui-pager/compare/v14.1.4...v14.1.5) (2023-05-10)
+
+**Note:** Version bump only for package @nativescript-community/ui-pager-indicator
+
+
+
+
+
+## [14.1.4](https://github.com/nativescript-community/ui-pager/compare/v14.1.3...v14.1.4) (2023-05-09)
+
+
+### Bug Fixes
+
+* indicator linking and circular functionality ([7bb05e5](https://github.com/nativescript-community/ui-pager/commit/7bb05e5669c1501b9a3f2fcdced36b10d88a797c))
+
+
+
+
+
 ## [14.1.3](https://github.com/nativescript-community/ui-pager/compare/v14.1.2...v14.1.3) (2023-04-06)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager-indicator

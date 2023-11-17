@@ -1,29 +1,4 @@
-import {
-    AddChildFromBuilder,
-    Builder,
-    CSSType,
-    CoercibleProperty,
-    Color,
-    ContainerView,
-    CoreTypes,
-    GridLayout,
-    ItemsSource,
-    KeyedTemplate,
-    Label,
-    Length,
-    Observable,
-    ObservableArray,
-    PercentLength,
-    Property,
-    Template,
-    Trace,
-    View,
-    ViewBase,
-    addWeakEventListener,
-    makeParser,
-    makeValidator,
-    removeWeakEventListener
-} from '@nativescript/core';
+import { CSSType, Color, ItemsSource, Property, View, ViewBase } from '@nativescript/core';
 import { IndicatorHolder } from '.';
 export enum Indicator {
     Disabled = 'disable',
@@ -62,6 +37,21 @@ export abstract class PagerIndicatorBase extends View {
     pagerView: View & IndicatorHolder;
     pagerViewId: string;
 
+    getPage() {
+        if (this.page) {
+            return this.page;
+        } else {
+            return this.getTopmost(this);
+        }
+    }
+    getTopmost<View>(arg: ViewBase) {
+        if (arg.parent) {
+            return this.getTopmost(arg.parent);
+        } else {
+            return arg;
+        }
+    }
+
     disposeNativeView() {
         this.pagerView = null;
         super.disposeNativeView();
@@ -70,12 +60,11 @@ export abstract class PagerIndicatorBase extends View {
     onLoaded() {
         super.onLoaded();
         if (this.pagerViewId) {
-            this.setPagerView(this.page.getViewById(this.pagerViewId));
+            this.setPagerView(this.getPage().getViewById(this.pagerViewId));
         }
     }
 
     setPagerView(view: View) {
-        console.log('setPagerView', view);
         if (this.pagerView !== view) {
             if (this.pagerView) {
                 this.pagerView.setIndicator(null);
@@ -89,7 +78,9 @@ export abstract class PagerIndicatorBase extends View {
     }
 
     [pagerViewIdProperty.setNative](value) {
-        this.setPagerView(this.page.getViewById(value));
+        if (this.page) {
+            this.setPagerView(this.page?.getViewById(value));
+        }
     }
 
     abstract setSelection(index: number, animated?: boolean);
