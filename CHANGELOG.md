@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.9](https://github.com/nativescript-community/ui-pager/compare/v14.1.8...v14.1.9) (2023-11-17)
+
+
+### Bug Fixes
+
+* **android:** pager having the wrong first index position. remain to see if it has side effects in corner cases ([d7a2dfc](https://github.com/nativescript-community/ui-pager/commit/d7a2dfcf8de397a824c19c9ed723394cafc90fbe))
+
+
+
+
+
 ## [14.1.8](https://github.com/nativescript-community/ui-pager/compare/v14.1.7...v14.1.8) (2023-09-18)
 
 **Note:** Version bump only for package ui-pager
