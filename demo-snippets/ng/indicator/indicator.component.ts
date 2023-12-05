@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { RouterExtensions } from '@nativescript/angular';
 
 @Component({
     selector: 'ns-indicator',
     templateUrl: './indicator.component.html',
-    styleUrls: ["./indicator.component.scss"],
+    styleUrls: ['./indicator.component.scss']
 })
 export class IndicatorComponent implements OnInit {
     selectedIndex = 0;
@@ -13,20 +13,20 @@ export class IndicatorComponent implements OnInit {
 
     items = [
         {
-            title: "First",
-            color: "#e67e22"
+            title: 'First',
+            color: '#e67e22'
         },
         {
-            title: "Second",
-            color: "#3498db"
+            title: 'Second',
+            color: '#3498db'
         },
         {
-            title: "Third",
-            color: "#e74c3c"
+            title: 'Third',
+            color: '#e74c3c'
         },
         {
-            title: "Fourth",
-            color: "#9b59b6"
+            title: 'Fourth',
+            color: '#9b59b6'
         }
     ];
 
