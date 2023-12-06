@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
-import { NativeScriptCommonModule, NativeScriptModule } from '@nativescript/angular';
+import { NativeScriptCommonModule, NativeScriptModule, registerElement } from '@nativescript/angular';
 
 import { PagerModule } from '@nativescript-community/ui-pager/angular';
 import { PagerIndicator } from "@nativescript-community/ui-pager-indicator";
