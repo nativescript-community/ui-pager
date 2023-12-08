@@ -93,11 +93,11 @@ export default {
         },
         onItemDisposing(args) {
             // TODO: handle disposing template
-            // const oldVnode = args.view && args.view[ VUE_VIEW ];
-            // console.log("disposing", !!oldVnode, VUE_VIEW);
-            // if (oldVnode) {
-            // 	Vue.prototype.__patch__(oldVnode, null);
-            // }
+            const oldVnode = args.view && args.view[VUE_VIEW];
+            if (oldVnode) {
+                // properly dispose the oldVnode (this will unmount the tree)
+                this.__patch__(oldVnode, null);
+            }
         },
         onSelectedIndexChange({ value }) {
             this.$emit('selectedIndexChange', {

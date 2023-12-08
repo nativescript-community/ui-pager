@@ -268,6 +268,12 @@ export class Pager extends PagerBase {
     disposeViewHolderViews() {
         this.enumerateViewHolders((v) => {
             const view = v.view;
+            this.notify({
+                eventName: Pager.itemDisposingEvent,
+                index: v.getAdapterPosition(),
+                android: v,
+                view
+            } as ItemEventData);
             // if (view && view.isLoaded) {
             //     view.callUnloaded();
             // }

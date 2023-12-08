@@ -505,11 +505,10 @@ export class Pager extends PagerBase {
     }
 
     private clearRealizedCells() {
-        const that = new WeakRef<Pager>(this);
-        this.mMap.forEach(function (value, key: PagerCell) {
-            that.get()._removeContainer(key);
-            that.get()._clearCellViews(key);
-        }, that);
+        this.mMap.forEach((value, key: PagerCell) => {
+            this._removeContainer(key);
+            this._clearCellViews(key);
+        });
         this.mMap.clear();
     }
     private _clearCellViews(cell: PagerCell) {
@@ -560,18 +559,14 @@ export class Pager extends PagerBase {
     }
 
     public _removeContainer(cell: PagerCell, index?: number): void {
-        let view = cell.view;
+        const view = cell.view;
 
-        const args = {
+        this.notify({
             eventName: Pager.itemDisposingEvent,
-            object: this,
             index,
-            android: undefined,
             ios: cell,
             view
-        } as ItemEventData;
-        this.notify(args);
-        view = args.view;
+        } as ItemEventData);
         if (view && view.parent) {
             // This is to clear the StackLayout that is used to wrap ProxyViewContainer instances.
             if (!(view.parent instanceof Pager)) {

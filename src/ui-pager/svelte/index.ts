@@ -54,6 +54,7 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
         const nativeView = this.nativeView;
         nativeView.itemViewLoader = (viewType: any): View => this.loadView(viewType);
         this.nativeView.on(Pager.itemLoadingEvent, this.updateListItem, this);
+        this.nativeView.on(Pager.itemDisposingEvent, this.disposeListItem, this);
     }
 
     private loadView(viewType: string): View {
@@ -116,6 +117,13 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
             if (this.nativeView._itemTemplatesInternal && typeof this.nativeView._itemTemplatesInternal !== 'string') {
                 this.nativeView._itemTemplatesInternal = this.nativeView._itemTemplatesInternal.filter((t) => t.key !== key);
             }
+        }
+    }
+    private disposeListItem(args: ItemEventData) {
+        const _view = args.view;
+        if (_view.__SvelteComponent__) {
+            _view.__SvelteComponent__.$destroy();
+            _view.__SvelteComponent__ = null;
         }
     }
     private updateListItem(args: ItemEventData & { bindingContext }) {
