@@ -672,15 +672,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helper-hoist-variables@npm:^7.18.6":
-  version: 7.18.6
-  resolution: "@babel/helper-hoist-variables@npm:7.18.6"
-  dependencies:
-    "@babel/types": "npm:^7.18.6"
-  checksum: fd9c35bb435fda802bf9ff7b6f2df06308a21277c6dec2120a35b09f9de68f68a33972e2c15505c1a1a04b36ec64c9ace97d4a9e26d6097b76b4396b7c5fa20f
-  languageName: node
-  linkType: hard
-
 "@babel/helper-hoist-variables@npm:^7.22.5":
   version: 7.22.5
   resolution: "@babel/helper-hoist-variables@npm:7.22.5"
@@ -1985,7 +1976,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:^7.19.3, @babel/traverse@npm:^7.23.2, @babel/traverse@npm:^7.23.5":
+"@babel/traverse@npm:^7.19.3, @babel/traverse@npm:^7.20.10, @babel/traverse@npm:^7.20.12, @babel/traverse@npm:^7.20.5, @babel/traverse@npm:^7.20.7, @babel/traverse@npm:^7.23.2, @babel/traverse@npm:^7.23.5":
   version: 7.23.5
   resolution: "@babel/traverse@npm:7.23.5"
   dependencies:
@@ -2000,24 +1991,6 @@ __metadata:
     debug: "npm:^4.1.0"
     globals: "npm:^11.1.0"
   checksum: 281cae2765caad88c7af6214eab3647db0e9cadc7ffcd3fd924f09fbb9bd09d97d6fb210794b7545c317ce417a30016636530043a455ba6922349e39c1ba622a
-  languageName: node
-  linkType: hard
-
-"@babel/traverse@npm:^7.20.10, @babel/traverse@npm:^7.20.12, @babel/traverse@npm:^7.20.5, @babel/traverse@npm:^7.20.7":
-  version: 7.20.12
-  resolution: "@babel/traverse@npm:7.20.12"
-  dependencies:
-    "@babel/code-frame": "npm:^7.18.6"
-    "@babel/generator": "npm:^7.20.7"
-    "@babel/helper-environment-visitor": "npm:^7.18.9"
-    "@babel/helper-function-name": "npm:^7.19.0"
-    "@babel/helper-hoist-variables": "npm:^7.18.6"
-    "@babel/helper-split-export-declaration": "npm:^7.18.6"
-    "@babel/parser": "npm:^7.20.7"
-    "@babel/types": "npm:^7.20.7"
-    debug: "npm:^4.1.0"
-    globals: "npm:^11.1.0"
-  checksum: 69cd161d17e812bc4ffde3cece3ec1fd8269cd581bd9e2ed7c6773791fcc9b81d99059cf982eac5098a112de330f8cf7c01b24f01cb4d23350dc1687d5db3c21
   languageName: node
   linkType: hard
 
@@ -3350,11 +3323,11 @@ __metadata:
 
 "@nativescript-community/template-snippet@file:demo-snippets::locator=root-workspace-0b6124%40workspace%3A.":
   version: 0.0.1
-  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=e4969b&locator=root-workspace-0b6124%40workspace%3A."
+  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=3c4d7e&locator=root-workspace-0b6124%40workspace%3A."
   dependencies:
     "@nativescript-community/ui-pager": "link:../packages/ui-pager"
     "@nativescript-community/ui-pager-indicator": "link:../packages/ui-pager-indicator"
-  checksum: 52c30ed7c61befea1ca1d3604de2a707af6b39730e58f5ffb0dddf468ddaf035c856dc75bb5b11be505cb229152143c8fd659485f73f362eeda89e29e2ecd3a7
+  checksum: 1e710dfcbae5456e7e99424bc7984241f4eb6fb3288b718554808b685de4c1c2bce0dd33f8cabece82a0a77405e3d9f8597561f10914d1208fd925011cde3479
   languageName: node
   linkType: hard
 
@@ -3367,9 +3340,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nativescript-community/ui-pager-indicator@link:../packages/ui-pager-indicator::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3De4969b%26locator%3Droot-workspace-0b6124%2540workspace%253A.":
+"@nativescript-community/ui-pager-indicator@link:../packages/ui-pager-indicator::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3D3c4d7e%26locator%3Droot-workspace-0b6124%2540workspace%253A.":
   version: 0.0.0-use.local
-  resolution: "@nativescript-community/ui-pager-indicator@link:../packages/ui-pager-indicator::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3De4969b%26locator%3Droot-workspace-0b6124%2540workspace%253A."
+  resolution: "@nativescript-community/ui-pager-indicator@link:../packages/ui-pager-indicator::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3D3c4d7e%26locator%3Droot-workspace-0b6124%2540workspace%253A."
   languageName: node
   linkType: soft
 
@@ -3385,9 +3358,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nativescript-community/ui-pager@link:../packages/ui-pager::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3De4969b%26locator%3Droot-workspace-0b6124%2540workspace%253A.":
+"@nativescript-community/ui-pager@link:../packages/ui-pager::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3D3c4d7e%26locator%3Droot-workspace-0b6124%2540workspace%253A.":
   version: 0.0.0-use.local
-  resolution: "@nativescript-community/ui-pager@link:../packages/ui-pager::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3De4969b%26locator%3Droot-workspace-0b6124%2540workspace%253A."
+  resolution: "@nativescript-community/ui-pager@link:../packages/ui-pager::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3D3c4d7e%26locator%3Droot-workspace-0b6124%2540workspace%253A."
   languageName: node
   linkType: soft
 
