@@ -2,6 +2,7 @@ import { ItemEventData, View } from '@nativescript/core';
 import { profile } from '@nativescript/core/profiling';
 import { ContentView, LayoutBase, StackLayout, ViewBase } from '@nativescript/core/ui';
 import { NativeViewElementNode, TemplateElement, ViewNode, createElement, registerElement, registerNativeViewElement } from 'svelte-native/dom';
+//@ts-ignore
 import { flush } from 'svelte/internal';
 import { Pager, PagerItem } from '..';
 
