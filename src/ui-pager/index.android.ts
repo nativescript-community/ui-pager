@@ -1,5 +1,4 @@
-import { ChangeType, Device, Property, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
-import { KeyedTemplate } from '@nativescript/core/ui/core/view';
+import { ChangeType, ContentView, Device, KeyedTemplate, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase } from '@nativescript/core';
 import { isString } from '@nativescript/core/utils/types';
 import {
     ItemEventData,
@@ -754,22 +753,23 @@ function initPagerRecyclerAdapter() {
             if (!view && owner._itemViewLoader !== undefined) {
                 view = owner._itemViewLoader(template.key);
             }
-            const sp = new StackLayout();
-            if (view) {
-                sp.addChild(view);
-            } else {
-                sp[PLACEHOLDER] = true;
+            const isNonSync = view === undefined;
+            if (isNonSync || view instanceof ProxyViewContainer) {
+                const parentView = new ContentView();
+                parentView.id = 'pagerViewHolder';
+                view = parentView;
+                view[PLACEHOLDER] = true;
             }
-            owner._addView(sp);
+            owner._addView(view);
             // sp._setupAsRootView(owner._context);
             // //@ts-ignore
             // sp.parent = owner;
             // sp._isAddedToNativeVisualTree = true;
             // sp.callLoaded();
-            sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+            view.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             initPagerViewHolder();
-            const holder = new PagerViewHolder(sp, new WeakRef(owner));
+            const holder = new PagerViewHolder(view, new WeakRef(owner));
             owner._viewHolders.add(holder);
             return holder;
         }
@@ -822,24 +822,23 @@ function initPagerRecyclerAdapter() {
                     }
                 }
                 const bindingContext = owner._getDataItem(index);
+                let view = holder.view;
+                const isNonSync = holder.view[PLACEHOLDER] === true;
+                view = isNonSync ? view.content : view;
                 const args = {
                     eventName: Pager.itemLoadingEvent,
                     object: owner,
                     android: holder,
-                    ios: undefined,
                     index,
                     bindingContext,
-                    view: holder.view[PLACEHOLDER] ? null : holder.view.getChildAt(0)
+                    view
                 } as ItemEventData;
 
                 owner.notify(args);
-                if (holder.view[PLACEHOLDER]) {
-                    if (args.view) {
-                        holder.view.addChild(args.view);
-                    } else {
-                        holder.view.addChild(owner._getDefaultItemContent(index));
-                    }
-                    holder.view[PLACEHOLDER] = false;
+                if (isNonSync && args.view !== view) {
+                    view = args.view;
+                    // the view has been changed on the event handler
+                    (holder.view as ContentView).content = args.view;
                 }
                 owner._prepareItem(holder.view, index);
             }

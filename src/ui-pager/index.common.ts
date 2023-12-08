@@ -53,8 +53,8 @@ export interface ItemEventData {
     object: any;
     index: number;
     view: View;
-    android: any;
-    ios: any;
+    android?: any;
+    ios?: any;
 }
 
 const autoEffectiveItemHeight = 100;
