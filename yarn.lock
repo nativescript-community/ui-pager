@@ -3350,11 +3350,11 @@ __metadata:
 
 "@nativescript-community/template-snippet@file:demo-snippets::locator=root-workspace-0b6124%40workspace%3A.":
   version: 0.0.1
-  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=e4969b&locator=root-workspace-0b6124%40workspace%3A."
+  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=3c4d7e&locator=root-workspace-0b6124%40workspace%3A."
   dependencies:
     "@nativescript-community/ui-pager": "link:../packages/ui-pager"
     "@nativescript-community/ui-pager-indicator": "link:../packages/ui-pager-indicator"
-  checksum: 52c30ed7c61befea1ca1d3604de2a707af6b39730e58f5ffb0dddf468ddaf035c856dc75bb5b11be505cb229152143c8fd659485f73f362eeda89e29e2ecd3a7
+  checksum: 1e710dfcbae5456e7e99424bc7984241f4eb6fb3288b718554808b685de4c1c2bce0dd33f8cabece82a0a77405e3d9f8597561f10914d1208fd925011cde3479
   languageName: node
   linkType: hard
 
@@ -3367,9 +3367,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nativescript-community/ui-pager-indicator@link:../packages/ui-pager-indicator::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3De4969b%26locator%3Droot-workspace-0b6124%2540workspace%253A.":
+"@nativescript-community/ui-pager-indicator@link:../packages/ui-pager-indicator::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3D3c4d7e%26locator%3Droot-workspace-0b6124%2540workspace%253A.":
   version: 0.0.0-use.local
-  resolution: "@nativescript-community/ui-pager-indicator@link:../packages/ui-pager-indicator::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3De4969b%26locator%3Droot-workspace-0b6124%2540workspace%253A."
+  resolution: "@nativescript-community/ui-pager-indicator@link:../packages/ui-pager-indicator::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3D3c4d7e%26locator%3Droot-workspace-0b6124%2540workspace%253A."
   languageName: node
   linkType: soft
 
@@ -3385,9 +3385,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@nativescript-community/ui-pager@link:../packages/ui-pager::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3De4969b%26locator%3Droot-workspace-0b6124%2540workspace%253A.":
+"@nativescript-community/ui-pager@link:../packages/ui-pager::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3D3c4d7e%26locator%3Droot-workspace-0b6124%2540workspace%253A.":
   version: 0.0.0-use.local
-  resolution: "@nativescript-community/ui-pager@link:../packages/ui-pager::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3De4969b%26locator%3Droot-workspace-0b6124%2540workspace%253A."
+  resolution: "@nativescript-community/ui-pager@link:../packages/ui-pager::locator=%40nativescript-community%2Ftemplate-snippet%40file%3Ademo-snippets%23demo-snippets%3A%3Ahash%3D3c4d7e%26locator%3Droot-workspace-0b6124%2540workspace%253A."
   languageName: node
   linkType: soft
 
@@ -10936,14 +10936,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-cache-semantics@npm:^4.0.0, http-cache-semantics@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "http-cache-semantics@npm:4.1.0"
-  checksum: c9c29508b27c1d81ba78fc1df45dc142dfc039a0871e596db0a2257f08c7e9de16be6a61c3a7c90f4cb0e7dfc1c0277ed8a1ea4bc700b07d4e91ff403ca46d9e
-  languageName: node
-  linkType: hard
-
-"http-cache-semantics@npm:^4.1.1":
+"http-cache-semantics@npm:^4.0.0, http-cache-semantics@npm:^4.1.0, http-cache-semantics@npm:^4.1.1":
   version: 4.1.1
   resolution: "http-cache-semantics@npm:4.1.1"
   checksum: 362d5ed66b12ceb9c0a328fb31200b590ab1b02f4a254a697dc796850cc4385603e75f53ec59f768b2dad3bfa1464bd229f7de278d2899a0e3beffc634b6683f
