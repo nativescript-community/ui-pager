@@ -3,208 +3,122 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [14.1.9](https://github.com/nativescript-community/ui-pager/compare/v14.1.8...v14.1.9) (2023-11-17)
+## [14.1.10](https://github.com/nativescript-community/ui-pager/compare/v14.1.9...v14.1.10) (2023-12-08)
 
+### Bug Fixes
+
+* notify of disposing on `disposeNativeView` so that flavours can destroy their instances ([fdbe33d](https://github.com/nativescript-community/ui-pager/commit/fdbe33da39ec8b8f010a098294a02d3425605f51))
+
+## [14.1.9](https://github.com/nativescript-community/ui-pager/compare/v14.1.8...v14.1.9) (2023-11-17)
 
 ### Bug Fixes
 
 * **android:** pager having the wrong first index position. remain to see if it has side effects in corner cases ([d7a2dfc](https://github.com/nativescript-community/ui-pager/commit/d7a2dfcf8de397a824c19c9ed723394cafc90fbe))
 
-
-
-
-
 ## [14.1.8](https://github.com/nativescript-community/ui-pager/compare/v14.1.7...v14.1.8) (2023-09-18)
 
 **Note:** Version bump only for package ui-pager
 
-
-
-
-
 ## [14.1.7](https://github.com/nativescript-community/ui-pager/compare/v14.1.6...v14.1.7) (2023-09-18)
-
 
 ### Bug Fixes
 
 * **android:** indicator issue ([6ae8929](https://github.com/nativescript-community/ui-pager/commit/6ae8929d59c36300dab947f185aa57de2fd61cf6))
 
-
-
-
-
 ## [14.1.6](https://github.com/nativescript-community/ui-pager/compare/v14.1.5...v14.1.6) (2023-05-11)
-
 
 ### Bug Fixes
 
 * **android:** peaking/spacing not updating on layout change (% values) ([5f900cf](https://github.com/nativescript-community/ui-pager/commit/5f900cf28f467020f9e502918a0ec6946f4ec912))
 
-
-
-
-
 ## [14.1.5](https://github.com/nativescript-community/ui-pager/compare/v14.1.4...v14.1.5) (2023-05-10)
-
 
 ### Bug Fixes
 
 * **android:** prevent views from disappearing when using peaking ([54519ca](https://github.com/nativescript-community/ui-pager/commit/54519ca5c72ea67b1101dcee9f64fedb9556096d))
 
-
-
-
-
 ## [14.1.4](https://github.com/nativescript-community/ui-pager/compare/v14.1.3...v14.1.4) (2023-05-09)
-
 
 ### Bug Fixes
 
 * indicator in circular mode ([0b38d56](https://github.com/nativescript-community/ui-pager/commit/0b38d56d127822cb82563f2874809ac25bc573c4))
 * indicator linking and circular functionality ([7bb05e5](https://github.com/nativescript-community/ui-pager/commit/7bb05e5669c1501b9a3f2fcdced36b10d88a797c))
 
-
-
-
-
 ## [14.1.3](https://github.com/nativescript-community/ui-pager/compare/v14.1.2...v14.1.3) (2023-04-06)
-
 
 ### Bug Fixes
 
 * fix for angular 15.x ([68f4255](https://github.com/nativescript-community/ui-pager/commit/68f4255884b8043b0cf13f762861e274fc410508))
 
-
-
-
-
 ## [14.1.2](https://github.com/nativescript-community/ui-pager/compare/v14.1.1...v14.1.2) (2023-03-21)
-
 
 ### Bug Fixes
 
 * **ios:** potential crash while disposing ([cde7a15](https://github.com/nativescript-community/ui-pager/commit/cde7a15e31546a94768efe4790fce4ebef3c065b))
 
-
-
-
-
 ## [14.1.1](https://github.com/nativescript-community/ui-pager/compare/v14.1.0...v14.1.1) (2023-01-28)
 
 **Note:** Version bump only for package ui-pager
 
-
-
-
-
 # [14.1.0](https://github.com/nativescript-community/ui-pager/compare/v14.0.3...v14.1.0) (2023-01-23)
-
 
 ### Features
 
 * allow to register custom transformers ([5eed813](https://github.com/nativescript-community/ui-pager/commit/5eed813b11f07b689582a6ae63f1c6520c2b8916))
 
-
-
-
-
 ## [14.0.3](https://github.com/nativescript-community/ui-pager/compare/v14.0.2...v14.0.3) (2023-01-23)
 
 **Note:** Version bump only for package ui-pager
-
-
-
-
 
 ## [14.0.2](https://github.com/nativescript-community/ui-pager/compare/v14.0.0...v14.0.2) (2023-01-23)
 
 **Note:** Version bump only for package ui-pager
 
-
-
-
-
 # [14.0.0](https://github.com/nativescript-community/ui-pager/compare/v13.0.44...v14.0.0) (2023-01-23)
-
 
 ### Features
 
 * moved indicator into it's own package ([631859d](https://github.com/nativescript-community/ui-pager/commit/631859d077d4afcc52e4ac06a3ab1f326e64f593))
 
-
 ### BREAKING CHANGES
 
 * You now create a `PagerIndicator`(from `@nativescript-community/ui-pager-indicator) and set `pagerViewId` on it to the id of your Pager.
-
-
-
-
 
 ## [13.0.44](https://github.com/nativescript-community/ui-pager/compare/v13.0.43...v13.0.44) (2022-12-01)
 
 **Note:** Version bump only for package nativescript-pager
 
-
-
-
-
 ## [13.0.43](https://github.com/nativescript-community/ui-pager/compare/v13.0.42...v13.0.43) (2022-08-31)
-
 
 ### Bug Fixes
 
 * **android:** prevent weakref being released and causing crashes ([e67ef9d](https://github.com/nativescript-community/ui-pager/commit/e67ef9d3ebb4bc25686a7a9b250b7997dc912f82))
 
-
-
-
-
 ## [13.0.42](https://github.com/nativescript-community/ui-pager/compare/v13.0.40...v13.0.42) (2022-07-28)
-
 
 ### Bug Fixes
 
 * **android:** rollback change as it break inheritance ([06db014](https://github.com/nativescript-community/ui-pager/commit/06db0143161519e6eedcae46ba5b7487d933d041))
-
-
-
-
 
 ## [13.0.41](https://github.com/nativescript-community/ui-pager/compare/v13.0.40...v13.0.41) (2022-07-28)
 
-
 ### Bug Fixes
 
 * **android:** rollback change as it break inheritance ([06db014](https://github.com/nativescript-community/ui-pager/commit/06db0143161519e6eedcae46ba5b7487d933d041))
 
-
-
-
-
 ## [13.0.40](https://github.com/nativescript-community/ui-pager/compare/v13.0.39...v13.0.40) (2022-07-17)
-
 
 ### Bug Fixes
 
 * **android:** fix for pager+gesturehandlers ([de237d3](https://github.com/nativescript-community/ui-pager/commit/de237d3680e22311ffb65cc91f462c9b575b8931))
 
-
-
-
-
 ## [13.0.39](https://github.com/nativescript-community/ui-pager/compare/v13.0.38...v13.0.39) (2022-07-15)
-
 
 ### Bug Fixes
 
 * **android:** oups ([b4c4399](https://github.com/nativescript-community/ui-pager/commit/b4c439906c978da054302a548c9c3411657cd130))
 
-
-
-
-
 ## [13.0.38](https://github.com/nativescript-community/ui-pager/compare/v13.0.37...v13.0.38) (2022-07-15)
-
 
 ### Bug Fixes
 
@@ -212,25 +126,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **android:** set page listener in initNativeView ([6e9273f](https://github.com/nativescript-community/ui-pager/commit/6e9273fe9ac18636a31a270ea5ec0981924d6363))
 * switch bug example to v-show ([cfede99](https://github.com/nativescript-community/ui-pager/commit/cfede991d32ef929ff51c8923210357ee5aea9eb))
 
-
 ### Features
 
 * `getChildView` working with templates ([76e5d85](https://github.com/nativescript-community/ui-pager/commit/76e5d85d5d7eefd5e22fc39b0d2583da647b26e2))
-
-
-
-
 
 ## [13.0.37](https://github.com/nativescript-community/ui-pager/compare/v13.0.36...v13.0.37) (2022-05-17)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager
 
-
-
-
-
 ## [13.0.36](https://github.com/nativescript-community/ui-pager/compare/v13.0.35...v13.0.36) (2022-05-17)
-
 
 ### Bug Fixes
 
@@ -238,45 +142,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **android:** Children property inheritance is broken for static pager. ([19e0a49](https://github.com/nativescript-community/ui-pager/commit/19e0a499113eee2e20bb74b256625d545708632f))
 * Triggering layout update inside selectedIndexChanged event blocks navigation. ([627c1f7](https://github.com/nativescript-community/ui-pager/commit/627c1f74315f7d3d1c8afff858126713d6c35a7b))
 
-
-
-
-
 ## [13.0.35](https://github.com/nativescript-community/ui-pager/compare/v13.0.34...v13.0.35) (2022-03-15)
-
 
 ### Bug Fixes
 
 * **android:** set indicator properly ([7836e84](https://github.com/nativescript-community/ui-pager/commit/7836e84c81e1372d565b3e7a41dd7d70c7651155))
 
-
-
-
-
 ## [13.0.34](https://github.com/nativescript-community/ui-pager/compare/v13.0.33...v13.0.34) (2022-01-19)
-
 
 ### Bug Fixes
 
 * better suited ios indicator size ([81941e6](https://github.com/nativescript-community/ui-pager/commit/81941e6eb555a176a25ebc363ae91463eb38b5e4))
 
-
-
-
-
 ## [13.0.33](https://github.com/nativescript-community/ui-pager/compare/v13.0.32...v13.0.33) (2021-11-17)
-
 
 ### Bug Fixes
 
 * **ios:** ensure memory is cleared on dispose ([a5c908d](https://github.com/nativescript-community/ui-pager/commit/a5c908da792a01073bec4ba26348a98c36593955))
 
-
-
-
-
 ## [13.0.32](https://github.com/nativescript-community/ui-pager/compare/v13.0.31...v13.0.32) (2021-11-15)
-
 
 ### Bug Fixes
 
@@ -284,348 +168,193 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ios:** prevent error on scrollToItem ([905d34a](https://github.com/nativescript-community/ui-pager/commit/905d34a5f38496e059d14cda41a640201e69461e))
 * missing platforms directory ([44bff68](https://github.com/nativescript-community/ui-pager/commit/44bff68074855d14032201fe9198e1519ab22ca0))
 
-
-
-
-
 ## [13.0.31](https://github.com/nativescript-community/ui-pager/compare/v13.0.30...v13.0.31) (2021-10-22)
-
 
 ### Bug Fixes
 
 * **android:** better native-api-usage ([dc9c77c](https://github.com/nativescript-community/ui-pager/commit/dc9c77c580757a0fdc00165e76533646e0190498))
 
-
-
-
-
 ## [13.0.30](https://github.com/nativescript-community/ui-pager/compare/v13.0.29...v13.0.30) (2021-09-29)
-
 
 ### Bug Fixes
 
 * **ios:** view not correctly layed out sometimes ([92a96f6](https://github.com/nativescript-community/ui-pager/commit/92a96f66b016c27377d1e1b4be83ee1d09ebdaa1))
 
-
-
-
-
 ## [13.0.29](https://github.com/nativescript-community/ui-pager/compare/v13.0.28...v13.0.29) (2021-09-17)
-
 
 ### Bug Fixes
 
 * **android:** allow to change appcompat version ([8925202](https://github.com/nativescript-community/ui-pager/commit/8925202f1787054e1791f7ebfdf82b6f8d078746))
 
-
-
-
-
 ## [13.0.28](https://github.com/nativescript-community/ui-pager/compare/v13.0.27...v13.0.28) (2021-09-17)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager
 
-
-
-
-
 ## [13.0.27](https://github.com/nativescript-community/ui-pager/compare/v13.0.26...v13.0.27) (2021-08-19)
-
 
 ### Bug Fixes
 
 * **ios:** fix for view not laying out correctly ([0b74243](https://github.com/nativescript-community/ui-pager/commit/0b74243ea2dcfcdc39b52c9da3d6472fd4f098b8))
 
-
-
-
-
 ## [13.0.26](https://github.com/nativescript-community/ui-pager/compare/v13.0.25...v13.0.26) (2021-08-08)
-
 
 ### Bug Fixes
 
 * **ios:** refactor to prevent race conditions and crashes with html texts ([a72c557](https://github.com/nativescript-community/ui-pager/commit/a72c557107f5b9c115ca807d3bc2c0bca84f37ba))
 
-
-
-
-
 ## [13.0.25](https://github.com/nativescript-community/ui-pager/compare/v13.0.24...v13.0.25) (2021-08-05)
-
 
 ### Bug Fixes
 
 * **ios:** ios 14 crash fix ([8fc3fd3](https://github.com/nativescript-community/ui-pager/commit/8fc3fd3effad56963562ed8ef0ceeae1fdc07406))
 
-
-
-
-
 ## [13.0.24](https://github.com/nativescript-community/ui-pager/compare/v13.0.23...v13.0.24) (2021-08-04)
-
 
 ### Bug Fixes
 
 * **ios:** prevent out of range page index change ([643f97e](https://github.com/nativescript-community/ui-pager/commit/643f97e25d0ab9070e13e7cb9ce58102dab89036))
 
-
-
-
-
 ## [13.0.23](https://github.com/nativescript-community/ui-pager/compare/v13.0.22...v13.0.23) (2021-07-26)
-
 
 ### Bug Fixes
 
 * vue fix ([c543697](https://github.com/nativescript-community/ui-pager/commit/c543697f6fd6e3e2504827bd8fb4faac3a292e81))
 
-
-
-
-
 ## [13.0.22](https://github.com/nativescript-community/ui-pager/compare/v13.0.21...v13.0.22) (2021-07-26)
-
 
 ### Bug Fixes
 
 * vscode fix for is not a module ([e8f8ce2](https://github.com/nativescript-community/ui-pager/commit/e8f8ce2cc6c51d0137472f3a3bcc6f7a8574c110))
 
-
-
-
-
 ## [13.0.21](https://github.com/nativescript-community/ui-pager/compare/v13.0.20...v13.0.21) (2021-05-07)
-
 
 ### Bug Fixes
 
 * update and fix angular ([58b6faf](https://github.com/nativescript-community/ui-pager/commit/58b6faf4c4988e3c37ec108d4a5bec0fb3d2784c))
 
-
-
-
-
 ## [13.0.20](https://github.com/nativescript-community/ui-pager/compare/v13.0.19...v13.0.20) (2021-05-06)
-
 
 ### Bug Fixes
 
 * **ios:** dont fail to set first page during page animation ([50c9f8b](https://github.com/nativescript-community/ui-pager/commit/50c9f8baf0ae99846b3b748b20691f0545801e7d))
 * **ios:** remove hack which prevented non 0 first page ([af729af](https://github.com/nativescript-community/ui-pager/commit/af729af70f4a8e0bb13d7fa41acbda578c2fb9b6))
 
-
-
-
-
 ## [13.0.19](https://github.com/nativescript-community/ui-pager/compare/v13.0.18...v13.0.19) (2021-04-08)
-
 
 ### Bug Fixes
 
 * **ios:** fix non showing pages in modal ([13a4987](https://github.com/nativescript-community/ui-pager/commit/13a49878554a0c7cad9e830a20aca0e213c59b9c))
 
-
-
-
-
 ## [13.0.18](https://github.com/nativescript-community/ui-pager/compare/v13.0.17...v13.0.18) (2021-03-31)
-
 
 ### Bug Fixes
 
 * **ios:** another crash fix when not current page ([1adc1d2](https://github.com/nativescript-community/ui-pager/commit/1adc1d24dccf394919e86bedc69824c9cb29d40b))
 
-
-
-
-
 ## [13.0.17](https://github.com/nativescript-community/ui-pager/compare/v13.0.16...v13.0.17) (2021-03-25)
-
 
 ### Bug Fixes
 
 * **ios:** prevent crash when pager not in current page ([c0b70f1](https://github.com/nativescript-community/ui-pager/commit/c0b70f1d5e4c22d4ad5ab837cad2cc099567d4ec))
 
-
-
-
-
 ## [13.0.16](https://github.com/nativescript-community/ui-pager/compare/v13.0.15...v13.0.16) (2021-03-19)
-
 
 ### Bug Fixes
 
 * **android:** selectedIndex not trigger on scroll without animation ([c1da92b](https://github.com/nativescript-community/ui-pager/commit/c1da92bf14bde7fc7494f964c1771a8ca93c8ca4))
 * **ios:** prevent crash when used iinside a collectionview cell ([9e7b1d1](https://github.com/nativescript-community/ui-pager/commit/9e7b1d1a27d139d95daaa1574c8a9e9ef10ba1a6))
 
-
 ### Features
 
 * selectedIndex && currentPosition for scroll event ([ebb708a](https://github.com/nativescript-community/ui-pager/commit/ebb708ae63af9bb9ebd93089ae73d5fba1babd4e))
 
-
-
-
-
 ## [13.0.15](https://github.com/nativescript-community/ui-pager/compare/v13.0.14...v13.0.15) (2021-03-18)
-
 
 ### Bug Fixes
 
 * **ios:** allow child textfield to resize itself without losing focus ([a1da0f4](https://github.com/nativescript-community/ui-pager/commit/a1da0f4d3bd6c6c0293a548697807b2a8ff949bf))
 
-
-
-
-
 ## [13.0.14](https://github.com/nativescript-community/ui-pager/compare/v13.0.13...v13.0.14) (2021-03-16)
-
 
 ### Bug Fixes
 
 * **ios:** prevent endless request lauyout ([a82cd56](https://github.com/nativescript-community/ui-pager/commit/a82cd5636f09901392063bd378224f9860dd36d4))
 
-
-
-
-
 ## [13.0.13](https://github.com/nativescript-community/ui-pager/compare/v13.0.12...v13.0.13) (2021-03-12)
-
 
 ### Bug Fixes
 
 * **android:** updating item fix ([cde0d89](https://github.com/nativescript-community/ui-pager/commit/cde0d8964bb24dbe33c85eb739f0b84b2d97bf10))
 
-
-
-
-
 ## [13.0.12](https://github.com/nativescript-community/ui-pager/compare/v13.0.11...v13.0.12) (2021-03-08)
-
 
 ### Bug Fixes
 
 * **android:** prevent crash ([88e93e9](https://github.com/nativescript-community/ui-pager/commit/88e93e9bb2a499771d5b4d327dca7450fba48961))
 
-
-
-
-
 ## [13.0.11](https://github.com/nativescript-community/ui-pager/compare/v13.0.10...v13.0.11) (2021-02-16)
-
 
 ### Bug Fixes
 
 * remove react logs ([9ddc9ee](https://github.com/nativescript-community/ui-pager/commit/9ddc9ee9f4e8128af5152681c40c26d2d568d9fd))
 * **android:** fix for views added after init ([3597d8c](https://github.com/nativescript-community/ui-pager/commit/3597d8c49c63738d4591da7e02481c27684f3acd))
 
-
-
-
-
 ## [13.0.10](https://github.com/nativescript-community/ui-pager/compare/v13.0.9...v13.0.10) (2021-02-10)
-
 
 ### Bug Fixes
 
 * correctly handle remove/add views in static layout (v-for) ([58cc142](https://github.com/nativescript-community/ui-pager/commit/58cc14295a023d350c7182e65f3def762222a4f1))
 
-
-
-
-
 ## [13.0.9](https://github.com/nativescript-community/ui-pager/compare/v13.0.8...v13.0.9) (2021-02-10)
-
 
 ### Bug Fixes
 
 * **android:** fix crash on removing static page ([71b3ecc](https://github.com/nativescript-community/ui-pager/commit/71b3ecc0b9000f2df8f16fc76e038d988ba60173))
 
-
-
-
-
 ## [13.0.8](https://github.com/nativescript-community/ui-pager/compare/v13.0.7...v13.0.8) (2021-02-09)
-
 
 ### Bug Fixes
 
 * **ios:** rollback to fix corner case ([9eeef55](https://github.com/nativescript-community/ui-pager/commit/9eeef5544bdb2cb518508b152bacbb87964b6a48))
 
-
-
-
-
 ## [13.0.7](https://github.com/nativescript-community/ui-pager/compare/v13.0.6...v13.0.7) (2021-02-08)
-
 
 ### Bug Fixes
 
 * yet another vue fix (pager without items prop) ([847646c](https://github.com/nativescript-community/ui-pager/commit/847646cc41c9e19c31455edf6d895dbb837f1412))
 
-
-
-
-
 ## [13.0.6](https://github.com/nativescript-community/ui-pager/compare/v13.0.5...v13.0.6) (2021-01-23)
-
 
 ### Bug Fixes
 
 * **vue:** another vue fix… ([8c8c074](https://github.com/nativescript-community/ui-pager/commit/8c8c074c555007cbe41678831c2532cda1b5a3a0))
 
-
-
-
-
 ## [13.0.5](https://github.com/nativescript-community/ui-pager/compare/v13.0.4...v13.0.5) (2021-01-22)
-
 
 ### Bug Fixes
 
 * **vue:** broken component ([7539cdb](https://github.com/nativescript-community/ui-pager/commit/7539cdb612ce765f63ca31927fda6be633efb525))
 
-
-
-
-
 ## [13.0.4](https://github.com/nativescript-community/ui-pager/compare/v13.0.3...v13.0.4) (2021-01-21)
-
 
 ### Bug Fixes
 
 * small vue fix when using templates ([75f3ce6](https://github.com/nativescript-community/ui-pager/commit/75f3ce6d4454a93da40184e4e96ffba06cdcf32e))
 
-
-
-
-
 ## [13.0.3](https://github.com/nativescript-community/ui-pager/compare/v13.0.2...v13.0.3) (2020-12-07)
-
 
 ### Bug Fixes
 
 * dont think selectedIndex sould affect layout ([0357e28](https://github.com/nativescript-community/ui-pager/commit/0357e288e6278924e29e76162130c3b7044d5d85))
 * prevent children to request layout. ([5578565](https://github.com/nativescript-community/ui-pager/commit/5578565457c37b3ba7f9ff58d2c121ab31d24e98))
 
-
-
-
-
 ## [13.0.2](https://github.com/nativescript-community/ui-pager/compare/v13.0.1...v13.0.2) (2020-11-29)
-
 
 ### Bug Fixes
 
 * broken vue component ([0830a54](https://github.com/nativescript-community/ui-pager/commit/0830a545213fdae72c243254ad0732e273e6cd6c))
 
-
-
-
-
 ## [13.0.1](https://github.com/nativescript-community/ui-pager/compare/v11.0.11...v13.0.1) (2020-11-27)
-
 
 ### Bug Fixes
 
@@ -646,63 +375,43 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ios:** protection around quick destroy of pager and events ([25a0fb0](https://github.com/nativescript-community/ui-pager/commit/25a0fb0ddfaefb28904d3fd51dc42942627ba6c2))
 * **react:** update react support ([9b953b3](https://github.com/nativescript-community/ui-pager/commit/9b953b32933e9e796469e5ae93aa8451991bc934))
 
-
 ### Features
 
 * getChildView ([e9f600f](https://github.com/nativescript-community/ui-pager/commit/e9f600f6514ac48d6586829b6256de548d07923f))
 * getChildView ([986ec71](https://github.com/nativescript-community/ui-pager/commit/986ec711d4f441b1baebf42e9ba6e69d4ac5c250))
 
-
-
 # 12.0.0-alpha.8 (2020-02-27)
-
 
 ### Bug Fixes
 
 * angular export ([9d6ec03](https://github.com/nativescript-community/ui-pager/commit/9d6ec03e0f922d07e86bbb63a138a16f6492207e))
 
-
-
 # 12.0.0-alpha.6 (2020-02-26)
 
-
-
 # 12.0.0-alpha.5 (2020-02-25)
-
 
 ### Bug Fixes
 
 * missing dispatch meta whitelist ([55ba003](https://github.com/nativescript-community/ui-pager/commit/55ba003351d4973225e56524a2ba22c5c36dac0d))
 * switch to [@nativescript](https://github.com/nativescript) scoped packages ([f2c5b5a](https://github.com/nativescript-community/ui-pager/commit/f2c5b5ad7d55d22a1c73f4e61a8d4a062f03bbc6)), closes [#162](https://github.com/nativescript-community/ui-pager/issues/162) [#153](https://github.com/nativescript-community/ui-pager/issues/153) [#160](https://github.com/nativescript-community/ui-pager/issues/160)
 
-
-
 # 12.0.0-alpha.4 (2020-02-25)
-
 
 ### Bug Fixes
 
 * **ios:** late init ([242a359](https://github.com/nativescript-community/ui-pager/commit/242a359d77bd282f8cdad96a9fa4859951a6e62d))
 * build issues ([c913554](https://github.com/nativescript-community/ui-pager/commit/c9135546db2a6d8c8bc84fad4c63ec3ddc416f0b))
 
-
-
 # 12.0.0-alpha.1 (2020-02-22)
-
 
 ### Bug Fixes
 
 * **ios:**  metadata filtering ([0596501](https://github.com/nativescript-community/ui-pager/commit/059650159301e4de92ca4f44beaa9eb07eabeb82))
 * updates ([d65390e](https://github.com/nativescript-community/ui-pager/commit/d65390e8047934aa0cae2db07ff04a01e6c44b92))
 
-
 ### Features
 
 * v12 ([d02d9cf](https://github.com/nativescript-community/ui-pager/commit/d02d9cf69f450cea5361900e8e178d899b2c6289))
-
-
-
-
 
 # Changelog
 
@@ -1156,7 +865,5 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - iOS Fix: hide UIPageControl [\#8](https://github.com/triniwiz/nativescript-pager/pull/8) ([ddfreiling](https://github.com/ddfreiling))
 - Angular demo [\#7](https://github.com/triniwiz/nativescript-pager/pull/7) ([ddfreiling](https://github.com/ddfreiling))
 - iOS fixes [\#6](https://github.com/triniwiz/nativescript-pager/pull/6) ([ddfreiling](https://github.com/ddfreiling))
-
-
 
 \* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
