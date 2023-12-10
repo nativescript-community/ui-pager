@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
     import { goBack } from 'svelte-native';
 </script>
 

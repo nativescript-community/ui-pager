@@ -6,7 +6,7 @@
         </ActionBar>
 
         <GridLayout class="page" rows="*,auto">
-            <Pager ref="pager" for="item in items" height="100%">
+            <Pager ref="pager" for="item in items" height="100%" peaking="30" spacing="10" pagesCount="3">
                 <v-template>
                     <GridLayout :backgroundColor="item.color">
                         <Label :text="item.title" />
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Pager } from '@nativescript-community/ui-pager/index.android';
+import { Pager } from '@nativescript-community/ui-pager';
 export default {
     data() {
         return {
