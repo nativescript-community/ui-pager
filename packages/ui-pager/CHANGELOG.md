@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.12](https://github.com/nativescript-community/ui-pager/compare/v14.1.11...v14.1.12) (2023-12-10)
+
+### Bug Fixes
+
+* **android:** peaking and spacing can work together with improved performances ([f8fa9e4](https://github.com/nativescript-community/ui-pager/commit/f8fa9e43e314f85f3066cbb91a632bfdd0f0f376))
+
 ## [14.1.11](https://github.com/nativescript-community/ui-pager/compare/v14.1.10...v14.1.11) (2023-12-08)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager
