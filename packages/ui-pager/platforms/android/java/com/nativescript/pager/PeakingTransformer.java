@@ -5,8 +5,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.View;
 import android.view.ViewParent;
+import android.util.Log;
 
 public final class PeakingTransformer implements ViewPager2.PageTransformer {
+    public float pageOffset = 0.0f;
+    public float pageMargin = 0.0f;
     /**
      * Creates a {@link PeakingTransformer}.
      *
@@ -16,7 +19,7 @@ public final class PeakingTransformer implements ViewPager2.PageTransformer {
     @Override
     public void transformPage(View page, float position) {
         ViewPager2 viewPager = requireViewPager(page);
-        float offset = 0.0005f * position;
+        float offset = position * -(2 * pageOffset - pageMargin);
         boolean isRtl = viewPager.getLayoutDirection() == 1;
         if (viewPager.getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL) {
             page.setTranslationX(isRtl ? -offset : offset);

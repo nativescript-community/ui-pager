@@ -49,9 +49,9 @@ export class Pager extends PagerBase {
     public _realizedTemplates = new Map<string, Map<android.view.View, View>>();
     lastEvent = 0;
     private _lastSpacing = 0;
-    private _lastPeaking = 0;
+    _lastPeaking = 0;
     private compositeTransformer: androidx.viewpager2.widget.CompositePageTransformer;
-    private marginTransformer: androidx.viewpager2.widget.MarginPageTransformer;
+    // private marginTransformer: androidx.viewpager2.widget.MarginPageTransformer;
     private peakingTransformer: com.nativescript.pager.PeakingTransformer;
     private _transformers: androidx.viewpager2.widget.ViewPager2.PageTransformer[];
 
@@ -170,18 +170,12 @@ export class Pager extends PagerBase {
         const size = this.convertToSize(value);
         const newSpacing = size !== this._lastSpacing;
         if (newSpacing) {
-            if (this.marginTransformer) {
-                this.compositeTransformer.removeTransformer(this.marginTransformer);
-                this.marginTransformer = null;
+            if (!this.peakingTransformer) {
+                this.peakingTransformer = new com.nativescript.pager.PeakingTransformer();
+                this.compositeTransformer.addTransformer(this.peakingTransformer);
             }
-            if (size !== 0) {
-                this.marginTransformer = new androidx.viewpager2.widget.MarginPageTransformer(size);
-                this.compositeTransformer.addTransformer(this.marginTransformer);
-                if (this.peakingTransformer) {
-                    this.compositeTransformer.removeTransformer(this.peakingTransformer);
-                    this.peakingTransformer = null;
-                }
-            }
+            this.peakingTransformer.pageOffset = this._lastPeaking;
+            this.peakingTransformer.pageMargin = size;
             this._lastSpacing = size;
             this.refresh();
         }
@@ -191,17 +185,12 @@ export class Pager extends PagerBase {
         const size = this.convertToSize(value);
         const newPeaking = size !== this._lastPeaking;
         if (newPeaking) {
-            const nativeView = this.nativeViewProtected;
-            const left = this.orientation === 'horizontal' ? size : 0;
-            const top = this.orientation === 'horizontal' ? 0 : size;
-            const enabled = left !== 0 || top !== 0;
-            nativeView.setPadding(left, top, left, top);
-            nativeView.setClipChildren(!enabled);
-            nativeView.setClipToPadding(!enabled);
-            if (!this.peakingTransformer && !this.marginTransformer) {
+            if (!this.peakingTransformer) {
                 this.peakingTransformer = new com.nativescript.pager.PeakingTransformer();
                 this.compositeTransformer.addTransformer(this.peakingTransformer);
             }
+            this.peakingTransformer.pageOffset = size;
+            this.peakingTransformer.pageMargin = this._lastSpacing;
             this._lastPeaking = size;
             this.refresh();
         }
@@ -841,6 +830,9 @@ function initPagerRecyclerAdapter() {
                     (holder.view as ContentView).content = args.view;
                 }
                 owner._prepareItem(holder.view, index);
+
+                // TODO: find a way to add to existing margin
+                view.marginLeft = view.marginRight = Utils.layout.toDeviceIndependentPixels(owner._lastPeaking);
             }
         }
 
@@ -1025,7 +1017,10 @@ function initPagerViewHolder() {
 
     @NativeClass
     class PagerViewHolderImpl extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        constructor(private owner: View, private pager: WeakRef<Pager>) {
+        constructor(
+            private owner: View,
+            private pager: WeakRef<Pager>
+        ) {
             super(owner.nativeViewProtected);
             return global.__native(this);
         }
