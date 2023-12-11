@@ -325,10 +325,10 @@ if you use <code>yarn</code> then run <code>yarn</code>
 if you use <code>pnpm</code> then run <code>pnpm i</code></p>
 <p><strong>Interactive Menu:</strong></p>
 <p>To start the interactive menu, run <code>npm start</code> (or <code>yarn start</code> or <code>pnpm start</code>). This will list all of the commonly used scripts.</p>
-<a id="md:build" class="tsd-anchor"></a><h3><a href="#md:build">Build</a></h3><pre><code class="language-bash"><span class="hl-1">npm </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">build.all</span>
+<a id="md:build" class="tsd-anchor"></a><h3><a href="#md:build">Build</a></h3><pre><code class="language-bash"><span class="hl-6">npm</span><span class="hl-1"> </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">build.all</span>
 </code><button>Copy</button></pre>
 <p>WARNING: it seems <code>yarn build.all</code> wont always work (not finding binaries in <code>node_modules/.bin</code>) which is why the doc explicitly uses <code>npm run</code></p>
-<a id="md:demos" class="tsd-anchor"></a><h3><a href="#md:demos">Demos</a></h3><pre><code class="language-bash"><span class="hl-1">npm </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">demo.[ng</span><span class="hl-1">|react|svelte|vue].[ios|android]</span><br/><br/><span class="hl-1">npm </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">demo.svelte.ios</span><span class="hl-1"> </span><span class="hl-11"># Example</span>
+<a id="md:demos" class="tsd-anchor"></a><h3><a href="#md:demos">Demos</a></h3><pre><code class="language-bash"><span class="hl-6">npm</span><span class="hl-1"> </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">demo.[ng</span><span class="hl-1">|</span><span class="hl-6">react</span><span class="hl-1">|</span><span class="hl-6">svelte</span><span class="hl-1">|</span><span class="hl-6">vue].[ios</span><span class="hl-1">|</span><span class="hl-6">android]</span><br/><br/><span class="hl-6">npm</span><span class="hl-1"> </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">demo.svelte.ios</span><span class="hl-1"> </span><span class="hl-11"># Example</span>
 </code><button>Copy</button></pre>
 <p>Demo setup is a bit special in the sense that if you want to modify/add demos you dont work directly in <code>demo-[ng|react|svelte|vue]</code>
 Instead you work in <code>demo-snippets/[ng|react|svelte|vue]</code>
@@ -336,20 +336,20 @@ You can start from the <code>install.ts</code> of each flavor to see how to regi
 <p><a href="#md:contributing"></a></p>
 <a id="md:contributing" class="tsd-anchor"></a><h2><a href="#md:contributing">Contributing</a></h2><a id="md:update-repo" class="tsd-anchor"></a><h3><a href="#md:update-repo">Update repo</a></h3><p>You can update the repo files quite easily</p>
 <p>First update the submodules</p>
-<pre><code class="language-bash"><span class="hl-1">npm </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">update</span>
+<pre><code class="language-bash"><span class="hl-6">npm</span><span class="hl-1"> </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">update</span>
 </code><button>Copy</button></pre>
 <p>Then commit the changes
 Then update common files</p>
-<pre><code class="language-bash"><span class="hl-1">npm </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">sync</span>
+<pre><code class="language-bash"><span class="hl-6">npm</span><span class="hl-1"> </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">sync</span>
 </code><button>Copy</button></pre>
 <p>Then you can run <code>yarn|pnpm</code>, commit changed files if any</p>
-<a id="md:update-readme" class="tsd-anchor"></a><h3><a href="#md:update-readme">Update readme</a></h3><pre><code class="language-bash"><span class="hl-1">npm </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">readme</span>
+<a id="md:update-readme" class="tsd-anchor"></a><h3><a href="#md:update-readme">Update readme</a></h3><pre><code class="language-bash"><span class="hl-6">npm</span><span class="hl-1"> </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">readme</span>
 </code><button>Copy</button></pre>
-<a id="md:update-doc" class="tsd-anchor"></a><h3><a href="#md:update-doc">Update doc</a></h3><pre><code class="language-bash"><span class="hl-1">npm </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">doc</span>
+<a id="md:update-doc" class="tsd-anchor"></a><h3><a href="#md:update-doc">Update doc</a></h3><pre><code class="language-bash"><span class="hl-6">npm</span><span class="hl-1"> </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">doc</span>
 </code><button>Copy</button></pre>
 <a id="md:publish" class="tsd-anchor"></a><h3><a href="#md:publish">Publish</a></h3><p>The publishing is completely handled by <code>lerna</code> (you can add <code>-- --bump major</code> to force a major release)
 Simply run </p>
-<pre><code class="language-shell"><span class="hl-1">npm </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">publish</span>
+<pre><code class="language-shell"><span class="hl-6">npm</span><span class="hl-1"> </span><span class="hl-5">run</span><span class="hl-1"> </span><span class="hl-5">publish</span>
 </code><button>Copy</button></pre>
 <a id="md:modifying-submodules" class="tsd-anchor"></a><h3><a href="#md:modifying-submodules">modifying submodules</a></h3><p>The repo uses https:// for submodules which means you won&#39;t be able to push directly into the submodules.
 One easy solution is t modify <code>~/.gitconfig</code> and add</p>
