@@ -32,7 +32,7 @@ class SvelteKeyedTemplate {
         // TODO is StackLayout the best choice here?
         // const wrapper = createElement('StackLayout') as NativeViewElementNode<View>;
 
-        const nativeEl = new StackLayout();
+        const nativeEl = new ContentView();
 
         // because of the way {N} works we cant use that wrapper as the target for the component
         // it will trigger uncessary {N} component updates because the parent view is already attached
@@ -138,14 +138,16 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
                 _view.__SvelteComponentBuilder__ = null;
                 _view.__CollectionViewCurrentIndex__ = args.index;
                 const nativeEl = (dummy.firstElement() as NativeViewElementNode<View>).nativeView;
-                (_view as LayoutBase).addChild(nativeEl);
+                (_view as ContentView).content = nativeEl;
             }
         } else {
             // ensure we dont do unnecessary tasks if index did not change
             // console.log('updateListItem', args.index,  _view.__CollectionViewCurrentIndex__);
             _view.__CollectionViewCurrentIndex__ = args.index;
-            componentInstance.$set(props);
-            flush(); // we need to flush to make sure update is applied right away
+            _view._batchUpdate(() => {
+                componentInstance.$set(props);
+                flush(); // we need to flush to make sure update is applied right away
+            });
         }
     }
 

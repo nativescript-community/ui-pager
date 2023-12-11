@@ -126,11 +126,12 @@ export class Pager extends PagerBase {
     private enumerateViewHolders<T = any>(cb: (v: PagerViewHolder) => T) {
         let result: T, v: PagerViewHolder;
         for (let it = this._viewHolders.values(), cellItemView: PagerViewHolder = null; (cellItemView = it.next().value); ) {
-            if (cellItemView) {
-                result = cb(cellItemView);
-                if (result) {
-                    return result;
-                }
+            if (cellItemView['position'] === undefined) {
+                continue;
+            }
+            result = cb(cellItemView);
+            if (result) {
+                return result;
             }
         }
         return result;
@@ -383,11 +384,24 @@ export class Pager extends PagerBase {
     refresh() {
         const nativeView = this.nativeViewProtected;
         if (nativeView && this._pagerAdapter) {
-            nativeView.requestLayout();
+            // nativeView.requestLayout();
             nativeView.getAdapter().notifyDataSetChanged();
         }
     }
-
+    bindedViewHolders: Set<number> = new Set();
+    refreshVisibleItems() {
+        const view = this.nativeViewProtected;
+        if (!view) {
+            return;
+        }
+        const ids = Array.from(this.bindedViewHolders).sort((a, b) => a - b);
+        console.log('refreshVisibleItems', ids);
+        this.pagerAdapter.notifyItemRangeChanged(ids[0], ids[ids.length - 1] - ids[0] + 1);
+    }
+    
+    getViewForItemAtIndex(index: number) {
+        return this.getChildView(index);
+    }
     onUnloaded() {
         // this._android.setAdapter(null);
         super.onUnloaded();
@@ -743,6 +757,7 @@ function initPagerRecyclerAdapter() {
                 view = owner._itemViewLoader(template.key);
             }
             const isNonSync = view === undefined;
+            console.log('isNonSync', view);
             if (isNonSync || view instanceof ProxyViewContainer) {
                 const parentView = new ContentView();
                 parentView.id = 'pagerViewHolder';
@@ -750,11 +765,6 @@ function initPagerRecyclerAdapter() {
                 view[PLACEHOLDER] = true;
             }
             owner._addView(view);
-            // sp._setupAsRootView(owner._context);
-            // //@ts-ignore
-            // sp.parent = owner;
-            // sp._isAddedToNativeVisualTree = true;
-            // sp.callLoaded();
             view.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             initPagerViewHolder();
@@ -810,6 +820,11 @@ function initPagerRecyclerAdapter() {
                         index = index - 1;
                     }
                 }
+                if (holder['position'] !== undefined) {
+                    owner.bindedViewHolders.delete(holder['position']);
+                }
+                holder['position'] = index;
+                owner.bindedViewHolders.add(holder['position']);
                 const bindingContext = owner._getDataItem(index);
                 let view = holder.view;
                 const isNonSync = holder.view[PLACEHOLDER] === true;
@@ -828,11 +843,24 @@ function initPagerRecyclerAdapter() {
                     view = args.view;
                     // the view has been changed on the event handler
                     (holder.view as ContentView).content = args.view;
+                } else if (view instanceof ContentView) {
+                    view = view.content;
                 }
                 owner._prepareItem(holder.view, index);
 
                 // TODO: find a way to add to existing margin
-                view.marginLeft = view.marginRight = Utils.layout.toDeviceIndependentPixels(owner._lastPeaking);
+                if (owner.orientation === 'vertical') {
+                    view.marginTop = view.marginBottom = Utils.layout.toDeviceIndependentPixels(owner._lastPeaking);
+                } else {
+                    view.marginLeft = view.marginRight = Utils.layout.toDeviceIndependentPixels(owner._lastPeaking);
+                }
+            }
+        }
+        onViewRecycled(holder) {
+            const owner = this.owner ? this.owner.get() : null;
+            if (owner) {
+                delete owner.bindedViewHolders[holder['position']];
+                holder['position'] = undefined;
             }
         }
 
@@ -916,23 +944,25 @@ function initStaticPagerStateAdapter() {
                 return null;
             }
 
-            const view = owner._childrenViewsType.get(type);
-            const sp = new StackLayout(); // Pager2 requires match_parent so add a parent with to fill
-            if (view && !view.parent) {
-                sp.addChild(view);
-            } else {
-                sp[PLACEHOLDER] = true;
-            }
-            owner._addView(sp);
+            let view = owner._childrenViewsType.get(type);
+            const isNonSync = view === undefined;
+            // if (isNonSync || view instanceof ProxyViewContainer) {
+            const parentView = new ContentView();
+            parentView.id = 'pagerViewHolder';
+            parentView.content = view;
+            view = parentView;
+            view[PLACEHOLDER] = true;
+            // }
+            owner._addView(view);
             // sp._setupAsRootView(owner._context);
             // //@ts-ignore
             // sp.parent = owner;
             // sp._isAddedToNativeVisualTree = true;
             // sp.callLoaded();
-            sp.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+            view.nativeView.setLayoutParams(new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 
             initPagerViewHolder();
-            const holder = new PagerViewHolder(sp, new WeakRef(owner));
+            const holder = new PagerViewHolder(view, new WeakRef(owner));
             owner._viewHolders.add(holder);
             return holder;
         }
@@ -940,21 +970,35 @@ function initStaticPagerStateAdapter() {
         onBindViewHolder(holder: any, index: number): void {
             const owner = this.owner ? this.owner.get() : null;
             if (owner) {
+                if (holder['position'] !== undefined) {
+                    owner.bindedViewHolders.delete(holder['position']);
+                }
+                holder['position'] = index;
+                owner.bindedViewHolders.add(holder['position']);
+                let view = holder.view;
+                const isNonSync = holder.view[PLACEHOLDER] === true;
+                view = isNonSync ? view.content : view;
                 const args = {
                     eventName: Pager.itemLoadingEvent,
                     object: owner,
                     android: holder,
-                    ios: undefined,
                     index,
-                    view: holder.view[PLACEHOLDER] ? null : holder.view
+                    // bindingContext,
+                    view
                 } as ItemEventData;
 
                 owner.notify(args);
-                if (holder.view[PLACEHOLDER]) {
-                    if (args.view) {
-                        holder.view.addChild(args.view);
-                    }
-                    holder.view[PLACEHOLDER] = false;
+                if (isNonSync && args.view !== view) {
+                    view = args.view;
+                    // the view has been changed on the event handler
+                    (holder.view as ContentView).content = args.view;
+                } else if (view instanceof ContentView) {
+                    view = view.content;
+                }
+                if (owner.orientation === 'vertical') {
+                    view.marginTop = view.marginBottom = Utils.layout.toDeviceIndependentPixels(owner._lastPeaking);
+                } else {
+                    view.marginLeft = view.marginRight = Utils.layout.toDeviceIndependentPixels(owner._lastPeaking);
                 }
             }
         }

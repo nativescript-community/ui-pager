@@ -137,6 +137,9 @@ export class Pager extends PagerBase {
 
         return result;
     }
+    getViewForItemAtIndex(index: number) {
+        return this.getChildView(index);
+    }
 
     _getRealWidthHeight(): { width: number; height: number } {
         let height = 0;
@@ -472,6 +475,19 @@ export class Pager extends PagerBase {
         if (this.indicator) {
             this.indicator.setCount(this._childrenCount);
         }
+    }
+    refreshVisibleItems() {
+        const view = this.nativeViewProtected;
+        if (!view) {
+            return;
+        }
+
+        const visibles = view.indexPathsForVisibleItems;
+        UIView.performWithoutAnimation(() => {
+            view.performBatchUpdatesCompletion(() => {
+                view.reloadItemsAtIndexPaths(visibles);
+            }, null);
+        });
     }
 
     _isDataDirty = false;

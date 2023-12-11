@@ -21,6 +21,7 @@ export declare class Pager extends PagerBase {
     updateNativeItems(oldItems: View[], newItems: View[]): void;
 
     refresh(): void;
+    refreshVisibleItems(): void;
 
     disableSwipe: boolean;
     disableAnimation: boolean;
@@ -31,5 +32,6 @@ export declare class Pager extends PagerBase {
 
     _onItemsChanged(oldValue: any, newValue: any);
 
-    getChildView(index: number): PagerItem;
+    getChildView(index: number): View;
+    getViewForItemAtIndex(index: number): View;
 }
