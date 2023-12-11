@@ -6,7 +6,7 @@
         </ActionBar>
 
         <StackLayout class="page">
-            <Pager height="100%">
+            <Pager height="100%" peaking="30" spacing="10">
                 <PagerItem backgroundColor="#e67e22"><Label text="First" /></PagerItem>
                 <PagerItem backgroundColor="#3498db"><Label text="Second" /></PagerItem>
                 <PagerItem backgroundColor="#e74c3c"><Label text="Third" /></PagerItem>

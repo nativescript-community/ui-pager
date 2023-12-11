@@ -2,12 +2,14 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "rootDir": "../../src/ui-pager",
-        "outDir": "./",
-        "paths": {
-            "@nativescript-community/ui-pager": ["packages/ui-pager"],
-            "@nativescript-community/ui-pager/*": ["packages/ui-pager/*"]
-        }
+        "outDir": "./"
     },
     "include": ["../../src/ui-pager/**/*", "../../references.d.ts", "../../tools/references.d.ts", "../../src/references.d.ts"],
-    "exclude": ["../../src/ui-pager/angular/**"]
+    "exclude": ["../../src/ui-pager/angular/**"],
+    "references": [
+        // {
+        //     //Need for tsc
+        //     "path": "../../tsconfig.vue3.json"
+        // }
+    ]
 }
