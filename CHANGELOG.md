@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.14](https://github.com/nativescript-community/ui-pager/compare/v14.1.13...v14.1.14) (2023-12-12)
+
+### Bug Fixes
+
+* removed logs ([7f2fd2d](https://github.com/nativescript-community/ui-pager/commit/7f2fd2d3b7a00c2c0721fd46e283d5b7c79b51b4))
+
 ## [14.1.13](https://github.com/nativescript-community/ui-pager/compare/v14.1.12...v14.1.13) (2023-12-11)
 
 ### Bug Fixes
