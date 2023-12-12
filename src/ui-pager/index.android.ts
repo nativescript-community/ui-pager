@@ -395,7 +395,6 @@ export class Pager extends PagerBase {
             return;
         }
         const ids = Array.from(this.bindedViewHolders).sort((a, b) => a - b);
-        console.log('refreshVisibleItems', ids);
         this.pagerAdapter.notifyItemRangeChanged(ids[0], ids[ids.length - 1] - ids[0] + 1);
     }
     
@@ -757,7 +756,6 @@ function initPagerRecyclerAdapter() {
                 view = owner._itemViewLoader(template.key);
             }
             const isNonSync = view === undefined;
-            console.log('isNonSync', view);
             if (isNonSync || view instanceof ProxyViewContainer) {
                 const parentView = new ContentView();
                 parentView.id = 'pagerViewHolder';
