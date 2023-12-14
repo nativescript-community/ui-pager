@@ -307,10 +307,6 @@ export class Pager extends PagerBase {
         this.nativeViewProtected.setUserInputEnabled(!value);
     }
 
-    [itemsProperty.getDefault](): any {
-        return null;
-    }
-
     [itemsProperty.setNative](value: any) {
         this.setObservableArrayInstance(value);
     }
@@ -357,11 +353,16 @@ export class Pager extends PagerBase {
         this.initStaticPagerAdapter();
     }
 
-    [selectedIndexProperty.setNative](value: number) {
+    [selectedIndexProperty.setNative](value: number, animated = true, requestTransform = false) {
         const nativeView = this.nativeViewProtected;
         if (this.isLoaded && nativeView) {
             const index = this.circularMode ? value + 1 : value;
-            nativeView.setCurrentItem(index, !this.disableAnimation);
+            nativeView.setCurrentItem(index, animated && !this.disableAnimation);
+            if (requestTransform) {
+                setTimeout(() => {
+                    nativeView.requestTransform();
+                }, 0);
+            }
         }
     }
 
@@ -397,7 +398,7 @@ export class Pager extends PagerBase {
         const ids = Array.from(this.bindedViewHolders).sort((a, b) => a - b);
         this.pagerAdapter.notifyItemRangeChanged(ids[0], ids[ids.length - 1] - ids[0] + 1);
     }
-    
+
     getViewForItemAtIndex(index: number) {
         return this.getChildView(index);
     }

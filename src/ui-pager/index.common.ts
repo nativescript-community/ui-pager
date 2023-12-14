@@ -82,6 +82,7 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
     public circularMode: boolean;
     public autoPlayDelay: number;
     public autoPlay: boolean;
+    public preserveIndexOnItemsChange: boolean = false;
     // This one works along with existing NS property change event system
     public static selectedIndexChangeEvent = 'selectedIndexChange';
     public static scrollEvent = 'scroll';
@@ -143,10 +144,14 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
         if (value instanceof ObservableArray) {
             this.mObservableArrayInstance = value as any;
             this.mObservableArrayInstance.on(ObservableArray.changeEvent, this._observableArrayHandler);
-        } else {
-            this.refresh();
+            // } else {
         }
-        selectedIndexProperty.coerce(this);
+        this.refresh();
+        if (this.preserveIndexOnItemsChange) {
+            this[selectedIndexProperty.setNative](this.selectedIndex, false /* disableAnimation */, true /* requestTransform(Android) */);
+        } else {
+            selectedIndexProperty.coerce(this);
+        }
     }
 
     getChildView(index: number): View {
@@ -336,22 +341,22 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
         return converted;
     }
 
-    abstract _onItemsChanged(oldValue: any, newValue: any): void;
+    // abstract _onItemsChanged(oldValue: any, newValue: any): void;
 }
 
 export class PagerItem extends GridLayout {}
 
-function onItemsChanged(pager: PagerBase, oldValue, newValue) {
-    if (oldValue instanceof Observable) {
-        removeWeakEventListener(oldValue, ObservableArray.changeEvent, pager.refresh, pager);
-    }
+// function onItemsChanged(pager: PagerBase, oldValue, newValue) {
+//     if (oldValue instanceof Observable) {
+//         removeWeakEventListener(oldValue, ObservableArray.changeEvent, pager.refresh, pager);
+//     }
 
-    if (newValue instanceof Observable && !(newValue instanceof ObservableArray)) {
-        addWeakEventListener(newValue, ObservableArray.changeEvent, pager.refresh, pager);
-    }
+//     if (newValue instanceof Observable && !(newValue instanceof ObservableArray)) {
+//         addWeakEventListener(newValue, ObservableArray.changeEvent, pager.refresh, pager);
+//     }
 
-    pager.refresh();
-}
+//     // pager.refresh();
+// }
 
 function onItemTemplateChanged(pager: PagerBase, oldValue, newValue) {
     pager.itemTemplateUpdated(oldValue, newValue);
@@ -407,8 +412,8 @@ peakingProperty.register(PagerBase);
 
 export const itemsProperty = new Property<PagerBase, any>({
     name: 'items',
-    affectsLayout: true,
-    valueChanged: onItemsChanged
+    affectsLayout: true
+    // valueChanged: onItemsChanged
 });
 itemsProperty.register(PagerBase);
 

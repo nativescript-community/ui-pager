@@ -290,9 +290,9 @@ export class Pager extends PagerBase {
         this.scrollToIndexAnimated(this.selectedIndex, false);
     }
 
-    [selectedIndexProperty.setNative](value: number) {
+    [selectedIndexProperty.setNative](value: number, animated = true) {
         if (this.isLoaded) {
-            this.scrollToIndexAnimated(value, !this.disableAnimation);
+            this.scrollToIndexAnimated(value, animated && !this.disableAnimation);
         }
     }
 
