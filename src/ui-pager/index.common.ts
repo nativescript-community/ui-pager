@@ -350,10 +350,7 @@ function onItemsChanged(pager: PagerBase, oldValue, newValue) {
         addWeakEventListener(newValue, ObservableArray.changeEvent, pager.refresh, pager);
     }
 
-    if (!(newValue instanceof Observable) || !(newValue instanceof ObservableArray)) {
-        pager.refresh();
-    }
-    pager._onItemsChanged(oldValue, newValue);
+    pager.refresh();
 }
 
 function onItemTemplateChanged(pager: PagerBase, oldValue, newValue) {
