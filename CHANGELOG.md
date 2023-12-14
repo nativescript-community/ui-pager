@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.16](https://github.com/nativescript-community/ui-pager/compare/v14.1.15...v14.1.16) (2023-12-14)
+
+### Features
+
+* `preserveIndexOnItemsChange` property ([696c611](https://github.com/nativescript-community/ui-pager/commit/696c611cfc100b754b777b3853861965f16b741c))
+
 ## [14.1.15](https://github.com/nativescript-community/ui-pager/compare/v14.1.14...v14.1.15) (2023-12-14)
 
 ### Bug Fixes
