@@ -3024,7 +3024,7 @@ __metadata:
 
 "@nativescript-community/plugin-seed-tools@file:tools::locator=root-workspace-0b6124%40workspace%3A.":
   version: 1.0.0
-  resolution: "@nativescript-community/plugin-seed-tools@file:tools#tools::hash=f25ecd&locator=root-workspace-0b6124%40workspace%3A."
+  resolution: "@nativescript-community/plugin-seed-tools@file:tools#tools::hash=c81897&locator=root-workspace-0b6124%40workspace%3A."
   dependencies:
     "@angular/animations": "npm:~16.2.8"
     "@angular/common": "npm:~16.2.8"
@@ -3078,9 +3078,9 @@ __metadata:
     react-nativescript: "npm:4.0.0"
     rimraf: "npm:~3.0.2"
     rxjs: "npm:~7.8.1"
-    svelte: "npm:4.2.8"
-    svelte-native: "npm:~1.0.15"
-    svelte-preprocess: "npm:~5.1.1"
+    svelte: "npm:4.2.3"
+    svelte-native: "npm:~1.0.9"
+    svelte-preprocess: "npm:~5.1.0"
     ts-patch: "npm:2.1.0"
     tslib: "npm:2.6.2"
     typedoc: "npm:~0.25.2"
@@ -3088,7 +3088,7 @@ __metadata:
     vue: "npm:~2.6.14"
     yargs: "npm:^17.7.2"
     zone.js: "npm:~0.14.0"
-  checksum: d1ead70006cad8490dd3739d46f29d3318901190f3214eed047635cd24152086d8b63842d5aa31f2ef256600c40d1bbcc1196a999386554eb68d405240833526
+  checksum: 19cc26fe0d0b84bb4c614216a4894ad9db25249698a7cb4cfd9c1961262386421bfd364614cf3c34a7e7fe3713aac2e32cd2428cb3a7671aeb8864c75bbaa899
   languageName: node
   linkType: hard
 
@@ -9455,12 +9455,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.0.0":
-  version: 1.15.3
-  resolution: "follow-redirects@npm:1.15.3"
+  version: 1.15.4
+  resolution: "follow-redirects@npm:1.15.4"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 60d98693f4976892f8c654b16ef6d1803887a951898857ab0cdc009570b1c06314ad499505b7a040ac5b98144939f8597766e5e6a6859c0945d157b473aa6f5f
+  checksum: 2e8f5f259a6b02dfa8dc199e08431848a7c3beed32eb4c19945966164a52c89f07b86c3afcc32ebe4279cf0a960520e45a63013d6350309c5ec90133c5d9351a
   languageName: node
   linkType: hard
 
@@ -17442,7 +17442,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-native@npm:~1.0.15, svelte-native@npm:~1.0.5":
+"svelte-native@npm:~1.0.5":
   version: 1.0.15
   resolution: "svelte-native@npm:1.0.15"
   peerDependencies:
@@ -17452,7 +17452,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-preprocess@npm:^5.0.0, svelte-preprocess@npm:~5.1.1":
+"svelte-native@npm:~1.0.9":
+  version: 1.0.16
+  resolution: "svelte-native@npm:1.0.16"
+  peerDependencies:
+    "@nativescript/core": ~8.5.9
+    svelte: ~4.2.8
+  checksum: 3a99076a5929358c48914958bcf08a53564193fb4cd99a0305bc2fb4244df7b64187937ac4918c735b139f65a889051a8b00133ae2fb0a06f48a7b4fe94d27cf
+  languageName: node
+  linkType: hard
+
+"svelte-preprocess@npm:^5.0.0":
   version: 5.1.1
   resolution: "svelte-preprocess@npm:5.1.1"
   dependencies:
@@ -17498,9 +17508,55 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:4.2.8":
-  version: 4.2.8
-  resolution: "svelte@npm:4.2.8"
+"svelte-preprocess@npm:~5.1.0":
+  version: 5.1.3
+  resolution: "svelte-preprocess@npm:5.1.3"
+  dependencies:
+    "@types/pug": "npm:^2.0.6"
+    detect-indent: "npm:^6.1.0"
+    magic-string: "npm:^0.30.5"
+    sorcery: "npm:^0.11.0"
+    strip-indent: "npm:^3.0.0"
+  peerDependencies:
+    "@babel/core": ^7.10.2
+    coffeescript: ^2.5.1
+    less: ^3.11.3 || ^4.0.0
+    postcss: ^7 || ^8
+    postcss-load-config: ^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+    pug: ^3.0.0
+    sass: ^1.26.8
+    stylus: ^0.55.0
+    sugarss: ^2.0.0 || ^3.0.0 || ^4.0.0
+    svelte: ^3.23.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
+    typescript: ">=3.9.5 || ^4.0.0 || ^5.0.0"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    coffeescript:
+      optional: true
+    less:
+      optional: true
+    postcss:
+      optional: true
+    postcss-load-config:
+      optional: true
+    pug:
+      optional: true
+    sass:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    typescript:
+      optional: true
+  checksum: 2070da27bee599bb089629926e196c8ab814017bf9e0ba1c4f599f9cefa5f9cad28110cb0e137f89f47d3f76b67df16b0d9086b199d2a6eaf31d978c5598e64e
+  languageName: node
+  linkType: hard
+
+"svelte@npm:4.2.3":
+  version: 4.2.3
+  resolution: "svelte@npm:4.2.3"
   dependencies:
     "@ampproject/remapping": "npm:^2.2.1"
     "@jridgewell/sourcemap-codec": "npm:^1.4.15"
@@ -17515,7 +17571,7 @@ __metadata:
     locate-character: "npm:^3.0.0"
     magic-string: "npm:^0.30.4"
     periscopic: "npm:^3.1.0"
-  checksum: 60d1ee8a67bf4d640eb417a36987d14169e4a8328e7f836917c53c75c8138f1e0e73900891cf95a35f456e112ca55778695e3291c4fd4ba60f22e36f63fc1537
+  checksum: c7ceee57cf630e8f029a59d041bc8baee9f7d90af85849cfce2708d2335d66e85183a6bb4bed9671d101235689e9731c9d7698db5b777ffc1c353372b1b3c0f9
   languageName: node
   linkType: hard
 
