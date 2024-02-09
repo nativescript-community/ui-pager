@@ -1,10 +1,7 @@
+import { Color, CoreTypes, KeyedTemplate, Template, View } from '@nativescript/core';
 import * as React from 'react';
-import { View as TNSView } from '@nativescript/core';
-import { ItemsSource, Pager as NativeScriptPager, PagerItem as NativeScriptPagerItem } from '..';
-import { registerElement } from 'react-nativescript';
-import { Template, Color, CoreTypes, View, KeyedTemplate} from '@nativescript/core';
-import { render as RNSRender, unmountComponentAtNode, NSVRoot, NSVElement, ViewAttributes, NativeScriptProps, GridLayoutAttributes } from "react-nativescript";
-import { Orientation } from '..';
+import { GridLayoutAttributes, NSVElement, NSVRoot, NativeScriptProps, render as RNSRender, ViewAttributes, registerElement, unmountComponentAtNode } from 'react-nativescript';
+import { ItemsSource, Pager as NativeScriptPager, PagerItem as NativeScriptPagerItem, Orientation } from '..';
 
 registerElement('pager', () => require('../').Pager);
 registerElement('pagerItem', () => require('../').PagerItem);
@@ -26,14 +23,13 @@ export declare type PagerAttributes = ViewAttributes & {
     transformers?: string;
     loadMoreCount?: number;
     disableSwipe?: boolean;
-    indicator?: any
+    indicator?: any;
     showIndicator?: boolean;
     indicatorColor?: Color | string;
     indicatorSelectedColor?: Color | string;
     ios?: any;
     android?: any;
 };
-
 
 export type CellViewContainer = View;
 type CellFactory = (item: any) => React.ReactElement;
@@ -54,15 +50,18 @@ type OwnProps = {
 
     onLoadMoreItems?: (args: any) => void;
     _debug?: {
-        logLevel: "debug" | "info";
+        logLevel: 'debug' | 'info';
         onCellFirstLoad?: (container: CellViewContainer) => void;
         onCellRecycle?: (container: CellViewContainer) => void;
     };
-} & Omit<PagerAttributes, "onItemLoading">;
+} & Omit<PagerAttributes, 'onItemLoading'>;
 type Props = OwnProps & { forwardedRef?: React.RefObject<NSVElement<NativeScriptPager>> };
 
 type NumberKey = number | string;
-type RootKeyAndTNSView = { rootKey: string; nativeView: View };
+interface RootKeyAndTNSView {
+    rootKey: string;
+    nativeView: View;
+}
 
 interface State {
     nativeCells: Record<NumberKey, CellViewContainer>;
@@ -74,10 +73,10 @@ interface State {
 export class _Pager extends React.Component<Props, State> {
     static readonly defaultProps = {
         _debug: {
-            logLevel: "info" as "info",
+            logLevel: 'info' as 'info',
             onCellFirstLoad: undefined,
-            onCellRecycle: undefined,
-        },
+            onCellRecycle: undefined
+        }
     };
 
     constructor(props: Props) {
@@ -86,7 +85,7 @@ export class _Pager extends React.Component<Props, State> {
         this.state = {
             nativeCells: {},
             nativeCellToItemIndex: new Map(),
-            itemIndexToNativeCell: props._debug.logLevel === "debug" ? new Map() : undefined,
+            itemIndexToNativeCell: props._debug.logLevel === 'debug' ? new Map() : undefined
         };
     }
 
@@ -94,29 +93,24 @@ export class _Pager extends React.Component<Props, State> {
     private readonly argsViewToRootKeyAndRef: Map<View, RootKeyAndTNSView> = new Map();
     private roots: Set<string> = new Set();
 
-
     private readonly defaultOnItemLoading: (args: any) => void = (args: any) => {
         const { logLevel, onCellRecycle, onCellFirstLoad } = this.props._debug;
         const { items, itemTemplateSelector } = this.props;
         const item: any = _Pager.isItemsSource(items) ? items.getItem(args.index) : items[args.index];
         const template: string | null = itemTemplateSelector
-            ? typeof itemTemplateSelector === "string"
+            ? typeof itemTemplateSelector === 'string'
                 ? itemTemplateSelector
-                : (itemTemplateSelector as ((item: any, index: number, items: any) => string))(item, args.index, items)
+                : (itemTemplateSelector as (item: any, index: number, items: any) => string)(item, args.index, items)
             : null;
         const cellFactory: CellFactory | undefined =
-            template === null
-                ? this.props.cellFactory
-                : this.props.cellFactories
-                    ? this.props.cellFactories.get(template).cellFactory
-                    : this.props.cellFactory;
+            template === null ? this.props.cellFactory : this.props.cellFactories ? this.props.cellFactories.get(template).cellFactory : this.props.cellFactory;
 
-        if (typeof cellFactory === "undefined") {
+        if (typeof cellFactory === 'undefined') {
             console.warn(`Pager: No cell factory found, given template ${template}!`);
             return;
         }
 
-        let view: View | undefined = args.view;
+        const view: View | undefined = args.view;
         if (!view) {
             const rootKeyAndRef: RootKeyAndTNSView = this.renderNewRoot(item, cellFactory);
 
@@ -127,16 +121,16 @@ export class _Pager extends React.Component<Props, State> {
 
             if (onCellFirstLoad) onCellFirstLoad(rootKeyAndRef.nativeView);
         } else {
-            console.log(`[Pager] existing view: `, view);
-            if (onCellRecycle) onCellRecycle(view as CellViewContainer);
+            console.log('[Pager] existing view: ', view);
+            if (onCellRecycle) onCellRecycle(view);
 
             const { rootKey, nativeView } = this.argsViewToRootKeyAndRef.get(view);
-            if (typeof rootKey === "undefined") {
-                console.error(`Unable to find root key that args.view corresponds to!`, view);
+            if (typeof rootKey === 'undefined') {
+                console.error('Unable to find root key that args.view corresponds to!', view);
                 return;
             }
             if (!nativeView) {
-                console.error(`Unable to find ref that args.view corresponds to!`, view);
+                console.error('Unable to find ref that args.view corresponds to!', view);
                 return;
             }
 
@@ -153,23 +147,24 @@ export class _Pager extends React.Component<Props, State> {
     };
 
     protected getNativeView(): NativeScriptPager | null {
-        const ref = (this.props.forwardedRef || this.myRef);
+        const ref = this.props.forwardedRef || this.myRef;
         return ref.current ? ref.current.nativeView : null;
     }
 
     private readonly renderNewRoot = (item: any, cellFactory: CellFactory): RootKeyAndTNSView => {
         const node: NativeScriptPager | null = this.getNativeView();
         if (!node) {
-            throw new Error("Unable to get ref to Pager");
+            throw new Error('Unable to get ref to Pager');
         }
 
-        console.log(`[Pager] no existing view.`);
+        console.log('[Pager] no existing view.');
         const rootKey: string = `Pager-${node._domId}-${this.roots.size.toString()}`;
 
         const root = new NSVRoot<View>();
         RNSRender(
             cellFactory(item),
-            root, () => {
+            root,
+            () => {
                 // console.log(`Rendered into cell! ref:`);
             },
             rootKey
@@ -186,7 +181,7 @@ export class _Pager extends React.Component<Props, State> {
     componentDidMount() {
         const node: NativeScriptPager | null = this.getNativeView();
         if (!node) {
-            console.warn(`React ref to NativeScript View lost, so unable to set item templates.`);
+            console.warn('React ref to NativeScript View lost, so unable to set item templates.');
             return;
         }
 
@@ -203,7 +198,7 @@ export class _Pager extends React.Component<Props, State> {
                         this.argsViewToRootKeyAndRef.set(rootKeyAndRef.nativeView, rootKeyAndRef);
 
                         return rootKeyAndRef.nativeView;
-                    },
+                    }
                 });
             });
             node.itemTemplates = itemTemplates;
@@ -211,18 +206,16 @@ export class _Pager extends React.Component<Props, State> {
     }
 
     componentWillUnmount() {
-        this.roots.forEach(root => unmountComponentAtNode(root));
+        this.roots.forEach((root) => unmountComponentAtNode(root));
     }
 
     public static isItemsSource(arr: any[] | ItemsSource): arr is ItemsSource {
         // Same implementation as: https://github.com/NativeScript/NativeScript/blob/b436ecde3605b695a0ffa1757e38cc094e2fe311/tns-core-modules/ui/list-picker/list-picker-common.ts#L74
-        return typeof (arr as ItemsSource).getItem === "function";
+        return typeof (arr as ItemsSource).getItem === 'function';
     }
 
-
-
     render() {
-        console.log(`Pager's render()`);
+        console.log("Pager's render()");
         const {
             // Only used by the class component; not the JSX element.
             forwardedRef,
@@ -242,25 +235,20 @@ export class _Pager extends React.Component<Props, State> {
             //     ref: forwardedRef || this.myRef,
             //     onItemLoading: this.defaultOnItemLoading
             // }, children)
-            <pager
-                {...rest}
-                onItemLoading={this.defaultOnItemLoading}
-                ref={forwardedRef || this.myRef}
-                children={children}
-            />
+            <pager {...rest} onItemLoading={this.defaultOnItemLoading} ref={forwardedRef || this.myRef} children={children} />
         );
     }
 }
 
-export type PagerItemAttributes = GridLayoutAttributes & {forwardedRef?: React.RefObject<NSVElement<NativeScriptPagerItem>> };
+export type PagerItemAttributes = GridLayoutAttributes & { forwardedRef?: React.RefObject<NSVElement<NativeScriptPagerItem>> };
 
 export class _PagerItem extends React.Component<PagerItemAttributes, {}> {
     private readonly myRef = React.createRef<NSVElement<NativeScriptPagerItem>>();
     private readonly item = new NativeScriptPagerItem();
 
     componentDidMount(): void {
-        const {forwardedRef} = this.props;
-        const view = (forwardedRef || this.myRef).current!.nativeView;
+        const { forwardedRef } = this.props;
+        const view = (forwardedRef || this.myRef).current.nativeView;
         const parent: any = view && view.parent ? view.parent : null;
         if (parent) {
             // remove parent
@@ -281,38 +269,30 @@ export class _PagerItem extends React.Component<PagerItemAttributes, {}> {
             ...rest
         } = this.props;
 
-
         return React.createElement(
             'pagerItem',
             {
                 ...rest,
-                ref: forwardedRef || this.myRef,
+                ref: forwardedRef || this.myRef
             },
             children
         );
     }
 }
 
-export const Pager = React.forwardRef<NSVElement<NativeScriptPager>, OwnProps>(
-    (props: OwnProps, ref: React.RefObject<NSVElement<NativeScriptPager>>) => {
-        return <_Pager {...props} forwardedRef={ref} />;
-    }
-);
+//@ts-ignore
+export const Pager = React.forwardRef<NSVElement<NativeScriptPager>, OwnProps>((props: OwnProps, ref: React.RefObject<NSVElement<NativeScriptPager>>) => <_Pager {...props} forwardedRef={ref} />);
 
-
-export const PagerItem = React.forwardRef<NSVElement<NativeScriptPagerItem>, PagerItemAttributes>(
-    (props: PagerItemAttributes, ref: React.RefObject<NSVElement<NativeScriptPagerItem>>) => {
-        return <_PagerItem {...props} forwardedRef={ref} />;
-    }
-);
-
-
+export const PagerItem = React.forwardRef<NSVElement<NativeScriptPagerItem>, PagerItemAttributes>((props: PagerItemAttributes, ref: React.RefObject<NSVElement<NativeScriptPagerItem>>) => (
+    //@ts-ignore
+    <_PagerItem {...props} forwardedRef={ref} />
+));
 
 declare global {
-    module JSX {
+    namespace JSX {
         interface IntrinsicElements {
             pager: NativeScriptProps<PagerAttributes, NativeScriptPager>;
-            pagerItem: NativeScriptProps<PagerItemAttributes, NativeScriptPagerItem>
+            pagerItem: NativeScriptProps<PagerItemAttributes, NativeScriptPagerItem>;
         }
     }
 }
