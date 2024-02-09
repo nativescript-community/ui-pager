@@ -3223,11 +3223,11 @@ __metadata:
 
 "@nativescript-community/template-snippet@file:demo-snippets::locator=root-workspace-0b6124%40workspace%3A.":
   version: 0.0.1
-  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=9c62b1&locator=root-workspace-0b6124%40workspace%3A."
+  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=84bfe1&locator=root-workspace-0b6124%40workspace%3A."
   dependencies:
     "@nativescript-community/ui-pager": "npm:*"
     "@nativescript-community/ui-pager-indicator": "npm:*"
-  checksum: 9674638c0aa031af1fbacad73e2259cf9b667b0e0f5694a3052d9d96933e657db41bb84f97a0ecdf82c7e5bff229019404c7c620cb563e969f47c10c52f9a184
+  checksum: fdf61196ffe8a029dba50565164c05206e588c3c317de16727bb400c365c507037819f6f8cd38894df6b785db7ed4dd964be65c5136921a30b934a736ea71730
   languageName: node
   linkType: hard
 
@@ -9544,12 +9544,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.0.0":
-  version: 1.15.3
-  resolution: "follow-redirects@npm:1.15.3"
+  version: 1.15.5
+  resolution: "follow-redirects@npm:1.15.5"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 60d98693f4976892f8c654b16ef6d1803887a951898857ab0cdc009570b1c06314ad499505b7a040ac5b98144939f8597766e5e6a6859c0945d157b473aa6f5f
+  checksum: d467f13c1c6aa734599b8b369cd7a625b20081af358f6204ff515f6f4116eb440de9c4e0c49f10798eeb0df26c95dd05d5e0d9ddc5786ab1a8a8abefe92929b4
   languageName: node
   linkType: hard
 
