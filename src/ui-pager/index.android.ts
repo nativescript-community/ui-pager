@@ -228,10 +228,10 @@ export class Pager extends PagerBase {
             switch (args.action) {
                 case ChangeType.Add:
                     this.pagerAdapter.notifyItemRangeInserted(args.index, args.addedCount);
-                    break;
+                    return;
                 case ChangeType.Delete:
                     this.pagerAdapter.notifyItemRangeRemoved(args.index, args.removed.length);
-                    break;
+                    return;
                 case ChangeType.Splice:
                     if (args.removed.length > 0) {
                         this.pagerAdapter.notifyItemRangeRemoved(args.index, args.removed.length);
@@ -239,10 +239,10 @@ export class Pager extends PagerBase {
                     if (args.addedCount > 0) {
                         this.pagerAdapter.notifyItemRangeInserted(args.index, args.addedCount);
                     }
-                    break;
+                    return;
                 case ChangeType.Update:
                     this.pagerAdapter.notifyItemChanged(args.index);
-                    break;
+                    return;
                 default:
                     break;
             }
@@ -338,13 +338,10 @@ export class Pager extends PagerBase {
                 this._pagerAdapter = new StaticPagerStateAdapter(new WeakRef(this));
                 nativeView.setAdapter(this._pagerAdapter);
                 selectedIndexProperty.coerce(this);
-                // TODO
-                // setTimeout(() => {
                 nativeView.setCurrentItem(this.selectedIndex, false);
                 if (this.indicator) {
                     this.indicator.setSelection(this.selectedIndex);
                 }
-                // }, 0);
             }
         }
     }
