@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.18](https://github.com/nativescript-community/ui-pager/compare/v14.1.17...v14.1.18) (2024-02-09)
+
+### Bug Fixes
+
+* **android:** prevent crash while using multi template ([2260464](https://github.com/nativescript-community/ui-pager/commit/22604649fbad6b01ff7080bee95d55d5196bd4d8))
+
 ## [14.1.17](https://github.com/nativescript-community/ui-pager/compare/v14.1.16...v14.1.17) (2024-02-09)
 
 ### Bug Fixes
