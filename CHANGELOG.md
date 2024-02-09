@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.17](https://github.com/nativescript-community/ui-pager/compare/v14.1.16...v14.1.17) (2024-02-09)
+
+### Bug Fixes
+
+* **android:** dont scroll to 0 when changes are made on the ObservableArray ([7e9a349](https://github.com/nativescript-community/ui-pager/commit/7e9a349ab7062e9ede3c639126465314762683c2))
+
 ## [14.1.16](https://github.com/nativescript-community/ui-pager/compare/v14.1.15...v14.1.16) (2023-12-14)
 
 ### Features
