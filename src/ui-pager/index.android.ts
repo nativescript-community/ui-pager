@@ -880,7 +880,6 @@ function initPagerRecyclerAdapter() {
             const owner = this.owner ? this.owner.get() : null;
             if (owner) {
                 const template = owner._getItemTemplate(index);
-                console.log('getItemViewType', template, owner._itemTemplatesInternal.indexOf(template));
                 return owner._itemTemplatesInternal.indexOf(template);
             }
             return 0;
