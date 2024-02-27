@@ -13,7 +13,7 @@
         "build.win": "npm run tsc.win && npm run readme",
         "build.all": "npm run build",
         "build.all.win": "npm run build .win&& npm run build.angular.win",
-        "build.angular": "ng-packagr -p ../../src/ui-pager-indicator/angular/ng-package.json -c ../../src/ui-pager-indicator/angular/tsconfig.json",
+        "build.angular": "ng-packagr -p ../../src/ui-pager-indicator/angular/ng-package.json -c ../../src/ui-pager-indicator/angular/tsconfig.json && rm angular/.npmignore",
         "build.angular.win": "ng-packagr -p ..\\..\\src\\ui-pager-indicator\\angular\\ng-package.json -c ..\\..\\src\\ui-pager-indicator\\angular\\tsconfig.json",
         "readme": "readme generate -c ../../tools/readme/blueprint.json",
         "tsc": "cpy '**/*.d.ts' '../../packages/ui-pager-indicator' --parents --cwd=../../src/ui-pager-indicator && tsc -skipLibCheck -d",
