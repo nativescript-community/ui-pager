@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.20](https://github.com/nativescript-community/ui-pager/compare/v14.1.19...v14.1.20) (2024-03-01)
+
+### Bug Fixes
+
+* **ios:** correctly apply transformer if start index is not 0 ([59c55a8](https://github.com/nativescript-community/ui-pager/commit/59c55a87d5abd8c807a6b7a45440e783dae4ddb6))
+
 ## [14.1.19](https://github.com/nativescript-community/ui-pager/compare/v14.1.18...v14.1.19) (2024-02-15)
 
 ### Bug Fixes
