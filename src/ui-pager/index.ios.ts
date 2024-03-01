@@ -856,6 +856,7 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
         if (owner) {
             if (!owner.mIsInit) {
                 owner._updateScrollPosition();
+                collectionView.collectionViewLayout.invalidateLayout();
                 owner.mIsInit = true;
             }
             if (owner.items && indexPath.row === owner.lastIndex - owner.loadMoreCount) {
