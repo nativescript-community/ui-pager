@@ -99,6 +99,9 @@ export class Pager extends PagerBase {
         nativeView.showsHorizontalScrollIndicator = false;
         nativeView.showsVerticalScrollIndicator = false;
         nativeView.decelerationRate = UIScrollViewDecelerationRateFast;
+        this._itemTemplatesInternal.forEach((t) => {
+            nativeView.registerClassForCellWithReuseIdentifier(PagerCell.class(), t.key);
+        });
         return nativeView;
     }
 
