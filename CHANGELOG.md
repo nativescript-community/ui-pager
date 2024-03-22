@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.22](https://github.com/nativescript-community/ui-pager/compare/v14.1.21...v14.1.22) (2024-03-22)
+
+### Bug Fixes
+
+* **ios:** page item not updating on change ([9a38a43](https://github.com/nativescript-community/ui-pager/commit/9a38a43e18170387f157ed173d21c02918d4c37a))
+
 ## [14.1.21](https://github.com/nativescript-community/ui-pager/compare/v14.1.20...v14.1.21) (2024-03-22)
 
 ### Bug Fixes
