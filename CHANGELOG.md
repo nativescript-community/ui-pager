@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.23](https://github.com/nativescript-community/ui-pager/compare/v14.1.22...v14.1.23) (2024-04-17)
+
+### Bug Fixes
+
+* **angular:** Correct initialisation issue with angular ([c83c292](https://github.com/nativescript-community/ui-pager/commit/c83c2926bf92959c9eda8e4d705248841ce6c37d))
+
 ## [14.1.22](https://github.com/nativescript-community/ui-pager/compare/v14.1.21...v14.1.22) (2024-03-22)
 
 ### Bug Fixes
