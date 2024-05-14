@@ -620,7 +620,7 @@ export class Pager extends PagerBase {
 
     public onLayout(left: number, top: number, right: number, bottom: number) {
         super.onLayout(left, top, right, bottom);
-        if (this.iosOverflowSafeAreaEnabled) {
+        if (this.iosOverflowSafeArea) {
             const safeArea = this.getSafeAreaInsets();
             this._effectiveItemHeight += safeArea.top + safeArea.bottom;
         }
@@ -1106,6 +1106,7 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
             // }
 
             // If cell is reused it has old content - remove it first.
+            const firstRender = !cell.view;
             if (!cell.view) {
                 cell.owner = new WeakRef(view);
             } else if (cell.view !== view) {
@@ -1138,8 +1139,9 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
                 // }
             }
 
-            view.iosOverflowSafeArea = owner.iosOverflowSafeArea;
-            view['iosIgnoreSafeArea'] = owner['iosIgnoreSafeArea'];
+            if (firstRender) {
+                view['iosIgnoreSafeArea'] = true;
+            }
             owner._layoutCell(view, indexPath);
             const size = owner._getSize();
             const width = Utils.layout.toDevicePixels(size.width);
@@ -1154,12 +1156,14 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
         const template = owner && owner._getItemTemplate(indexPath.row);
         cell = collectionView.dequeueReusableCellWithReuseIdentifierForIndexPath(template.key, indexPath) || PagerCell.initWithEmptyBackground();
         cell.index = indexPath;
+        const firstRender = !cell.view;
         if (owner) {
             const size = owner._getSize();
             owner._prepareCell(cell, indexPath);
             const cellView: any = (cell as PagerCell).view;
-            cellView.iosOverflowSafeArea = owner.iosOverflowSafeArea;
-            cellView['iosIgnoreSafeArea'] = owner['iosIgnoreSafeArea'];
+            if (firstRender) {
+                cellView['iosIgnoreSafeArea'] = true;
+            }
             if (cellView && cellView.isLayoutRequired) {
                 View.layoutChild(owner, cellView, 0, 0, Utils.layout.toDevicePixels(size.width), Utils.layout.toDevicePixels(size.height));
             }
