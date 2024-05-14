@@ -110,6 +110,41 @@ export abstract class PagerBase extends View implements AddChildFromBuilder {
 
     protected mObservableArrayInstance: ObservableArray<any>;
 
+    get padding(): string | CoreTypes.LengthType {
+        return this.style.padding;
+    }
+    set padding(value: string | CoreTypes.LengthType) {
+        this.style.padding = value;
+    }
+
+    get paddingTop(): CoreTypes.LengthType {
+        return this.style.paddingTop;
+    }
+    set paddingTop(value: CoreTypes.LengthType) {
+        this.style.paddingTop = value;
+    }
+
+    get paddingRight(): CoreTypes.LengthType {
+        return this.style.paddingRight;
+    }
+    set paddingRight(value: CoreTypes.LengthType) {
+        this.style.paddingRight = value;
+    }
+
+    get paddingBottom(): CoreTypes.LengthType {
+        return this.style.paddingBottom;
+    }
+    set paddingBottom(value: CoreTypes.LengthType) {
+        this.style.paddingBottom = value;
+    }
+
+    get paddingLeft(): CoreTypes.LengthType {
+        return this.style.paddingLeft;
+    }
+    set paddingLeft(value: CoreTypes.LengthType) {
+        this.style.paddingLeft = value;
+    }
+
     abstract refresh(): void;
 
     public static registerTransformer(key: string, transformer) {

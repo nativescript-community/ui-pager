@@ -1,4 +1,5 @@
-import { ChangeType, EventData, KeyedTemplate, Observable, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
+import { ChangeType, CoreTypes, EventData, KeyedTemplate, Observable, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
+import { paddingBottomProperty, paddingLeftProperty, paddingRightProperty, paddingTopProperty } from '@nativescript/core/ui/styling/style-properties';
 import {
     ItemEventData,
     Orientation,
@@ -336,6 +337,34 @@ export class Pager extends PagerBase {
             this._autoPlayInterval = undefined;
             this._initAutoPlay(this.autoPlay);
         }
+    }
+
+    private _setPadding(newPadding: { top?: number; right?: number; bottom?: number; left?: number }) {
+        const layout = this.nativeViewProtected;
+        const sectionInset = layout['contentInset'];
+        const padding = {
+            top: sectionInset.top,
+            right: sectionInset.right,
+            bottom: sectionInset.bottom,
+            left: sectionInset.left
+        };
+        const newValue = Object.assign(padding, newPadding);
+        layout['contentInset'] = newValue;
+    }
+    [paddingTopProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ top: Utils.layout.toDeviceIndependentPixels(this.effectivePaddingTop) });
+    }
+
+    [paddingRightProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ right: Utils.layout.toDeviceIndependentPixels(this.effectivePaddingRight) });
+    }
+
+    [paddingBottomProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ bottom: Utils.layout.toDeviceIndependentPixels(this.effectivePaddingBottom) });
+    }
+
+    [paddingLeftProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ left: Utils.layout.toDeviceIndependentPixels(this.effectivePaddingLeft) });
     }
 
     protected _observableArrayHandler = (args) => {

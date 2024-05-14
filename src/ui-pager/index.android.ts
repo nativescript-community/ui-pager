@@ -1,4 +1,19 @@
-import { ChangeType, ContentView, Device, KeyedTemplate, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase } from '@nativescript/core';
+import {
+    ChangeType,
+    ContentView,
+    CoreTypes,
+    Device,
+    KeyedTemplate,
+    Property,
+    ProxyViewContainer,
+    Utils,
+    View,
+    ViewBase,
+    paddingBottomProperty,
+    paddingLeftProperty,
+    paddingRightProperty,
+    paddingTopProperty
+} from '@nativescript/core';
 import { isString } from '@nativescript/core/utils/types';
 import {
     ItemEventData,
@@ -309,6 +324,47 @@ export class Pager extends PagerBase {
 
     [itemsProperty.setNative](value: any) {
         this.setObservableArrayInstance(value);
+    }
+
+    private _setPadding(newPadding: { top?: number; right?: number; bottom?: number; left?: number }) {
+        const nativeView = this.nativeViewProtected;
+        const padding = {
+            top: nativeView.getPaddingTop(),
+            right: nativeView.getPaddingRight(),
+            bottom: nativeView.getPaddingBottom(),
+            left: nativeView.getPaddingLeft()
+        };
+        // tslint:disable-next-line:prefer-object-spread
+        const newValue = Object.assign(padding, newPadding);
+        nativeView.setClipToPadding(false);
+        nativeView.setPadding(newValue.left, newValue.top, newValue.right, newValue.bottom);
+    }
+    [paddingTopProperty.getDefault](): CoreTypes.LengthType {
+        return { value: this._defaultPaddingTop, unit: 'px' };
+    }
+    [paddingTopProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ top: this.effectivePaddingTop });
+    }
+
+    [paddingRightProperty.getDefault](): CoreTypes.LengthType {
+        return { value: this._defaultPaddingRight, unit: 'px' };
+    }
+    [paddingRightProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ right: this.effectivePaddingRight });
+    }
+
+    [paddingBottomProperty.getDefault](): CoreTypes.LengthType {
+        return { value: this._defaultPaddingBottom, unit: 'px' };
+    }
+    [paddingBottomProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ bottom: this.effectivePaddingBottom });
+    }
+
+    [paddingLeftProperty.getDefault](): CoreTypes.LengthType {
+        return { value: this._defaultPaddingLeft, unit: 'px' };
+    }
+    [paddingLeftProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ left: this.effectivePaddingLeft });
     }
 
     private _updateScrollPosition() {
