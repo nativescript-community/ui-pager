@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.24](https://github.com/nativescript-community/ui-pager/compare/v14.1.23...v14.1.24) (2024-05-14)
+
+### Features
+
+* padding support ([3624df8](https://github.com/nativescript-community/ui-pager/commit/3624df8330fe33cc5d8517f18ebe907af81216dd))
+
 ## [14.1.23](https://github.com/nativescript-community/ui-pager/compare/v14.1.22...v14.1.23) (2024-04-17)
 
 ### Bug Fixes
