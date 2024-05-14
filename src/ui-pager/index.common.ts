@@ -69,7 +69,7 @@ const booleanConverter = (v: any): boolean => String(v) === 'true';
 let UNIQUE_VIEW_TYPE = 0;
 
 @CSSType('Pager')
-export abstract class PagerBase extends ContainerView implements AddChildFromBuilder {
+export abstract class PagerBase extends View implements AddChildFromBuilder {
     static mRegisteredTransformers = {};
     // This one works along with existing NS property change event system
     public static selectedIndexChangeEvent = 'selectedIndexChange';
