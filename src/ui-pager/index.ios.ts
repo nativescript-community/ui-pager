@@ -880,9 +880,7 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
 
     public collectionViewLayoutMinimumLineSpacingForSectionAtIndex(collectionView: UICollectionView, collectionViewLayout: UICollectionViewLayout, section: number): number {
         const owner = this._owner ? this._owner.get() : null;
-        if (!owner) return 0;
-        const result = owner._getSpacing();
-        return result;
+        return owner?._getSpacing() ?? 0;
     }
 
     public scrollViewWillBeginDragging(scrollView: UIScrollView): void {
@@ -1201,7 +1199,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
         const owner = this._owner ? this._owner.get() : null;
         const originalLayoutAttribute = super.layoutAttributesForElementsInRect(rect);
         const visibleLayoutAttributes = NSMutableArray.alloc().init();
-        if (owner && owner.transformers) {
+        if (owner?.transformers) {
             const transformsArray = owner.transformers
                 .split(' ')
                 .map((s) => Pager.mRegisteredTransformers[s])
@@ -1217,11 +1215,10 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
                     }
                 }
             }
-        } else {
-            return originalLayoutAttribute;
+            return visibleLayoutAttributes as any;
         }
 
-        return visibleLayoutAttributes as any;
+        return originalLayoutAttribute;
     }
 
     public shouldInvalidateLayoutForBoundsChange(newBounds: CGRect): boolean {
