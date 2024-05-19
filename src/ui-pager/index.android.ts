@@ -708,12 +708,12 @@ function initPagerChangeCallback() {
                         object: owner
                     });
                     owner.lastEvent = 1;
-                } else if (owner.lastEvent === 1 && state === 1) {
+                } else if (owner.lastEvent === 2 && state === 0) {
                     owner.notify({
                         eventName: Pager.swipeOverEvent,
                         object: owner
                     });
-                    owner.lastEvent = 1;
+                    owner.lastEvent = 0;
                 } else if (owner.lastEvent === 1 && state === 2) {
                     owner.notify({
                         eventName: Pager.swipeEndEvent,
