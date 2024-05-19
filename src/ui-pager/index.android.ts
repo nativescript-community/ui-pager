@@ -708,7 +708,7 @@ function initPagerChangeCallback() {
                         object: owner
                     });
                     owner.lastEvent = 1;
-                } else if (owner.lastEvent === 2 && state === 0) {
+                else if ((owner.lastEvent === 2 || owner.lastEvent === 0) && state === 0) {
                     owner.notify({
                         eventName: Pager.swipeOverEvent,
                         object: owner
