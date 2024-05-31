@@ -18,27 +18,25 @@
 </template>
 
 <script>
-
 import { Pager } from '@nativescript-community/ui-pager';
 import transformer from '@nativescript-community/ui-pager/transformers/Scale';
 
-Pager.registerTransformer('scale', transformer)
+Pager.registerTransformer('scale', transformer);
 export default {
     data() {
         return {
             items: [
-                {title: "First", color: "#e67e22"},
-                {title: "Second", color: "#3498db"},
-                {title: "Third", color: "#e74c3c"},
-                {title: "Fourth", color: "#9b59b6"},
+                { title: 'First', color: '#e67e22' },
+                { title: 'Second', color: '#3498db' },
+                { title: 'Third', color: '#e74c3c' },
+                { title: 'Fourth', color: '#9b59b6' }
             ]
-        }
+        };
     }
 };
 </script>
 
 <style lang="scss" scoped>
-
 .page Label {
     font-size: 35;
     text-align: center;
@@ -47,5 +45,4 @@ export default {
     color: #ffffff;
     text-transform: uppercase;
 }
-
 </style>

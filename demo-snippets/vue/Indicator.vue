@@ -13,23 +13,22 @@
                     </GridLayout>
                 </v-template>
             </Pager>
-                <PagerIndicator pagerViewId="pager" type="fill" verticalAlignment="bottom" horizontalAlignment="center" marginBottom="10"/>
-                <Button row="1" text="Reset" @tap="resetPager" />
+            <PagerIndicator pagerViewId="pager" type="fill" verticalAlignment="bottom" horizontalAlignment="center" marginBottom="10" />
+            <Button row="1" text="Reset" @tap="resetPager" />
         </GridLayout>
     </Page>
 </template>
 
 <script>
-
 export default {
     data() {
         return {
             selectedIndex: 2,
             items: [
-                {title: 'First', color: '#e67e22'},
-                {title: 'Second', color: '#3498db'},
-                {title: 'Third', color: '#e74c3c'},
-                {title: 'Fourth', color: '#9b59b6'},
+                { title: 'First', color: '#e67e22' },
+                { title: 'Second', color: '#3498db' },
+                { title: 'Third', color: '#e74c3c' },
+                { title: 'Fourth', color: '#9b59b6' }
             ]
         };
     },
@@ -38,7 +37,7 @@ export default {
             this.selectedIndex = 0;
         },
         selectedIndexChange(args) {
-            console.log("SELECTED INDEX CHANGES", args.value)
+            console.log('SELECTED INDEX CHANGES', args.value);
             this.selectedIndex = args.value;
         }
     }

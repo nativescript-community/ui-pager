@@ -22,8 +22,6 @@ export class PagerComponent extends TemplatedItemsComponent {
     public get nativeElement(): Pager {
         return this.templatedItemsView;
     }
-    //@ts-ignore
-    protected templatedItemsView: Pager;
 
     constructor(_elementRef: ElementRef, _iterableDiffers: IterableDiffers) {
         super(_elementRef, _iterableDiffers);

@@ -27,12 +27,12 @@ export default {
     data() {
         return {
             items: [
-                {title: "First", color: "#e67e22"},
-                {title: "Second", color: "#3498db"},
-                {title: "Third", color: "#e74c3c"},
-                {title: "Fourth", color: "#9b59b6"},
+                { title: 'First', color: '#e67e22' },
+                { title: 'Second', color: '#3498db' },
+                { title: 'Third', color: '#e74c3c' },
+                { title: 'Fourth', color: '#9b59b6' }
             ]
-        }
+        };
     },
     methods: {
         moveTo3() {
@@ -46,7 +46,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .page Label {
     font-size: 35;
     text-align: center;
@@ -55,5 +54,4 @@ export default {
     color: #ffffff;
     text-transform: uppercase;
 }
-
 </style>

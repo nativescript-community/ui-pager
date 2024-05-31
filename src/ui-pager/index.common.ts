@@ -69,7 +69,21 @@ const booleanConverter = (v: any): boolean => String(v) === 'true';
 let UNIQUE_VIEW_TYPE = 0;
 
 @CSSType('Pager')
-export abstract class PagerBase extends ContainerView implements AddChildFromBuilder {
+export abstract class PagerBase extends View implements AddChildFromBuilder {
+    static mRegisteredTransformers = {};
+    // This one works along with existing NS property change event system
+    public static selectedIndexChangeEvent = 'selectedIndexChange';
+    public static scrollEvent = 'scroll';
+    public static swipeEvent = 'swipe';
+    public static swipeStartEvent = 'swipeStart';
+    public static swipeOverEvent = 'swipeOver';
+    public static swipeEndEvent = 'swipeEnd';
+    public static loadMoreItemsEvent = 'loadMoreItems';
+    public static itemLoadingEvent = 'itemLoading';
+    public static itemDisposingEvent = 'itemDisposing';
+
+    public static knownFunctions = ['itemTemplateSelector', 'itemIdGenerator']; // See component-builder.ts isKnownFunction
+
     public items: any[] | ItemsSource;
     public selectedIndex: number;
     public itemTemplate: string | Template;
@@ -83,31 +97,56 @@ export abstract class PagerBase extends ContainerView implements AddChildFromBui
     public autoPlayDelay: number;
     public autoPlay: boolean;
     public preserveIndexOnItemsChange: boolean = false;
-    // This one works along with existing NS property change event system
-    public static selectedIndexChangeEvent = 'selectedIndexChange';
-    public static scrollEvent = 'scroll';
-    public static swipeEvent = 'swipe';
-    public static swipeStartEvent = 'swipeStart';
-    public static swipeOverEvent = 'swipeOver';
-    public static swipeEndEvent = 'swipeEnd';
-    public static loadMoreItemsEvent = 'loadMoreItems';
-    public static itemLoadingEvent = 'itemLoading';
-    public static itemDisposingEvent = 'itemDisposing';
     public orientation: Orientation;
-    public _effectiveItemHeight: number;
-    public _effectiveItemWidth: number;
     public transformers: string;
     public loadMoreCount: number = 1;
-    public _childrenViews: { view: PagerItem; type: number }[];
-    abstract readonly _childrenCount: number;
     public disableSwipe: boolean = false;
-    public static knownFunctions = ['itemTemplateSelector', 'itemIdGenerator']; // See component-builder.ts isKnownFunction
+
+    abstract readonly _childrenCount: number;
+
+    protected _effectiveItemHeight: number;
+    protected _effectiveItemWidth: number;
+    public _childrenViews: { view: PagerItem; type: number }[];
 
     protected mObservableArrayInstance: ObservableArray<any>;
 
+    get padding(): string | CoreTypes.LengthType {
+        return this.style.padding;
+    }
+    set padding(value: string | CoreTypes.LengthType) {
+        this.style.padding = value;
+    }
+
+    get paddingTop(): CoreTypes.LengthType {
+        return this.style.paddingTop;
+    }
+    set paddingTop(value: CoreTypes.LengthType) {
+        this.style.paddingTop = value;
+    }
+
+    get paddingRight(): CoreTypes.LengthType {
+        return this.style.paddingRight;
+    }
+    set paddingRight(value: CoreTypes.LengthType) {
+        this.style.paddingRight = value;
+    }
+
+    get paddingBottom(): CoreTypes.LengthType {
+        return this.style.paddingBottom;
+    }
+    set paddingBottom(value: CoreTypes.LengthType) {
+        this.style.paddingBottom = value;
+    }
+
+    get paddingLeft(): CoreTypes.LengthType {
+        return this.style.paddingLeft;
+    }
+    set paddingLeft(value: CoreTypes.LengthType) {
+        this.style.paddingLeft = value;
+    }
+
     abstract refresh(): void;
 
-    static mRegisteredTransformers = {};
     public static registerTransformer(key: string, transformer) {
         PagerBase.mRegisteredTransformers[key] = transformer;
     }

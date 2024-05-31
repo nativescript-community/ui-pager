@@ -6,7 +6,7 @@
         </ActionBar>
 
         <StackLayout class="page">
-            <Pager height="100%" peaking="30" spacing="10">
+            <Pager height="100%" peaking="30">
                 <PagerItem backgroundColor="#e67e22"><Label text="First" /></PagerItem>
                 <PagerItem backgroundColor="#3498db"><Label text="Second" /></PagerItem>
                 <PagerItem backgroundColor="#e74c3c"><Label text="Third" /></PagerItem>
@@ -21,7 +21,6 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-
 .page Label {
     font-size: 35;
     horizontal-alignment: center;
@@ -29,5 +28,4 @@ export default {};
     color: #ffffff;
     text-transform: uppercase;
 }
-
 </style>

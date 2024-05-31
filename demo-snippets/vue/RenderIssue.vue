@@ -1,4 +1,3 @@
-
 <template>
     <Page>
         <ActionBar>
@@ -20,7 +19,7 @@
                         </StackLayout>
                         <StackLayout marginBottom="50">
                             <Label :text="item.field3" />
-                            <StackLayout v-show="item.field3" backgroundColor="blue" height="10" width="10"/>
+                            <StackLayout v-show="item.field3" backgroundColor="blue" height="10" width="10" />
                         </StackLayout>
                     </StackLayout>
                 </v-template>
@@ -34,18 +33,16 @@ export default {
     data() {
         return {
             items: [
-                { field1: true, field2: true, field3: true},
-                { field1: true, field2: true, field3: false},
-                { field1: true, field2: false, field3: true},
-                { field1: false, field2: true, field3: true},
-                { field1: false, field2: true, field3: true},
-                { field1: true, field2: true, field3: false},
+                { field1: true, field2: true, field3: true },
+                { field1: true, field2: true, field3: false },
+                { field1: true, field2: false, field3: true },
+                { field1: false, field2: true, field3: true },
+                { field1: false, field2: true, field3: true },
+                { field1: true, field2: true, field3: false }
             ]
-        }
+        };
     }
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -1,4 +1,5 @@
-import { ChangeType, EventData, KeyedTemplate, Observable, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
+import { ChangeType, CoreTypes, EventData, KeyedTemplate, Observable, Property, ProxyViewContainer, StackLayout, Utils, View, ViewBase, profile } from '@nativescript/core';
+import { paddingBottomProperty, paddingLeftProperty, paddingRightProperty, paddingTopProperty } from '@nativescript/core/ui/styling/style-properties';
 import {
     ItemEventData,
     Orientation,
@@ -99,6 +100,9 @@ export class Pager extends PagerBase {
         nativeView.showsHorizontalScrollIndicator = false;
         nativeView.showsVerticalScrollIndicator = false;
         nativeView.decelerationRate = UIScrollViewDecelerationRateFast;
+        this._itemTemplatesInternal.forEach((t) => {
+            nativeView.registerClassForCellWithReuseIdentifier(PagerCell.class(), t.key);
+        });
         return nativeView;
     }
 
@@ -333,6 +337,34 @@ export class Pager extends PagerBase {
             this._autoPlayInterval = undefined;
             this._initAutoPlay(this.autoPlay);
         }
+    }
+
+    private _setPadding(newPadding: { top?: number; right?: number; bottom?: number; left?: number }) {
+        const layout = this.nativeViewProtected;
+        const sectionInset = layout['contentInset'];
+        const padding = {
+            top: sectionInset.top,
+            right: sectionInset.right,
+            bottom: sectionInset.bottom,
+            left: sectionInset.left
+        };
+        const newValue = Object.assign(padding, newPadding);
+        layout['contentInset'] = newValue;
+    }
+    [paddingTopProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ top: Utils.layout.toDeviceIndependentPixels(this.effectivePaddingTop) });
+    }
+
+    [paddingRightProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ right: Utils.layout.toDeviceIndependentPixels(this.effectivePaddingRight) });
+    }
+
+    [paddingBottomProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ bottom: Utils.layout.toDeviceIndependentPixels(this.effectivePaddingBottom) });
+    }
+
+    [paddingLeftProperty.setNative](value: CoreTypes.LengthType) {
+        this._setPadding({ left: Utils.layout.toDeviceIndependentPixels(this.effectivePaddingLeft) });
     }
 
     protected _observableArrayHandler = (args) => {
@@ -614,11 +646,10 @@ export class Pager extends PagerBase {
             View.measureChild(this, childView, childView._currentWidthMeasureSpec, childView._currentHeightMeasureSpec);
         });
     }
-    iosOverflowSafeAreaEnabledLayoutHackNeeded = true;
 
     public onLayout(left: number, top: number, right: number, bottom: number) {
         super.onLayout(left, top, right, bottom);
-        if (this.iosOverflowSafeAreaEnabled) {
+        if (this.iosOverflowSafeArea) {
             const safeArea = this.getSafeAreaInsets();
             this._effectiveItemHeight += safeArea.top + safeArea.bottom;
         }
@@ -856,6 +887,7 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
         if (owner) {
             if (!owner.mIsInit) {
                 owner._updateScrollPosition();
+                collectionView.collectionViewLayout.invalidateLayout();
                 owner.mIsInit = true;
             }
             if (owner.items && indexPath.row === owner.lastIndex - owner.loadMoreCount) {
@@ -877,9 +909,7 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
 
     public collectionViewLayoutMinimumLineSpacingForSectionAtIndex(collectionView: UICollectionView, collectionViewLayout: UICollectionViewLayout, section: number): number {
         const owner = this._owner ? this._owner.get() : null;
-        if (!owner) return 0;
-        const result = owner._getSpacing();
-        return result;
+        return owner?._getSpacing() ?? 0;
     }
 
     public scrollViewWillBeginDragging(scrollView: UIScrollView): void {
@@ -1103,6 +1133,7 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
             // }
 
             // If cell is reused it has old content - remove it first.
+            const firstRender = !cell.view;
             if (!cell.view) {
                 cell.owner = new WeakRef(view);
             } else if (cell.view !== view) {
@@ -1135,8 +1166,9 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
                 // }
             }
 
-            view.iosOverflowSafeArea = owner.iosOverflowSafeArea;
-            view['iosIgnoreSafeArea'] = owner['iosIgnoreSafeArea'];
+            if (firstRender) {
+                view['iosIgnoreSafeArea'] = true;
+            }
             owner._layoutCell(view, indexPath);
             const size = owner._getSize();
             const width = Utils.layout.toDevicePixels(size.width);
@@ -1151,13 +1183,15 @@ class UICollectionViewDataSourceImpl extends NSObject implements UICollectionVie
         const template = owner && owner._getItemTemplate(indexPath.row);
         cell = collectionView.dequeueReusableCellWithReuseIdentifierForIndexPath(template.key, indexPath) || PagerCell.initWithEmptyBackground();
         cell.index = indexPath;
+        const firstRender = !cell.view;
         if (owner) {
             const size = owner._getSize();
             owner._prepareCell(cell, indexPath);
             const cellView: any = (cell as PagerCell).view;
-            cellView.iosOverflowSafeArea = owner.iosOverflowSafeArea;
-            cellView['iosIgnoreSafeArea'] = owner['iosIgnoreSafeArea'];
-            if (!owner.iosOverflowSafeAreaEnabled && cellView && cellView.isLayoutRequired) {
+            if (firstRender) {
+                cellView['iosIgnoreSafeArea'] = true;
+            }
+            if (cellView && cellView.isLayoutRequired) {
                 View.layoutChild(owner, cellView, 0, 0, Utils.layout.toDevicePixels(size.width), Utils.layout.toDevicePixels(size.height));
             }
         }
@@ -1194,7 +1228,7 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
         const owner = this._owner ? this._owner.get() : null;
         const originalLayoutAttribute = super.layoutAttributesForElementsInRect(rect);
         const visibleLayoutAttributes = NSMutableArray.alloc().init();
-        if (owner && owner.transformers) {
+        if (owner?.transformers) {
             const transformsArray = owner.transformers
                 .split(' ')
                 .map((s) => Pager.mRegisteredTransformers[s])
@@ -1210,11 +1244,10 @@ class UICollectionViewFlowLinearLayoutImpl extends UICollectionViewFlowLayout {
                     }
                 }
             }
-        } else {
-            return originalLayoutAttribute;
+            return visibleLayoutAttributes as any;
         }
 
-        return visibleLayoutAttributes as any;
+        return originalLayoutAttribute;
     }
 
     public shouldInvalidateLayoutForBoundsChange(newBounds: CGRect): boolean {

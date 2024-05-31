@@ -6,10 +6,10 @@
             "@nativescript-community/ui-pager/*": ["src/ui-pager/*"]
         }
     },
-    // "references": [
-    //     {
-    //         //Need for IDE
-    //         "path": "./tsconfig.vue3.json"
-    //     }
-    // ]
+    "references": [
+        {
+            //Need for IDE
+            "path": "./tsconfig.vue3.json"
+        }
+    ]
 }

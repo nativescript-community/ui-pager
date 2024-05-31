@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.24](https://github.com/nativescript-community/ui-pager/compare/v14.1.23...v14.1.24) (2024-05-14)
+
+### Features
+
+* padding support ([3624df8](https://github.com/nativescript-community/ui-pager/commit/3624df8330fe33cc5d8517f18ebe907af81216dd))
+
+## [14.1.23](https://github.com/nativescript-community/ui-pager/compare/v14.1.22...v14.1.23) (2024-04-17)
+
+### Bug Fixes
+
+* **angular:** Correct initialisation issue with angular ([c83c292](https://github.com/nativescript-community/ui-pager/commit/c83c2926bf92959c9eda8e4d705248841ce6c37d))
+
+## [14.1.22](https://github.com/nativescript-community/ui-pager/compare/v14.1.21...v14.1.22) (2024-03-22)
+
+### Bug Fixes
+
+* **ios:** page item not updating on change ([9a38a43](https://github.com/nativescript-community/ui-pager/commit/9a38a43e18170387f157ed173d21c02918d4c37a))
+
+## [14.1.21](https://github.com/nativescript-community/ui-pager/compare/v14.1.20...v14.1.21) (2024-03-22)
+
+### Bug Fixes
+
+* **ios:** ensure all templates are registered ([658e9c2](https://github.com/nativescript-community/ui-pager/commit/658e9c27a10cd714ab43f6674fdbf1ddd9abc8ac))
+
+## [14.1.20](https://github.com/nativescript-community/ui-pager/compare/v14.1.19...v14.1.20) (2024-03-01)
+
+### Bug Fixes
+
+* **ios:** correctly apply transformer if start index is not 0 ([59c55a8](https://github.com/nativescript-community/ui-pager/commit/59c55a87d5abd8c807a6b7a45440e783dae4ddb6))
+
 ## [14.1.19](https://github.com/nativescript-community/ui-pager/compare/v14.1.18...v14.1.19) (2024-02-15)
 
 ### Bug Fixes
