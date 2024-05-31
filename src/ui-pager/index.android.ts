@@ -67,7 +67,12 @@ export class Pager extends PagerBase {
     set views(value: any[]) {
         this._views = value;
     }
-
+    setObservableArrayInstance(value) {
+        super.setObservableArrayInstance(value);
+        if (this.indicator) {
+            this.indicator.setCount(this.items ? this.items.length : 0);
+        }
+    }
     public createNativeView() {
         const nativeView = new androidx.viewpager2.widget.ViewPager2(this._context);
         nativeView.setOffscreenPageLimit(-1);
