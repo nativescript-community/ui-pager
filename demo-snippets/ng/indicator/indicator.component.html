@@ -4,13 +4,16 @@
 </ActionBar>
 
 <StackLayout>
-    <Pager [items]="items" height="300" [selectedIndex]="selectedIndex" (selectedIndexChange)="onIndexChanged($event)"
-        indicator="fill" showIndicator="true">
-        <ng-template let-i="index" let-item="item">
-            <GridLayout [backgroundColor]="item.color">
-                <Label class="label" [text]="item.title"></Label>
-            </GridLayout>
-        </ng-template>
-    </Pager>
+    <GridLayout>
+        <Pager id="pager" [items]="items" height="300" [selectedIndex]="selectedIndex" (selectedIndexChange)="onIndexChanged($event)">
+            <ng-template let-i="index" let-item="item">
+                <GridLayout [backgroundColor]="item.color">
+                    <Label class="label" [text]="item.title"></Label>
+                </GridLayout>
+            </ng-template>
+        </Pager>
+        <PagerIndicator pagerViewId="pager" type="thin_worm" verticalAlignment="bottom" horizontalAlignment="center"
+            marginBottom="10" color="#C3AEC6" selectedColor="#77567a" />
+    </GridLayout>
     <Button text="Reset" (tap)="resetPager()"></Button>
 </StackLayout>
