@@ -17,7 +17,7 @@ export default {
     props: {
         items: {
             //@ts-ignore
-            type: Array | Object
+            type: [Array, Object]
         },
         '+alias': {
             type: String,
