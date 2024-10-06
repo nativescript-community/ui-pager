@@ -12,7 +12,7 @@ export declare class Pager extends PagerBase {
     readonly android: any;
     readonly ios: any;
 
-    scrollToIndexAnimated(index: number, animate: boolean): void;
+    scrollToIndexAnimated(index: number, animate: boolean, requestTransform?: boolean): void;
 
     eachChildView(callback: (child: View) => boolean): void;
 

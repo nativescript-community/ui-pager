@@ -424,7 +424,7 @@ export class Pager extends PagerBase {
         }
     }
 
-    public scrollToIndexAnimated(index: number, animate: boolean) {
+    public scrollToIndexAnimated(index: number, animate: boolean, requestTransform = false) {
         const nativeView = this.nativeViewProtected;
         if (nativeView) {
             nativeView.setCurrentItem(this.pagerAdapter.getIndex(index), animate);
@@ -434,6 +434,11 @@ export class Pager extends PagerBase {
                 if (this.indicator) {
                     this.indicator.setSelection(index, false);
                 }
+            }
+            if (requestTransform) {
+                setTimeout(() => {
+                    nativeView.requestTransform();
+                }, 0);
             }
         }
     }
