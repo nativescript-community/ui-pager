@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.26](https://github.com/nativescript-community/ui-pager/compare/v14.1.25...v14.1.26) (2024-10-06)
+
+### Bug Fixes
+
+* Added Angular usage to readme ([122ff41](https://github.com/nativescript-community/ui-pager/commit/122ff4113dfdc84a8d4e96f6ff3b9857571eb5e1))
+
 ## [14.1.25](https://github.com/nativescript-community/ui-pager/compare/v14.1.24...v14.1.25) (2024-05-31)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager-indicator

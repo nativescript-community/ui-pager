@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.26](https://github.com/nativescript-community/ui-pager/compare/v14.1.25...v14.1.26) (2024-10-06)
+
+### Bug Fixes
+
+* Added Angular usage to readme ([122ff41](https://github.com/nativescript-community/ui-pager/commit/122ff4113dfdc84a8d4e96f6ff3b9857571eb5e1))
+* Added registerElement import ([6eccc1a](https://github.com/nativescript-community/ui-pager/commit/6eccc1a8bfbfac1fe7c5bae48339480fc33375f2))
+* **android:** reqestTransform option for scrollToIndexAnimated ([691af12](https://github.com/nativescript-community/ui-pager/commit/691af1277bbe339956be72c5c6ef7965ec40a590))
+* Updated Angular snippet ([d4b0b12](https://github.com/nativescript-community/ui-pager/commit/d4b0b123ed7f6cbc3ab95105fc2533ba30626d5b))
+
 ## [14.1.25](https://github.com/nativescript-community/ui-pager/compare/v14.1.24...v14.1.25) (2024-05-31)
 
 ### Bug Fixes
