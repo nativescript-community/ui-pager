@@ -424,9 +424,10 @@ export class Pager extends PagerBase {
         }
     }
 
-    public scrollToIndexAnimated(index: number, animate: boolean, requestTransform = false) {
+    public scrollToIndexAnimated(value: number, animate: boolean, requestTransform = false) {
         const nativeView = this.nativeViewProtected;
         if (nativeView) {
+            const index = this.circularMode ? value + 1 : value;
             nativeView.setCurrentItem(this.pagerAdapter.getIndex(index), animate);
             if (!animate) {
                 // without animate we wont go through the delegate
@@ -463,7 +464,7 @@ export class Pager extends PagerBase {
     }
 
     getViewForItemAtIndex(index: number) {
-        return this.getChildView(index);
+        return this.getChildView(this.circularMode ? index + 1 : index);
     }
     onUnloaded() {
         // this._android.setAdapter(null);
@@ -718,12 +719,12 @@ function initPagerChangeCallback() {
                         object: owner
                     });
                     owner.lastEvent = 1;
-                else if ((owner.lastEvent === 2 || owner.lastEvent === 0) && state === 0) {
+                } else if (owner.lastEvent === 1 && state === 1) {
                     owner.notify({
                         eventName: Pager.swipeOverEvent,
                         object: owner
                     });
-                    owner.lastEvent = 0;
+                    owner.lastEvent = 1;
                 } else if (owner.lastEvent === 1 && state === 2) {
                     owner.notify({
                         eventName: Pager.swipeEndEvent,
