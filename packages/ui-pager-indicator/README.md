@@ -44,8 +44,10 @@
 * [Installation](#installation)
 * [API](#api)
 	* [Properties](#properties)
-* [Usage in Vue](#usage-in-vue)
+* [Usage in Angular](#usage-in-angular)
 	* [Examples](#examples)
+* [Usage in Vue](#usage-in-vue)
+	* [Examples](#examples-1)
 
 
 [](#installation)
@@ -72,6 +74,31 @@ Run the following command from the root of your project:
 PagerIndicator add page control for Pager or other Paging Views.
 ```
 
+
+[](#usage-in-angular)
+
+## Usage in Angular
+
+
+If you are planning to use an indicator, add the following to your module:
+
+```typescript
+import { registerElement } from "@nativescript/angular";
+import { PagerIndicator } from "@nativescript-community/ui-pager-indicator";
+registerElement("PagerIndicator", () => PagerIndicator)
+```
+
+Then in your template:
+```html
+<Pager id="pager" [items]="items"
+    ...
+</Pager>
+<PagerIndicator pagerViewId="pager" />
+```
+
+### Examples
+- [Indicator Pager](demo-snippets/ng/indicator)
+  - A simple pager example using dynamic content and indicator.
 
 
 [](#usage-in-vue)
