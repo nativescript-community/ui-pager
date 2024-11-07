@@ -159,7 +159,7 @@ export class Pager extends PagerBase {
 
     getChildView(index: number): View {
         if (this._childrenViews) {
-            return this._childrenViews[index].view;
+            return this._childrenViews[index]?.view;
         }
         return this.enumerateViewHolders<View>((v) => (v.getAdapterPosition() === index ? v.view : undefined));
     }

@@ -131,7 +131,7 @@ export class Pager extends PagerBase {
 
     getChildView(index: number): View {
         if (this._childrenViews) {
-            return this._childrenViews[index].view;
+            return this._childrenViews[index]?.view;
         }
         let result: View;
         if (this.nativeViewProtected) {

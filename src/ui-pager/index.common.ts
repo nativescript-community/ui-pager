@@ -194,7 +194,7 @@ export abstract class PagerBase extends View implements AddChildFromBuilder {
     }
 
     getChildView(index: number): View {
-        return this._childrenViews && this._childrenViews[index].view;
+        return this._childrenViews && this._childrenViews[index]?.view;
     }
     _removeView(view: ViewBase) {
         // inside the recyclerview we wrap the PagerItem in a StackLayout
