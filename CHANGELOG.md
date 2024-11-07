@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.28](https://github.com/nativescript-community/ui-pager/compare/v14.1.27...v14.1.28) (2024-11-07)
+
+### Bug Fixes
+
+* prevent error if `getChildView` is called with index out of bounds ([5c15c25](https://github.com/nativescript-community/ui-pager/commit/5c15c25c6451243497fbaffd810835a3b4034308))
+
 ## [14.1.27](https://github.com/nativescript-community/ui-pager/compare/v14.1.26...v14.1.27) (2024-10-08)
 
 ### Bug Fixes
