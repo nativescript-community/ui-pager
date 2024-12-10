@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.29](https://github.com/nativescript-community/ui-pager/compare/v14.1.28...v14.1.29) (2024-12-10)
+
+### Bug Fixes
+
+* **ios:** circularMode fixes ([efeef7f](https://github.com/nativescript-community/ui-pager/commit/efeef7fbe57c4fe3077c1cd29bc63120202b467e))
+
 ## [14.1.28](https://github.com/nativescript-community/ui-pager/compare/v14.1.27...v14.1.28) (2024-11-07)
 
 ### Bug Fixes
