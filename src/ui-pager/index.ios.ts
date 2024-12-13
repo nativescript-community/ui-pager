@@ -442,11 +442,29 @@ export class Pager extends PagerBase {
         if (this._childrenCount === 0) {
             return;
         }
+
         const maxMinIndex = Math.min(Math.max(0, index), this._childrenCount - 1);
-        const frame = this.page && this.page.frame;
-        if (!this.isLoaded || (this.page && frame && (frame._executingContext?.entry.resolvedPage !== this.page || frame.currentPage !== this.page))) {
+        let isNativeValueChanged: boolean = false;
+        
+        if (!this.isLoaded) {
+            isNativeValueChanged = true;
+        } else {
+            const page = this.page;
+            const frame = page && page.frame;
+
+            if (frame) {
+                if (frame._executingContext) {
+                    isNativeValueChanged = frame._executingContext.entry.resolvedPage !== page;
+                } else  {
+                    isNativeValueChanged = frame.currentPage !== page;
+                }
+            }
+        }
+
+        if (isNativeValueChanged) {
             return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
         }
+
         // dispatch_async(main_queue, () => {
         if (this.mDataSource.collectionViewNumberOfItemsInSection(this.nativeViewProtected, 0) > maxMinIndex) {
             // when we have custom layouts (they don't occupy 100% of the parent) and we use custom transformers we need to call setContentOffsetAnimated to take size into account.
