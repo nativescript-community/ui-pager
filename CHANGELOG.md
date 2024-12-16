@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.31](https://github.com/nativescript-community/ui-pager/compare/v14.1.30...v14.1.31) (2024-12-16)
+
+### Bug Fixes
+
+* **android:** `scrollToIndexAnimated` fix for circular ([8aa8cb6](https://github.com/nativescript-community/ui-pager/commit/8aa8cb68069f7e2527b70e71bad6303d544032d8))
+
 ## [14.1.30](https://github.com/nativescript-community/ui-pager/compare/v14.1.29...v14.1.30) (2024-12-14)
 
 ### Bug Fixes
