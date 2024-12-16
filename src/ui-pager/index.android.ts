@@ -428,7 +428,7 @@ export class Pager extends PagerBase {
         const nativeView = this.nativeViewProtected;
         if (nativeView) {
             const index = this.circularMode ? value + 1 : value;
-            nativeView.setCurrentItem(this.pagerAdapter.getIndex(index), animate);
+            nativeView.setCurrentItem(index, animate);
             if (!animate) {
                 // without animate we wont go through the delegate
                 selectedIndexProperty.nativeValueChange(this, index);
