@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.30](https://github.com/nativescript-community/ui-pager/compare/v14.1.29...v14.1.30) (2024-12-14)
+
+### Bug Fixes
+
+* **ui-pager:** Navigation between items stopped working ([ce1cf8a](https://github.com/nativescript-community/ui-pager/commit/ce1cf8a53ce49d7d5f345c786ff4f326693691d9))
+
+## [14.1.29](https://github.com/nativescript-community/ui-pager/compare/v14.1.28...v14.1.29) (2024-12-10)
+
+### Bug Fixes
+
+* **ios:** circularMode fixes ([efeef7f](https://github.com/nativescript-community/ui-pager/commit/efeef7fbe57c4fe3077c1cd29bc63120202b467e))
+
 ## [14.1.28](https://github.com/nativescript-community/ui-pager/compare/v14.1.27...v14.1.28) (2024-11-07)
 
 ### Bug Fixes

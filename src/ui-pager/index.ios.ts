@@ -242,18 +242,11 @@ export class Pager extends PagerBase {
     }
 
     get lastIndex(): number {
-        if (this.items && this.items.length === 0) {
-            return 0;
-        }
-        return this.circularMode ? this.itemCount - 3 : this.itemCount - 1;
+        return Math.max(0, this.circularMode ? this.itemCount - 3 : this.itemCount - 1);
     }
 
     get firstDummy(): number {
-        const count = this.itemCount;
-        if (count === 0) {
-            return 0;
-        }
-        return this.itemCount - 1;
+        return Math.max(0, this.itemCount - 1);
     }
 
     get lastDummy(): number {
@@ -261,7 +254,7 @@ export class Pager extends PagerBase {
     }
 
     public get _childrenCount() {
-        return this.items?.length || this._childrenViews?.length || 0;
+        return this.items?.length ?? this._childrenViews?.length ?? 0;
     }
 
     public itemTemplateUpdated(oldData: any, newData: any): void {}
@@ -449,20 +442,29 @@ export class Pager extends PagerBase {
         if (this._childrenCount === 0) {
             return;
         }
+
         const maxMinIndex = Math.min(Math.max(0, index), this._childrenCount - 1);
+        let isNativeValueChanged: boolean = false;
+        
         if (!this.isLoaded) {
-            return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
-        }
-        const frame = this.page && this.page.frame;
-        if (this.page && frame) {
-            if (frame._executingContext) {
-                if (frame._executingContext.entry.resolvedPage !== this.page) {
-                    return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
+            isNativeValueChanged = true;
+        } else {
+            const page = this.page;
+            const frame = page && page.frame;
+
+            if (frame) {
+                if (frame._executingContext) {
+                    isNativeValueChanged = frame._executingContext.entry.resolvedPage !== page;
+                } else  {
+                    isNativeValueChanged = frame.currentPage !== page;
                 }
-            } else if (frame.currentPage !== this.page) {
-                return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
             }
         }
+
+        if (isNativeValueChanged) {
+            return selectedIndexProperty.nativeValueChange(this, maxMinIndex);
+        }
+
         // dispatch_async(main_queue, () => {
         if (this.mDataSource.collectionViewNumberOfItemsInSection(this.nativeViewProtected, 0) > maxMinIndex) {
             // when we have custom layouts (they don't occupy 100% of the parent) and we use custom transformers we need to call setContentOffsetAnimated to take size into account.
@@ -480,7 +482,7 @@ export class Pager extends PagerBase {
     }
 
     @profile
-    public refresh() {
+    public refresh(delayUpdateScrollPosition = false) {
         if (!this.isLoaded || !this.nativeView) {
             this._isDataDirty = true;
             return;
@@ -500,7 +502,13 @@ export class Pager extends PagerBase {
         // dispatch_async(main_queue, () => {
         this.nativeViewProtected.reloadData();
         this.nativeViewProtected.collectionViewLayout.invalidateLayout();
-        this._updateScrollPosition();
+        if (delayUpdateScrollPosition) {
+            setTimeout(() => {
+                this._updateScrollPosition();
+            }, 0);
+        } else {
+            this._updateScrollPosition();
+        }
         this._initAutoPlay(this.autoPlay);
         // });
 
@@ -675,7 +683,7 @@ export class Pager extends PagerBase {
         // this refresh is just to handle size change
         const layoutKey = this._effectiveItemWidth + '_' + this._effectiveItemHeight;
         if (this.mLastLayoutKey !== layoutKey) {
-            this.refresh();
+            this.refresh(true);
         }
     }
 
@@ -991,12 +999,12 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
                     const contentSize = scrollView.contentSize;
                     const frameSize = scrollView.frame.size;
                     if (contentOffset.x <= 0) {
-                        scrollView.contentOffset = CGPointMake(contentSize.width - frameSize.width * 2, 0);
+                        scrollView.contentOffset = CGPointMake(contentSize.width - frameSize.width * 2 + 2 * owner._getPeaking(), 0);
                         if (owner.indicator) {
                             owner.indicator.setSelection(owner.lastIndex, false);
                         }
                     } else if (contentOffset.x + frameSize.width >= contentSize.width) {
-                        scrollView.contentOffset = CGPointMake(frameSize.width, 0);
+                        scrollView.contentOffset = CGPointMake(frameSize.width - 2 * owner._getPeaking(), 0);
                         if (owner.indicator) {
                             owner.indicator.setSelection(0, false);
                         }
