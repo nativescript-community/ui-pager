@@ -431,9 +431,9 @@ export class Pager extends PagerBase {
             nativeView.setCurrentItem(index, animate);
             if (!animate) {
                 // without animate we wont go through the delegate
-                selectedIndexProperty.nativeValueChange(this, index);
+                selectedIndexProperty.nativeValueChange(this, value);
                 if (this.indicator) {
-                    this.indicator.setSelection(index, false);
+                    this.indicator.setSelection(value, false);
                 }
             }
             if (requestTransform) {
