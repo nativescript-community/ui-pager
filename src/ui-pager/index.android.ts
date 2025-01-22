@@ -161,7 +161,12 @@ export class Pager extends PagerBase {
         if (this._childrenViews) {
             return this._childrenViews[index]?.view;
         }
-        return this.enumerateViewHolders<View>((v) => (v.getAdapterPosition() === index ? v.view : undefined));
+        return this.enumerateViewHolders<View>((v) => {
+            if (v.getAdapterPosition() === index) {
+                return v.view[PLACEHOLDER] === true ? (v.view as ContentView).content : v.view;
+            }
+            return undefined;
+        });
     }
 
     protected _removeChildView(index: number) {
