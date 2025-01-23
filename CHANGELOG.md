@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.33](https://github.com/nativescript-community/ui-pager/compare/v14.1.32...v14.1.33) (2025-01-23)
+
+### Bug Fixes
+
+* **ui-pager:** Method getChildView returns placeholder ([5c262ca](https://github.com/nativescript-community/ui-pager/commit/5c262cae94dc3ed0dca7ee605dc9f9b45033d228))
+
 ## [14.1.32](https://github.com/nativescript-community/ui-pager/compare/v14.1.31...v14.1.32) (2024-12-17)
 
 ### Bug Fixes
