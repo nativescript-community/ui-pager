@@ -280,8 +280,11 @@ export class Pager extends PagerBase {
 
     _updateScrollPosition() {
         const view = this.nativeViewProtected;
+        if(!view){
+            return;
+        }
         const size = this.orientation === 'vertical' ? view.contentSize.height : view.contentSize.width;
-        if (!view || size === 0) {
+        if (size === 0) {
             return;
         }
         this.scrollToIndexAnimated(this.selectedIndex, false);
