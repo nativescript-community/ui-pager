@@ -57,11 +57,28 @@ export abstract class PagerIndicatorBase extends View {
         super.disposeNativeView();
     }
 
+    findPagerView() {
+        if (this.pagerViewId) {
+            let found = false;
+            let parent = this.parent;
+            const page = this.getPage();
+            while (!found && parent && parent !== page) {
+                const pager = parent.getViewById<View>(this.pagerViewId);
+                if (pager) {
+                    this.setPagerView(pager);
+                    found = true;
+                } else {
+                    parent = parent.parent;
+                }
+            }
+        } else {
+            this.setPagerView(null);
+        }
+    }
+
     onLoaded() {
         super.onLoaded();
-        if (this.pagerViewId) {
-            this.setPagerView(this.getPage().getViewById(this.pagerViewId));
-        }
+        this.findPagerView();
     }
 
     setPagerView(view: View) {
@@ -78,9 +95,7 @@ export abstract class PagerIndicatorBase extends View {
     }
 
     [pagerViewIdProperty.setNative](value) {
-        if (this.page) {
-            this.setPagerView(this.page?.getViewById(value));
-        }
+        this.findPagerView();
     }
 
     abstract setSelection(index: number, animated?: boolean);
