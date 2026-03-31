@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.1.39](https://github.com/nativescript-community/ui-pager/compare/v14.1.34...v14.1.39) (2026-03-31)
+
+**Note:** Version bump only for package @nativescript-community/ui-pager-indicator
+
 ## [14.1.34](https://github.com/nativescript-community/ui-pager/compare/v14.1.33...v14.1.34) (2025-09-12)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager-indicator
