@@ -16,7 +16,8 @@ export { PagerItemDirective, TemplatedItemsComponent, TemplateKeyDirective } fro
             provide: TEMPLATED_ITEMS_COMPONENT,
             useExisting: forwardRef(() => PagerComponent)
         }
-    ]
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
 })
 export class PagerComponent extends TemplatedItemsComponent {
     public get nativeElement(): Pager {
@@ -29,7 +30,7 @@ export class PagerComponent extends TemplatedItemsComponent {
 }
 
 @NgModule({
-    declarations: [PagerComponent, TemplateKeyDirective, PagerItemDirective],
+    imports: [PagerComponent, TemplateKeyDirective, PagerItemDirective],
     exports: [PagerComponent, TemplateKeyDirective, PagerItemDirective],
     schemas: [NO_ERRORS_SCHEMA]
 })
