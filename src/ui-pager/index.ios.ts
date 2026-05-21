@@ -452,16 +452,18 @@ export class Pager extends PagerBase {
         if (!this.isLoaded) {
             isNativeValueChanged = true;
         } else {
-            const page = this.page;
-            const frame = page && page.frame;
+            // this would fail if the pager is shown inside a modal because
+            // the modal page would have the top frame (outside the modal) without being the current
+            // const page = this.page;
+            // const frame = page && page.frame;
 
-            if (frame) {
-                if (frame._executingContext) {
-                    isNativeValueChanged = frame._executingContext.entry.resolvedPage !== page;
-                } else  {
-                    isNativeValueChanged = frame.currentPage !== page;
-                }
-            }
+            // if (frame) {
+            //     if (frame._executingContext) {
+            //         isNativeValueChanged = frame._executingContext.entry.resolvedPage !== page;
+            //     } else  {
+            //         isNativeValueChanged = frame.currentPage !== page;
+            //     }
+            // }
         }
 
         if (isNativeValueChanged) {
