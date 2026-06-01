@@ -181,10 +181,10 @@ export class Pager extends PagerBase {
     }
     onLayoutChange(args: any) {
         if (this.peaking) {
-            this[peakingProperty.setNative](this.peaking);
+            this[peakingProperty.setNative](this.peaking as any);
         }
         if (this.spacing) {
-            this[spacingProperty.setNative](this.spacing);
+            this[spacingProperty.setNative](this.spacing as any);
         }
         // this._setTransformers(this.transformers ? this.transformers : '');
         this._updateScrollPosition();
@@ -250,6 +250,10 @@ export class Pager extends PagerBase {
 
     protected _observableArrayHandler = (args) => {
         if (this.pagerAdapter) {
+            const recyclerView = (this.nativeViewProtected.getChildAt(0)) as androidx.recyclerview.widget.RecyclerView;
+            if (recyclerView.isComputingLayout()) {
+                return;
+            }
             switch (args.action) {
                 case ChangeType.Add:
                     this.pagerAdapter.notifyItemRangeInserted(args.index, args.addedCount);
