@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { Pager } from '@nativescript-community/ui-pager';
+import type { Pager } from '@nativescript-community/ui-pager';
 import { ref } from 'nativescript-vue';
 
 const items = ref([
