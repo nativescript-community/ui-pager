@@ -32,10 +32,10 @@ const items = ref([
     { title: 'Fourth', color: '#9b59b6' }
 ]);
 const selectedIndex = ref(0);
-const pager = ref<{ nativeView: Pager }>(null);
+const pager = ref<{ nativeView: Pager } | null>(null);
 
 function moveTo(index: number) {
-    pager.value.nativeView.scrollToIndexAnimated(index, true);
+    pager.value?.nativeView.scrollToIndexAnimated(index, true);
 }
 </script>
 

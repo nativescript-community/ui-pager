@@ -39,6 +39,13 @@ export const Pager = defineComponent({
 
         const pager = ref<any & { nativeView: NSPager }>(null);
 
+        ctx.expose({
+            /** The native Pager, for scrollToIndexAnimated and friends. */
+            get nativeView(): NSPager {
+                return pager.value?.nativeView;
+            }
+        });
+
         function refresh() {
             // ObservableArray notifies the native view of changes itself
             if (props.items instanceof ObservableArray) {
