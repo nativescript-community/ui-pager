@@ -4160,11 +4160,11 @@ __metadata:
 
 "@nativescript-community/template-snippet@file:demo-snippets::locator=root-workspace-0b6124%40workspace%3A.":
   version: 0.0.1
-  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=e09ff5&locator=root-workspace-0b6124%40workspace%3A."
+  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=da7584&locator=root-workspace-0b6124%40workspace%3A."
   dependencies:
     "@nativescript-community/ui-pager": "npm:*"
     "@nativescript-community/ui-pager-indicator": "npm:*"
-  checksum: 10/ad4964b6fd4bef8658be6d4026d3c77921e5d5d15a536a4ee91c4e3ff23935b1b3376216931d61269d53eb1585a80643830a5c31123b63b4c176ccc5500f54c6
+  checksum: 10/1676162f3bfa84af39354efa64934e39b9786d10db4992149a55ca32c664ca40f44c8f438934ecabc59b817ed0f78bda132a9e0815a613c65477af7a5fbb6c1b
   languageName: node
   linkType: hard
 
