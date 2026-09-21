@@ -470,7 +470,7 @@ export const itemTemplatesProperty = new Property<PagerBase, string | KeyedTempl
     affectsLayout: true,
     valueConverter: (value) => {
         if (typeof value === 'string') {
-            return Builder.parseMultipleTemplates(value);
+            return Builder.parseMultipleTemplates(value, undefined);
         }
         return value;
     }
