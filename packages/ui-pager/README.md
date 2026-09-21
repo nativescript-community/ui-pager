@@ -52,6 +52,8 @@
 	* [Examples](#examples-2)
 * [Usage in Vue](#usage-in-vue)
 	* [Examples](#examples-3)
+* [Usage in Vue 3](#usage-in-vue-3)
+	* [Examples](#examples-4)
 * [Custom Transformer](#custom-transformer)
 
 
@@ -178,6 +180,48 @@ Vue.use(Pager);
 - [Basic Pager](demo-snippets/vue/BasicPager.vue)
   - A simple pager example using dynamic content.
 
+
+
+[](#usage-in-vue-3)
+
+## Usage in Vue 3
+
+Register the plugin in your `app.ts`.
+
+```typescript
+import Pager from '@nativescript-community/ui-pager/vue3';
+
+const app = createApp(YourComponent);
+app.use(Pager);
+app.start();
+```
+
+Pages come either from static `PagerItem` children or from `items` rendered through slot templates:
+
+```html
+<Pager peaking="30">
+    <PagerItem backgroundColor="#e67e22"><Label text="First" /></PagerItem>
+    <PagerItem backgroundColor="#3498db"><Label text="Second" /></PagerItem>
+</Pager>
+
+<Pager v-model:selectedIndex="selectedIndex" :items="items" :itemTemplateSelector="selector">
+    <template #default="{ item, index }">
+        <Label :text="item.title" />
+    </template>
+    <template #cover="{ item }">
+        <Image :src="item.image" />
+    </template>
+</Pager>
+```
+
+Each named slot becomes a template; `itemTemplateSelector(item, index, items)` picks the slot name. The slot scope exposes the item as `item` (rename it with `alias`), plus `index`, `$index` (rename it with `indexAlias`), `even` and `odd`.
+
+### Examples
+
+- [Static Pager](demo-snippets/vue3/StaticPager.vue)
+  - A simple pager example using static content.
+- [Basic Pager](demo-snippets/vue3/BasicPager.vue)
+  - A simple pager example using dynamic content.
 
 
 [](#custom-transformer)
