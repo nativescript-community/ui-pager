@@ -1,0 +1,12 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "../../src/ui-pager",
+        "outDir": "./",
+        "paths": {
+            "nativescript-vue": ["./node_modules/nativescript-vue3"]
+        }
+    },
+    "include": ["../../src/ui-pager/vue3/**/*"]
+}

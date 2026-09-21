@@ -32,6 +32,9 @@
         "demo.vue.android": "cd ./demo-vue && ns run android --no-hmr --env.watchNodeModules",
         "demo.vue.clean": "cd ./demo-vue && ns clean",
         "demo.vue.ios": "cd ./demo-vue && ns run ios --no-hmr --env.watchNodeModules",
+        "demo.vue3.android": "cd ./demo-vue3 && ns run android --no-hmr --env.watchNodeModules",
+        "demo.vue3.clean": "cd ./demo-vue3 && ns clean",
+        "demo.vue3.ios": "cd ./demo-vue3 && ns run ios --no-hmr --env.watchNodeModules",
         "postinstall": "npm run setup",
         "publish": "npm run setup && npm run clean && npm run build.all && npm run readme && npm run doc && npm run commit_readme_doc_changes && lerna publish",
         "readme": "lerna run readme && node ./tools/readme.js",
@@ -69,6 +72,8 @@
             "demo.svelte.ios": "Runs the Svelte demo on iOS.",
             "demo.vue.android": "Runs the Vue demo on Android.",
             "demo.vue.ios": "Runs the Vue demo on iOS.",
+            "demo.vue3.android": "Runs the Vue 3 demo on Android.",
+            "demo.vue3.ios": "Runs the Vue 3 demo on iOS.",
             "watch": "Watch for changes in the plugin source and re-build."
         }
     },
@@ -82,5 +87,8 @@
         "packages/*",
         "demo*"
     ],
-    "packageManager": "yarn@4.10.2"
+    "packageManager": "yarn@4.10.2",
+    "resolutions": {
+        "nativescript-vue@3.0.1": "npm:nativescript-vue@3.1.2"
+    }
 }
