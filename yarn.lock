@@ -31,6 +31,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@akylas/nativescript@npm:8.9.15":
+  version: 8.9.15
+  resolution: "@akylas/nativescript@npm:8.9.15"
+  dependencies:
+    "@csstools/css-calc": "npm:~2.1.2"
+    "@csstools/css-color-parser": "npm:^3.0.8"
+    "@csstools/css-parser-algorithms": "npm:^3.0.4"
+    "@csstools/css-tokenizer": "npm:^3.0.3"
+    "@nativescript/hook": "npm:~2.0.0"
+    acorn: "npm:^8.7.0"
+    css-tree: "npm:^1.1.2"
+    css-what: "npm:^6.1.0"
+    emoji-regex: "npm:^10.3.0"
+    reduce-css-calc: "npm:^2.1.8"
+    tslib: "npm:^2.6.3"
+  checksum: 10/9c0d29807984240a587fc177c12aa0ac13ebf551b84843a18bd90f2037c0931f10b2c51b1109cdada4ed112d4bb8d9a2b608cbcc4e416bb292bfce48fb50a29b
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:2.3.0":
   version: 2.3.0
   resolution: "@ampproject/remapping@npm:2.3.0"
@@ -4135,11 +4154,11 @@ __metadata:
 
 "@nativescript-community/template-snippet@file:demo-snippets::locator=root-workspace-0b6124%40workspace%3A.":
   version: 0.0.1
-  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=da7584&locator=root-workspace-0b6124%40workspace%3A."
+  resolution: "@nativescript-community/template-snippet@file:demo-snippets#demo-snippets::hash=36cb05&locator=root-workspace-0b6124%40workspace%3A."
   dependencies:
     "@nativescript-community/ui-pager": "npm:*"
     "@nativescript-community/ui-pager-indicator": "npm:*"
-  checksum: 10/1676162f3bfa84af39354efa64934e39b9786d10db4992149a55ca32c664ca40f44c8f438934ecabc59b817ed0f78bda132a9e0815a613c65477af7a5fbb6c1b
+  checksum: 10/85fa8bfe57827d17909ba4726e78ab0b20d158437743e03ae18217d11cce21754894604bc829283ec3592e981574bf3ba6a4aec503ff212f6cc350cc0c58c636
   languageName: node
   linkType: hard
 
@@ -4151,6 +4170,13 @@ __metadata:
     "@nativescript-community/ui-pager-indicator": "npm:*"
   languageName: unknown
   linkType: soft
+
+"@nativescript-community/ui-material-core@npm:^7.3.2":
+  version: 7.3.2
+  resolution: "@nativescript-community/ui-material-core@npm:7.3.2"
+  checksum: 10/83b734b779054599a92489aad89fa29a4dbb7954e3119e1995829237a4696d7316eb86d6d958be8583e2c91bb07bef005cee69b228d92b7e05af3ea7a5aa60b9
+  languageName: node
+  linkType: hard
 
 "@nativescript-community/ui-pager-indicator@npm:*, @nativescript-community/ui-pager-indicator@workspace:packages/ui-pager-indicator":
   version: 0.0.0-use.local
@@ -4301,6 +4327,7 @@ __metadata:
     nativescript-vue-template-compiler: "npm:2.9.3"
     typescript: "npm:5.9.3"
     vue: "npm:2.7.16"
+    vue-property-decorator: "npm:8.5.1"
   languageName: unknown
   linkType: soft
 
@@ -4317,7 +4344,7 @@ __metadata:
     "@nativescript/types": "npm:8.9.1"
     "@nativescript/webpack": "npm:5.0.24"
     "@types/node": "npm:24.7.0"
-    nativescript-vue: "npm:3.0.1"
+    nativescript-vue: "npm:3.1.2"
     typescript: "npm:5.9.3"
     vue: "npm:3.5.22"
   languageName: unknown
@@ -4434,9 +4461,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nativescript/webpack@npm:5.0.29":
-  version: 5.0.29
-  resolution: "@nativescript/webpack@npm:5.0.29"
+"@nativescript/webpack@npm:5.0.38":
+  version: 5.0.38
+  resolution: "@nativescript/webpack@npm:5.0.38"
   dependencies:
     "@babel/core": "npm:^7.0.0"
     "@pmmmwh/react-refresh-webpack-plugin": "npm:~0.6.1"
@@ -4453,8 +4480,6 @@ __metadata:
     dotenv-webpack: "npm:^8.0.0"
     fork-ts-checker-webpack-plugin: "npm:^9.0.0"
     loader-utils: "npm:^2.0.0 || ^3.0.0"
-    lodash.get: "npm:^4.0.0"
-    micromatch: "npm:^4.0.0"
     postcss: "npm:^8.0.0"
     postcss-import: "npm:^16.0.0"
     postcss-loader: "npm:^8.0.0"
@@ -4482,7 +4507,7 @@ __metadata:
       optional: true
   bin:
     nativescript-webpack: dist/bin/index.js
-  checksum: 10/743f789d55b816966f5a3df722f8464e7eccb82d658d9113e7358982ed48829fa74b7961945b165c5238ec957d4ca3b98cc15db9078e0507f03741a6874bdd7b
+  checksum: 10/205f873be07100f32a5a65557dc7d9b0d7c29f9313e50e2e099c49b011e63cc1040e7f4c4c475f190aad1fd9a5568d6612256da8964ae68991d1f0aea373359a
   languageName: node
   linkType: hard
 
@@ -9557,15 +9582,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "demo-svelte@workspace:demo-svelte"
   dependencies:
-    "@akylas/nativescript": "npm:8.9.10"
+    "@akylas/nativescript": "npm:8.9.15"
     "@nativescript-community/svelte-native": "npm:1.0.32"
     "@nativescript-community/template-snippet": "npm:*"
+    "@nativescript-community/ui-material-core": "npm:^7.3.2"
     "@nativescript/android": "npm:8.9.2"
-    "@nativescript/core": "npm:8.9.9"
-    "@nativescript/ios": "npm:8.9.4"
+    "@nativescript/core": "npm:9.0.20"
+    "@nativescript/ios": "npm:8.9.5"
     "@nativescript/theme": "npm:3.1.0"
     "@nativescript/types": "npm:8.9.1"
-    "@nativescript/webpack": "npm:5.0.29"
+    "@nativescript/webpack": "npm:5.0.38"
     svelte: "npm:4.2.20"
     svelte-loader: "npm:3.2.4"
     svelte-native-preprocessor: "npm:1.0.0"
@@ -14961,7 +14987,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nativescript-vue3@npm:nativescript-vue@3.1.2, nativescript-vue@npm:nativescript-vue@3.1.2":
+"nativescript-vue3@npm:nativescript-vue@3.1.2, nativescript-vue@npm:3.1.2":
   version: 3.1.2
   resolution: "nativescript-vue@npm:3.1.2"
   dependencies:
@@ -20157,6 +20183,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue-class-component@npm:^7.1.0":
+  version: 7.2.6
+  resolution: "vue-class-component@npm:7.2.6"
+  peerDependencies:
+    vue: ^2.0.0
+  checksum: 10/d0ff279fa5d22f15b291fc07cabb116a4a3f748070a478cdd42f73bd9ceb6d46f0dc86bb2bad2ac408d4f11c53290207268d6cfdf3d27039ff34de02adfd5a8f
+  languageName: node
+  linkType: hard
+
 "vue-eslint-parser@npm:10.2.0":
   version: 10.2.0
   resolution: "vue-eslint-parser@npm:10.2.0"
@@ -20216,6 +20251,17 @@ __metadata:
     vue:
       optional: true
   checksum: 10/88760fe6a56fbf7d9422caea98f49613012e6a656d31c959b6bdeb84ff1075a5000798928048aa29b0c6b0734d6aba8eea03daf5f356233ec2146de1b849cea1
+  languageName: node
+  linkType: hard
+
+"vue-property-decorator@npm:8.5.1":
+  version: 8.5.1
+  resolution: "vue-property-decorator@npm:8.5.1"
+  dependencies:
+    vue-class-component: "npm:^7.1.0"
+  peerDependencies:
+    vue: "*"
+  checksum: 10/f294f7880c77a2b2691c270f8eb7babe30352500a38a7fca3b15ab0d05692b33a27fb0d8be8af514f918f006a3f3ecaf49176891a402e3c1e2631a9d0d3cb1b1
   languageName: node
   linkType: hard
 
