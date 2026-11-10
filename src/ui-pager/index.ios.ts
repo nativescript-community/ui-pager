@@ -422,6 +422,10 @@ export class Pager extends PagerBase {
                         }
                     },
                     () => {
+                        // updating an item moves no page: the first visible item is the one of a neighbor when the pager peeks
+                        if (args.action === ChangeType.Update) {
+                            return;
+                        }
                         if (collectionView.indexPathsForVisibleItems.count > 0) {
                             const currentIndex = collectionView.indexPathsForVisibleItems.objectAtIndex(0).item;
                             selectedIndexProperty.nativeValueChange(this, this.getPosition(currentIndex));
