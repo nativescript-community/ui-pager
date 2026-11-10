@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.2.0](https://github.com/nativescript-community/ui-pager/compare/v14.1.42...v14.2.0) (2026-11-10)
+
+### Features
+
+* **vue3:** Pager component for nativescript-vue 3 ([13c85b0](https://github.com/nativescript-community/ui-pager/commit/13c85b077499956805ac715532adb8c121509c2e)), closes [nativescript-vue/nativescript-vue#1170](https://github.com/nativescript-vue/nativescript-vue/issues/1170)
+
 ## [14.1.42](https://github.com/nativescript-community/ui-pager/compare/v14.1.41...v14.1.42) (2026-06-01)
 
 **Note:** Version bump only for package @nativescript-community/ui-pager

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.2.0](https://github.com/nativescript-community/ui-pager/compare/v14.1.42...v14.2.0) (2026-11-10)
+
+### Features
+
+* **vue3:** expose the native Pager on the component ref ([c17d66f](https://github.com/nativescript-community/ui-pager/commit/c17d66f9c71f8f9363f49a3ec6a4a4d5cfafd3e9))
+* **vue3:** Pager component for nativescript-vue 3 ([13c85b0](https://github.com/nativescript-community/ui-pager/commit/13c85b077499956805ac715532adb8c121509c2e)), closes [nativescript-vue/nativescript-vue#1170](https://github.com/nativescript-vue/nativescript-vue/issues/1170)
+
+### Bug Fixes
+
+* **demo:** type-only import of Pager in the Vue 3 snippet ([e25181f](https://github.com/nativescript-community/ui-pager/commit/e25181f059d4656692dff6e3a1ed4da0a1f173fe))
+* **ui-pager:** keep the selected index when an item is updated on iOS ([63c58cc](https://github.com/nativescript-community/ui-pager/commit/63c58cc373cd551032c399c160454ad865991b64))
+
 ## [14.1.42](https://github.com/nativescript-community/ui-pager/compare/v14.1.41...v14.1.42) (2026-06-01)
 
 ### Bug Fixes
