@@ -209,6 +209,9 @@ Vue.use(Pager);
 
 [](#usage-in-vue-3)
 
+
+[](#usage-in-vue-3)
+
 ## Usage in Vue 3
 
 Register the plugin in your `app.ts`.
