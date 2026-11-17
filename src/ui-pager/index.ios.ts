@@ -901,6 +901,15 @@ class UICollectionDelegateImpl extends NSObject implements UICollectionViewDeleg
         const owner = this._owner && this._owner.get();
         if (!owner) return CGSizeZero;
         const size = owner._getSize();
+        // the native view is resized (rotation) before our layout pass updates the effective size:
+        // an item bigger than the room across the scroll direction is invalid for UIKit, which logs it (and iOS 27 crashes while logging)
+        const bounds = collectionView.bounds.size;
+        const inset = collectionView.adjustedContentInset;
+        if (owner.orientation === 'vertical') {
+            size.width = Math.max(0, Math.min(size.width, bounds.width - inset.left - inset.right));
+        } else {
+            size.height = Math.max(0, Math.min(size.height, bounds.height - inset.top - inset.bottom));
+        }
         return CGSizeMake(size.width, size.height);
     }
 
