@@ -106,6 +106,10 @@ export class Pager extends PagerBase {
         return nativeView;
     }
 
+    _registerTemplateKey(key: string) {
+        this.nativeViewProtected?.registerClassForCellWithReuseIdentifier(PagerCell.class(), key);
+    }
+
     initNativeView() {
         super.initNativeView();
         const nativeView = this.nativeViewProtected;

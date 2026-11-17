@@ -108,6 +108,8 @@ export default class PagerViewElement extends NativeViewElementNode<Pager> {
             } else {
                 this.nativeView._itemTemplatesInternal = this.nativeView._itemTemplatesInternal.concat(new SvelteKeyedTemplate(key, childNode) as any);
             }
+            // a pager mounted into a loaded page has its native view before its templates
+            this.nativeView._registerTemplateKey(key);
         }
     }
 
