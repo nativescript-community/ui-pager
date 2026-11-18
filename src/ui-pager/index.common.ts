@@ -243,6 +243,9 @@ export abstract class PagerBase extends View implements AddChildFromBuilder {
 
     public _itemTemplatesInternal = new Array<KeyedTemplate>(this._defaultTemplate);
 
+    /** a template added to `_itemTemplatesInternal` once the native view exists: iOS has to register its key to make cells of it */
+    public _registerTemplateKey(_key: string) {}
+
     private _itemIdGenerator: (item: any, index: number, items: any) => number = (_item: any, index: number) => index;
 
     get itemIdGenerator(): (item: any, index: number, items: any) => number {

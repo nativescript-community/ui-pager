@@ -106,6 +106,10 @@ export class Pager extends PagerBase {
         return nativeView;
     }
 
+    _registerTemplateKey(key: string) {
+        this.nativeViewProtected?.registerClassForCellWithReuseIdentifier(PagerCell.class(), key);
+    }
+
     initNativeView() {
         super.initNativeView();
         const nativeView = this.nativeViewProtected;
@@ -819,11 +823,12 @@ export class Pager extends PagerBase {
         } else {
             width = (width - (this._getSpacing() * 2 + this._getPeaking() * 2)) / this.perPage;
         }
-        if (Number.isNaN(width)) {
+        // before the first layout the size is 0: the spacing and the peaking would make it negative, which UIKit refuses (it throws)
+        if (Number.isNaN(width) || width < 0) {
             width = 0;
         }
 
-        if (Number.isNaN(height)) {
+        if (Number.isNaN(height) || height < 0) {
             height = 0;
         }
         return { width, height };
