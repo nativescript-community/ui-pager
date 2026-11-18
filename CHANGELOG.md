@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.2.1](https://github.com/nativescript-community/ui-pager/compare/v14.2.0...v14.2.1) (2026-11-18)
+
+### Bug Fixes
+
+* **ui-pager:** no negative item size on iOS before the first layout ([60d4f1a](https://github.com/nativescript-community/ui-pager/commit/60d4f1a302f6ea5d95f2dc0c655ed63b018df5c3))
+* **ui-pager:** register templates added after the native view on iOS ([f06ac6a](https://github.com/nativescript-community/ui-pager/commit/f06ac6a124de6e96f397fd3d5bc1b5a10497856e))
+
 ## [14.2.0](https://github.com/nativescript-community/ui-pager/compare/v14.1.42...v14.2.0) (2026-11-10)
 
 ### Features
