@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.2.2](https://github.com/nativescript-community/ui-pager/compare/v14.2.1...v14.2.2) (2026-11-18)
+
+### Bug Fixes
+
+* **ui-pager:** never return an item size bigger than the native view on iOS ([c46341a](https://github.com/nativescript-community/ui-pager/commit/c46341ad416db064788bca146272ef31e3c433e6))
+
 ## [14.2.1](https://github.com/nativescript-community/ui-pager/compare/v14.2.0...v14.2.1) (2026-11-18)
 
 ### Bug Fixes
