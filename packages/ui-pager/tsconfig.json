@@ -6,6 +6,6 @@
         "outDir": "./"
     },
     "include": ["../../src/ui-pager/**/*", "../../references.d.ts", "../../tools/references.d.ts", "../../src/references.d.ts"],
-    "exclude": ["../../src/ui-pager/vue3/**/*", "../../src/ui-pager/angular/**"],
-    "references": [{ "path": "./tsconfig.vue3.json" }]
+    "exclude": ["../../src/ui-pager/vue3/**/*", "../../src/ui-pager/svelte5/**/*", "../../src/ui-pager/angular/**"],
+    "references": [{ "path": "./tsconfig.vue3.json" }, { "path": "./tsconfig.svelte5.json" }]
 }
