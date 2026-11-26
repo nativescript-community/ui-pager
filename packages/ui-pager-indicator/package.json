@@ -17,7 +17,7 @@
         "readme": "readme generate -c ../../tools/readme/blueprint.json",
         "tsc": "cpy '**/*.d.ts' '../../packages/ui-pager-indicator' --parents --cwd=../../src/ui-pager-indicator && tsc  --build",
         "tsc.win": "cpy '**\\*.d.ts' '..\\..\\packages\\ui-pager-indicator' --parents --cwd=..\\..\\src\\ui-pager-indicator && tsc -skipLibCheck -d",
-        "clean": "bin/rimraf ./*.d.ts ./*.js ./*.js.map ./*.tsbuildinfo ./*.mjs ./*.mjs.map ./angular ./svelte ./vue* ./react",
+        "clean": "bin/rimraf ./*.d.ts ./*.js ./*.js.map ./*.tsbuildinfo ./*.mjs ./*.mjs.map ./angular ./svelte ./svelte5 ./vue* ./react",
         "clean.win": "rimraf .\\*.d.ts .\\*.js .\\*.js.map"
     },
     "nativescript": {
