@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [14.3.0](https://github.com/nativescript-community/ui-pager/compare/v14.2.2...v14.3.0) (2026-11-26)
+
+### Features
+
+* **svelte:** add a Svelte 5 binding in svelte5/ ([fdfda40](https://github.com/nativescript-community/ui-pager/commit/fdfda4079d9b9f84d6d330f87acf35d8cfec1bed))
+* **svelte:** build the svelte5/ binding against svelte-native 5 ([3f965da](https://github.com/nativescript-community/ui-pager/commit/3f965da8524efd497a6e04fde9702f5340127cf6))
+
 ## [14.2.2](https://github.com/nativescript-community/ui-pager/compare/v14.2.1...v14.2.2) (2026-11-18)
 
 ### Bug Fixes
